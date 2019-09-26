@@ -2,8 +2,9 @@ from django.urls import path, re_path, include
 from django.conf.urls import url, include
 
 from . import views
-from django.contrib.auth.views import LoginView ,PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
+from django.contrib.auth.views import LoginView ,PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView, LogoutView
 from django.contrib.auth.decorators import login_required
+
 
 app_name="biblioteca_app"
 
@@ -53,6 +54,8 @@ urlpatterns = [
     re_path('autor/add', views.addAutor.as_view(), name="Agregar_autores"),
     re_path('libro/add', views.addLibro.as_view(), name="Agregar_libros"),
     re_path('js', views.script.as_view(), name="js"),
+    re_path('sd', views.registro.as_view(), name="sd"),
     re_path('inicio', login_required(views.Inicio.as_view()), name="index"),
-    re_path('', LoginView.as_view(template_name="biblioteca/index.html"), name="login"),
+    re_path('', LoginView.as_view(template_name="biblioteca/index.html"), name="signin"),
+
 ]

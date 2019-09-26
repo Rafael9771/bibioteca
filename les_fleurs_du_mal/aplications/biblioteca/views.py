@@ -1,5 +1,5 @@
 from django.db.models import Count
-from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django import  forms
 from django.template.loader import get_template
@@ -178,6 +178,11 @@ class Inicio(TemplateView):
 
 class script(TemplateView):
     template_name = "statics/jsAutores.js"
+
+class registro(CreateView):
+    model = User
+    template_name = "biblioteca/add-libro.html"
+    success_url = "biblioteca/"
 
 class addAutor(CreateView):
     template_name = "biblioteca/add-autor.html"

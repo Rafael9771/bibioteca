@@ -6,12 +6,7 @@
 </head>
 <body>
 {% block content %}
-  <h3>Forgot password</h3>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Submit</button>
-  </form>
+
 {% endblock %}
 </body>
 </html>
