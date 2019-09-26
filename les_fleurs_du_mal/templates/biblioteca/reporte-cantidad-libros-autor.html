@@ -1,0 +1,68 @@
+{% extends 'biblioteca/opciones-reportes-libros-autores.html' %}
+{% load staticfiles %}
+
+{% block body %}<body background="{% static '275.jpg'%}" onload="desclickearAut()">{% endblock%}
+{% block reporte2%}
+<div id="autores2">
+<h1 style="background-color:white">Reporte de libro por Autor</h1>
+
+
+<table border="2" width="1920" class="rounded-sm" bgcolor="white">
+    <thead>
+    <th>Cantidad</th>
+    <th>Nombre</th>
+    <th>Descripcion</th>
+    </thead>
+
+    <tbody id="ta">
+
+                <tr>
+                    {% for a in l%}
+
+                    {% for s in a%}
+                    {% if s.autor%}
+                        <td>{{s.total}}</td>
+                        {%for i in l%}
+                        {%for k in i%}
+                            {%if k.id_autor and k.id_autor == s.autor%}
+                                <td>{{k.nombre_autor}}{{" "}}{{k.apellidos_autor}}</td>
+                                <td>{{k.nacionalidad_autor}}</td>
+                            {%endif%}
+                        {%endfor%}
+                        {%endfor%}
+
+                    {%endif%}
+
+
+                    {% endfor %}
+                    {% endfor %}
+				</tr>
+
+    </tbody>
+</table>
+</div>
+{%endblock%}
+{%block autores%}
+
+<div id="autores">
+    {% if l %}
+    <select name="" id="au">
+        <option value="">--Seleccione el autor--</option>
+        {%for a in l%}
+        {%for s in a%}
+        {% if s.nombre_autor and  s.status_autor.lower == 'a'%}
+
+        <option value="{{s.id_autor}}">{{s.nombre_autor.capitalize}}{{" "}}{{s.apellidos_autor.capitalize}}</option>
+        {% else %}
+        <h1>NO HAY AUTORES</h1>
+        {% endif %}
+        {% endfor %}
+        {% endfor %}
+    </select>
+    {% else %}
+        <h1>NO HAY AUTORES</h1>
+    {% endif %}
+</div>
+
+
+{% endblock%}

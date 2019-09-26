@@ -1,0 +1,71 @@
+{% extends 'biblioteca/opciones-reportes-libros-categorias.html' %}
+{% load staticfiles %}
+
+{% block body %}<body background="{% static '275.jpg'%}" onload="desclickearCat()">{% endblock%}
+{% block reporte2%}
+<div id="categorias2">
+<h1 style="background-color:white">Reporte de libro por Categoria</h1>
+
+
+<table border="2" width="1920" class="rounded-sm" bgcolor="white">
+    <thead>
+    <th>Cantidad</th>
+    <th>Nombre</th>
+    <th>Descripcion</th>
+    </thead>
+
+    <tbody id="ta">
+
+                <tr>
+                    {% for a in l%}
+
+                    {% for s in a%}
+                    {% if s.categoria%}
+                        <td>{{s.total}}</td>
+                        {%for i in l%}
+                        {%for k in i%}
+                            {%if k.id_categoria and k.id_categoria == s.categoria%}
+                                <td>{{k.nombre_categoria}}</td>
+                                <td>{{k.descripcion_categoria}}</td>
+                            {%endif%}
+                        {%endfor%}
+                        {%endfor%}
+
+                    {%endif%}
+
+
+                    {% endfor %}
+                    {% endfor %}
+				</tr>
+
+    </tbody>
+</table>
+</div>
+{%endblock%}
+{%block categorias%}
+<div id="categorias">
+
+    <select name="" id="select">
+        <option value="">--Seleccione la categoria--</option>
+{%for a in l%}
+{%for s in a%}
+
+
+    {% if s.nombre_categoria and s.status_categoria.lower == 'a'%}
+
+
+        <option value="{{s.id_categoria}}">{{s.nombre_categoria.capitalize}}</option>
+
+
+
+
+    {% else %}
+        <h1>NO HAY AUTORES</h1>
+    {% endif %}
+
+
+{%endfor%}
+{%endfor%}
+    </select>
+</div>
+{% endblock%}

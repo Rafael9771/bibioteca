@@ -1,0 +1,231 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Les fleurs du mal</title>
+    {% block link %}<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/tabla.css'%}">
+  <link rel="stylesheet" href="{% static 'css/opcionesAutores.css'%}">  {% endblock %}
+    {% block script %}<script src="{% static 'js/editar.js'%}"></script>
+    <script src="{% static 'js/jquery-3.4.1.min.js'%}"></script>{% endblock %}
+</head>
+
+{% block body %}<body background="{% static '275.jpg'%}" onload="ocultarReportesAutor()">{% endblock%}
+
+{% block nav %}
+
+<nav class="navbar navbar-dark bg-dark">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="true" aria-label="Toggle navigation">
+  <span class="navbar-toggler-icon"></span>
+</button>
+
+
+
+    <h1 style="color:white">{% block tituloNav %}BIENVENIDO{% endblock %}</h1>
+
+
+
+
+      <div class="navbar-collapse collapse" id="navbarColor01" style="">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/biblioteca/inicio">Inicio <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+
+          <div class="btn-group dropright">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Libros
+                </button>
+                <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    <a class="dropdown-item" href="/biblioteca/libros">Ver</a>
+                    <a class="dropdown-item" href="/biblioteca/libro/add">Agregar</a>
+                </div>
+            </div>
+      </li>
+      <li class="nav-item">
+          <div class="btn-group dropright">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Autores
+                </button>
+                <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    <a class="dropdown-item" href="/biblioteca/autores">Ver</a>
+                    <a class="dropdown-item" href="/biblioteca/autor/add">Agregar</a>
+                </div>
+            </div>
+      </li>
+      <li class="nav-item">
+
+          <div class="btn-group dropright">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                   Categorias
+                </button>
+                <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    <a class="dropdown-item" href="/biblioteca/categorias">Ver</a>
+                    <a class="dropdown-item" href="/biblioteca/categoria/add">Agregar</a>
+                </div>
+            </div>
+      </li>
+        <li class="nav-item">
+
+            <div class="btn-group dropright">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Editoriales
+                </button>
+                <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    <a class="dropdown-item" href="/biblioteca/editoriales">Ver</a>
+                    <a class="dropdown-item" href="/biblioteca/editorial/add">Agregar</a>
+                </div>
+            </div>
+      </li>
+        <li class="nav-item">
+
+            <div class="btn-group dropright">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Revistas
+                </button>
+                <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    <a class="dropdown-item" href="/biblioteca/revistas">Ver</a>
+                    <a class="dropdown-item" href="/biblioteca/revista/add">Agregar</a>
+                </div>
+            </div>
+      </li>
+        <li class="nav-item">
+            <div class="btn-group dropright">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Sucursales
+                </button>
+                <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    <a class="dropdown-item" href="/biblioteca/sucursales">Ver</a>
+                    <a class="dropdown-item" href="/biblioteca/sucursal/add">Agregar</a>
+                </div>
+            </div>
+      </li>
+        <li class="nav-item">
+            <div class="btn-group dropright">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Servicios
+                </button>
+                <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    <a class="dropdown-item" href="/biblioteca/servicios">Ver</a>
+                    <a class="dropdown-item" href="/biblioteca/servicio/add">Agregar</a>
+                </div>
+            </div>
+      </li>
+        <li class="nav-item">
+            <div class="btn-group dropright">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Reportes
+                </button>
+                <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    <a class="dropdown-item" href="/biblioteca/reportesA">Libros</a>
+                    <a class="dropdown-item" href="#">Revistas</a>
+                    <a class="dropdown-item" href="#">Autores</a>
+                    <a class="dropdown-item" href="#">Sucursales</a>
+                </div>
+            </div>
+        </li>
+
+    </ul>
+
+  </div>
+
+    </nav>
+{% endblock %}
+{% block reporte %}
+
+<script type="text/javascript">
+$('document').ready(
+    function(){
+        $('input:radio').click(
+            function(){
+                verReporteAutor();
+            }
+        );
+
+        $('#lib').change(
+            function(){
+                verReporteAutor_libro();
+
+            }
+        );
+
+        $('#nac').change(
+            function(){
+            verReporteAutor_nacionalidad();
+
+            }
+
+        );
+
+    }
+);
+
+</script>
+
+<div style="background-color:white">
+<h2>Opcion</h2>
+    <label>
+<input type="radio" name="opcion" id="nacionalidad" value="1">
+Por libro</label>
+    <br>
+    <label>
+<input type="radio" name="opcion" id="lirbo" value="2">
+Por nacionalidad</label>
+    <br>
+
+</div>
+
+
+
+
+
+{% endblock %}
+
+
+{% block libros %}
+<div id="libros">
+    {% if l %}
+    <select name="" id="lib">
+        <option value="">--Seleccione el libro--</option>
+        {%for s in l%}
+            {%for a in s%}
+                {% if a.id_libro and a.status_libro.lower == 'a'%}
+
+                    <option value="{{a.id_libro}}">{{a.titulo_libro.capitalize}}</option>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    </select>
+    {% else %}
+        <h1>NO HAY AUTORES</h1>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block nacionalidad%}
+<div id="nacionalidades">
+    {% if l%}
+    <select name="" id="nac">
+        <option value="">--Seleccione la nacinalidad</option>
+        {% for s in l%}
+            {%for a in s%}
+                {% if a.id_autor and a.status_autor.lower == 'a'%}
+                    <option value="{{a.nacionalidad_autor}}">{{a.nacionalidad_autor.capitalize}}</option>
+                {%endif%}
+            {% endfor %}
+        {%endfor%}
+    </select>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block reporte2%}
+{%endblock%}
+
+<script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js'%}"></script>
+    <script src="{% static 'js/bootstrap.min.js'%}"></script>
+</body>

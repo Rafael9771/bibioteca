@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reporte</title>
+</head>
+<body>
+{%for a in l%}
+<h1>Reporte de autores de nacionalidad {{a.nacionalidad_autor}}</h1>
+{%endfor%}
+
+
+<table border="0.5">
+    <thead>
+    <th>Nombre</th>
+    <th>Nacionalidad</th>
+    </thead>
+
+    <tbody>
+    {%for s in l%}
+    {%for a in l2%}
+    {%if a.nacionalidad_autor and s.nacionalidad_autor == a.nacionalidad_autor%}
+    <tr>
+    <td align="center">{{a.nombre_autor.capitalize}}{{" "}}{{a.apellidos_autor.capitalize}}</td>
+        <td align="center">{{a.nacionalidad_autor.capitalize}}</td>
+    </tr>
+    {%endif%}
+    {%endfor%}
+    {%endfor%}
+    <tr>
+        {%for a in l%}
+        <td align="center" ><b> TOTAL</b></td>
+        <td align="center"><b>{{a.total}}</b></td>
+        {%endfor%}
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

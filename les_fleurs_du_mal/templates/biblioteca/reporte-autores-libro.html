@@ -1,0 +1,61 @@
+{% extends 'biblioteca/opciones-reportes-autores.html' %}
+{% load staticfiles %}
+
+{% block nav %}
+{%endblock%}
+{%block nacionalidad%}
+{%endblock%}
+
+{% block reporte %}
+{%endblock%}
+{% block libros %}
+
+{% endblock %}
+{% block categorias %}
+
+{%endblock%}
+{% block reporte2%}
+
+<div id="autores2">
+
+
+<h1 style="background-color:white">Reporte de libro por Autor</h1>
+
+
+<table border="0.5" width="1920" class="rounded-sm" bgcolor="white">
+    <thead>
+    <th>Titulo</th>
+    <th>Autor</th>
+
+    <th>Nacionalidad</th>
+    </thead>
+
+    <tbody id="ta">
+
+                <tr>
+
+
+                    {% for s in l%}
+                    {% if s.id_libro%}
+                        <td>{{s.titulo_libro}}</td>
+
+                        {%for k in l2%}
+                            {%if k.id_autor and k.id_autor == s.autor.id_autor%}
+                                <td>{{k.nombre_autor}}{{" "}}{{k.apellidos_autor}}</td>
+                                <td>{{k.nacionalidad_autor}}</td>
+                            {%endif%}
+
+                        {%endfor%}
+
+                    {%endif%}
+
+
+
+                    {% endfor %}
+				</tr>
+
+    </tbody>
+</table>
+</div>
+
+{%endblock%}

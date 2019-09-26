@@ -1,0 +1,55 @@
+{% extends 'base/baseBuscar.html'%}
+{% block tituloNav %}SUCURSALES{% endblock %}
+{% block regresar%}<a class="navbar-brand" href="/biblioteca/sucursales">SUCURSALES</a>{% endblock %}
+{% block formBuscar %}<form class="form-inline" id="formulario" action="#" onsubmit="return buscarsucursal()">{% endblock %}
+
+
+{% block thead %}
+    <th>Nombre</th>
+    <th>Descripcion</th>
+    <th>Telefono</th>
+    <th>Servicios</th>
+    <th>Fecha de Creacion</th>
+    <th>Fecha de Modificacion</th>
+    <th>Eliminar</th>
+    <th>Editar</th>
+
+{% endblock %}
+
+{% block td %}
+{% if a.status_sucursal.lower == 'a'%}
+
+					<td>
+						{{a.nombre_sucursal.capitalize}}
+					</td>
+					<td>
+						{{a.descripcion_sucursal.capitalize}}
+					</td>
+                    <td>
+                        {{a.telefono_sucursal}}
+                    </td>
+                     <td>
+                        <p>
+                    {% for u in a.servicio.all %}
+
+                        {% if u.status_servicio.lower == 'a'%}
+                        {{u}},
+                            {% endif %}
+
+                    {% endfor %}
+                        </p>
+                    </td>
+                    <td>{{a.fecha_creacion_sucursal}}
+                    </td>
+                    <td>{{a.fecha_modificacion_sucursal}}
+                    </td>
+					<td>
+                        <a class="btn btn-danger" href="{%url 'biblioteca_app:eliminar_sucursal' a.id_sucursal%}">Eliminar</a>
+					</td>
+                    <td>
+                        <a href="{%url 'biblioteca_app:editar_sucursal' a.id_sucursal%}" class="btn btn-info">Editar</a>
+                    </td>
+{% endif %}
+
+{% endblock%}
+{% block nohay %}NO HAY EDITORIALES CON ESE NOMBRE :({% endblock %}

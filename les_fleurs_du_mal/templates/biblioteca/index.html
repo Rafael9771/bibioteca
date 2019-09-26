@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Les fleurs du mal</title>
+</head>
+<body>
+<form method="post">
+    {% csrf_token %}
+    <label for="username">Nombre de usuraio:</label>
+    <input type="text" name="username">
+    <label for="password">Constraseña:</label>
+    <input type="password" name="password">
+    <button type="submit" name="button" class="btn btn-primary" >Guardar</button>
+</form>
+</body>
+</html>

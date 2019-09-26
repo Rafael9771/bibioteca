@@ -1,0 +1,30 @@
+{% extends 'base/baseLista.html'%}
+{% block tituloNav %}AUTORES{% endblock %}
+{% block nohay %}NO HAY AUTORES{% endblock %}
+
+	{% block tr %}
+            {% if a.status_autor.lower == 'a'%}
+                <tr>
+					<td>
+						{{a.nombre_autor.capitalize}}
+					</td>
+					<td>
+						{{a.apellidos_autor.capitalize}}
+					</td>
+                    <td>{{a.nacionalidad_autor.capitalize}}
+                    </td>
+                    <td>
+                       {{a.fecha_creacion_autor}}
+
+                    </td>
+                    <td>{{a.fecha_modificacion_autor}}
+                    </td>
+					<td>
+                        <a class="btn btn-danger" href="{%url 'biblioteca_app:eliminar_autor' a.id_autor%}">Eliminar</a>
+					</td>
+                    <td>
+                        <a href="{%url 'biblioteca_app:editar_autor' a.id_autor%}" class="btn btn-info">Editar</a>
+                    </td>
+				</tr>
+            {% endif %}
+                {% endblock%}

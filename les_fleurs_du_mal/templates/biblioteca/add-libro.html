@@ -1,0 +1,9 @@
+{% extends 'base/baseAgregar.html' %}
+{% load staticfiles %}
+{% block bodyAdd %}
+<body  onload="cambiarValoresLibro()" background="{% static '275.jpg'%}">{% endblock %}
+{% block textoAdd %}
+LIBROS
+{% endblock %}
+{% block onclick %} onclick="lowerLibro()" {% endblock %}
+

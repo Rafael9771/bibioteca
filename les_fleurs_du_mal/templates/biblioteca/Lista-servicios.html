@@ -1,0 +1,39 @@
+{% extends 'base/baseLista.html'%}
+{% block tituloNav %}SERVICIOS{% endblock %}<
+{% block formBuscar %}<form class="form-inline my-2 my-lg-0" id="formulario" action="#" onsubmit="return buscarservicio()" >{% endblock %}
+
+
+{% block thead %} <thead>
+    <th>Nombre</th>
+    <th>Descripcion</th>
+    <th>Fecha de Creacion</th>
+    <th>Fecha de Modificacion</th>
+    <th>Eliminar</th>
+    <th>Editar</th>
+    </thead>
+{% endblock %}
+{% block tr %}
+    {% if a.status_servicio.lower == 'a'%}
+                <tr>
+					<td>
+
+						{{a.nombre_servicio.capitalize}}
+					</td>
+                    <td>
+                        {{a.descripcion_servicio.capitalize}}
+                    </td>
+                    <td>{{a.fecha_creacion_servicio}}
+                    </td>
+                    <td>{{a.fecha_modificacion_servicio}}
+                    </td>
+					<td>
+                        <a class="btn btn-danger" href="{%url 'biblioteca_app:eliminar_servicio' a.id_servicio%}">Eliminar</a>
+					</td>
+                    <td>
+                        <a href="{%url 'biblioteca_app:editar_servicio' a.id_servicio%}" class="btn btn-info">Editar</a>
+                    </td>
+				</tr>
+    {% endif %}
+{% endblock%}
+
+{% block nohay %}NO HAY SUCURSALES{% endblock %}

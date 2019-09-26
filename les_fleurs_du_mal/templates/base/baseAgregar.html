@@ -1,0 +1,149 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	{% block headAdd %}
+    <meta charset="UTF-8">
+    <title>Les fleurs du mal</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/fondo.css'%}">
+	{% endblock %}
+<script src="{% static 'jsAutores.js' %}">
+</script>
+</head>
+{% block bodyAdd %}
+<body  onload="cambiarValores()" background="{% static '275.jpg'%}">{% endblock %}
+
+{% block tituloAdd %}
+
+<nav class="navbar navbar-dark bg-dark">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="true" aria-label="Toggle navigation">
+  <span class="navbar-toggler-icon"></span>
+</button>
+
+
+
+    <h1 style="color:white">{% block tituloNav %}BIENVENIDO{% endblock %}</h1>
+
+
+     {% block formBuscar %}<form class="form-inline" id="formulario" action="#" onsubmit="return buscarautor()">{% endblock %}
+      <input class="form-control mr-sm-2" type="text" placeholder="Search" id="buscar">
+      <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+    </form>
+
+      <div class="navbar-collapse collapse" id="navbarColor01" style="">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/biblioteca/inicio">Inicio <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+
+          <div class="btn-group dropright">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Libros
+                </button>
+                <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    <a class="dropdown-item" href="/biblioteca/libros">Ver</a>
+                    <a class="dropdown-item" href="/biblioteca/libro/add">Agregar</a>
+                </div>
+            </div>
+      </li>
+      <li class="nav-item">
+          <div class="btn-group dropright">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Autores
+                </button>
+                <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    <a class="dropdown-item" href="/biblioteca/autores">Ver</a>
+                    <a class="dropdown-item" href="/biblioteca/autor/add">Agregar</a>
+                </div>
+            </div>
+      </li>
+      <li class="nav-item">
+
+          <div class="btn-group dropright">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                   Categorias
+                </button>
+                <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    <a class="dropdown-item" href="/biblioteca/categorias">Ver</a>
+                    <a class="dropdown-item" href="/biblioteca/categoria/add">Agregar</a>
+                </div>
+            </div>
+      </li>
+        <li class="nav-item">
+
+            <div class="btn-group dropright">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Editoriales
+                </button>
+                <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    <a class="dropdown-item" href="/biblioteca/editoriales">Ver</a>
+                    <a class="dropdown-item" href="/biblioteca/editorial/add">Agregar</a>
+                </div>
+            </div>
+      </li>
+        <li class="nav-item">
+
+            <div class="btn-group dropright">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Revistas
+                </button>
+                <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    <a class="dropdown-item" href="/biblioteca/revistas">Ver</a>
+                    <a class="dropdown-item" href="/biblioteca/revista/add">Agregar</a>
+                </div>
+            </div>
+      </li>
+        <li class="nav-item">
+            <div class="btn-group dropright">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Sucursales
+                </button>
+                <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    <a class="dropdown-item" href="/biblioteca/sucursales">Ver</a>
+                    <a class="dropdown-item" href="/biblioteca/sucursal/add">Agregar</a>
+                </div>
+            </div>
+      </li>
+        <li class="nav-item">
+            <div class="btn-group dropright">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Servicios
+                </button>
+                <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    <a class="dropdown-item" href="/biblioteca/servicios">Ver</a>
+                    <a class="dropdown-item" href="/biblioteca/servicio/add">Agregar</a>
+                </div>
+            </div>
+      </li>
+        <li class="nav-item">
+            <div class="btn-group dropright">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Reportes
+                </button>
+                <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    <a class="dropdown-item" href="/biblioteca/reportesA">Libros</a>
+                    <a class="dropdown-item" href="#">Revistas</a>
+                    <a class="dropdown-item" href="/biblioteca/reportes-Autores">Autores</a>
+                    <a class="dropdown-item" href="#">Sucursales</a>
+                </div>
+            </div>
+        </li>
+
+    </ul>
+
+  </div>
+
+    </nav>
+<h1><a href="/biblioteca/" id="menu">menu</a>{% block textoAdd %}Agregar Libro{% endblock %} </h1>
+{% endblock%}
+	<form method="post">{% csrf_token %}
+		{{ form.as_p}}
+		<button type="submit" name="button" class="btn btn-primary" {% block onclick %} onclick="lowerT()" {% endblock %}>Guardar</button>
+
+
+	</form>
+</body>
+
+</html>

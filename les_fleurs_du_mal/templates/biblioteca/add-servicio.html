@@ -1,0 +1,8 @@
+{% extends 'base/baseAgregar.html' %}
+{% load staticfiles %}
+{% block bodyAdd %}
+<body  onload="cambiarValoresServicio()" background="{% static '275.jpg'%}">{% endblock %}
+{% block textoAdd %}
+SERVICIO
+{% endblock %}
+{% block onclick %} onclick="lowerServicio()" {% endblock %}

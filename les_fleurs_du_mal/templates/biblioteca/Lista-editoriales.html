@@ -1,0 +1,39 @@
+{% extends 'base/baseLista.html'%}
+{% block tituloNav %}EDITORIALES{% endblock %}
+{% block formBuscar %}<form class="form-inline my-2 my-lg-0" id="formulario" action="#" onsubmit="return buscareditorial()" >{% endblock %}
+
+
+{% block thead %} <thead>
+    <th>Nombre</th>
+    <th>Pais</th>
+    <th>Fecha de Creacion</th>
+    <th>Fecha de Modificacion</th>
+    <th>Eliminar</th>
+    <th>Editar</th>
+    </thead>
+{% endblock %}
+
+{% block tr %}
+    {% if a.status_editorial.lower == 'a'%}
+                <tr>
+					<td>
+						{{a.nombre_editorial.capitalize}}
+					</td>
+					<td>
+						{{a.pais_editorial.capitalize}}
+					</td>
+                    <td>{{a.fecha_creacion_editorial}}
+                    </td>
+                    <td>{{a.fecha_modificacion_editorial}}
+                    </td>
+					<td>
+                        <a class="btn btn-danger" href="{%url 'biblioteca_app:eliminar_editorial' a.id_editorial%}">Eliminar</a>
+					</td>
+                    <td>
+                        <a href="{%url 'biblioteca_app:editar_editorial' a.id_editorial%}" class="btn btn-info">Editar</a>
+                    </td>
+				</tr>
+    {% endif %}
+{% endblock%}
+
+{% block nohay %}NO HAY EDITORIALES{% endblock %}

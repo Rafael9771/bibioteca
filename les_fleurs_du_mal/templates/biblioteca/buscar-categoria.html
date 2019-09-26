@@ -1,0 +1,39 @@
+{% extends 'base/baseBuscar.html'%}
+{% block tituloNav %}CATEGORIAS{% endblock %}
+{% block regresar%}<a class="navbar-brand" href="/biblioteca/categorias">CATEGORIAS</a>{% endblock %}
+{% block formBuscar %}<form class="form-inline" id="formulario" action="#" onsubmit="return buscarcategoria()">{% endblock %}
+
+
+{% block thead %}
+    <th>Nombre</th>
+    <th>Descripcion</th>
+    <th>Fecha de Creacion</th>
+    <th>Fecha de Modificacion</th>
+    <th>Eliminar</th>
+    <th>Editar</th>
+
+{% endblock %}
+
+{% block td %}
+{% if a.status_categoria == 'a' %}
+
+					<td>
+						{{a.nombre_categoria.capitalize}}
+					</td>
+					<td>
+						{{a.descripcion_categoria.capitalize}}
+					</td>
+                    <td>{{a.fecha_creacion_categoria}}
+                    </td>
+                    <td>{{a.fecha_modificacion_categoria}}
+                    </td>
+					<td>
+                        <a class="btn btn-danger" href="{%url 'biblioteca_app:eliminar_categoria' a.id_categoria%}">Eliminar</a>
+					</td>
+                    <td>
+                        <a href="{%url 'biblioteca_app:editar_categoria' a.id_categoria%}" class="btn btn-info">Editar</a>
+                    </td>
+{% endif %}
+
+{% endblock%}
+{% block nohay %}NO HAY CATEGORIAS CON ESE NOMBRE :({% endblock %}

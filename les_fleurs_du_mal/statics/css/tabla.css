@@ -1,0 +1,44 @@
+#tabla{
+	padding-top: 10px;
+	width: 1780px;
+	position:relative;
+	left:40px;
+	border-radius: 15px;
+}
+
+#reportes{
+    position:relative:
+    left:-40px;
+}
+
+table{
+padding-top: 10px;
+	width: 1780px;
+	position:relative;
+	left:40px;
+	border-radius: 15px;
+}
+
+.dropdown-submenu {
+  position: relative;
+}
+
+.dropdown-submenu a::after {
+  transform: rotate(-90deg);
+  position: absolute;
+  right: 6px;
+  top: .8em;
+}
+
+.dropdown-submenu .dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-left: .1rem;
+  margin-right: .1rem;
+}
+
+td {
+  height: 30px;
+  text-align:left;
+  vertical-align: middle;
+}

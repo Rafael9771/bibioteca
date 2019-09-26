@@ -1,0 +1,57 @@
+{% extends 'base/baseNav.html'%}
+{%block nav%}
+{%endblock%}
+{% block reporte %}
+
+
+
+            <h1 id="fechareporte" style="background-color:white">REPORTES DE LIBROS CREADOS ENTRE {{l2}}</h1>
+
+<table border="0.5" bgcolor="white">
+    <thead>
+    <th>Titulo</th>
+    <th>Autor</th>
+    <th>Categoria</th>
+    <th>Editorial</th>
+    <th>Numero de paginas</th>
+    <th>Fecha de Creacion</th>
+    <th>Fecha de modificacion</th>
+
+    </thead>
+<tbody>
+
+    {%for a in l%}
+        {% if a.id_libro%}
+                <tr>
+					<td height="40px">
+                        <center>
+						{{a.titulo_libro.capitalize}}
+                        </center>
+					</td>
+					<td>
+						{{a.autor.nombre_autor.capitalize}}{{" "}}{{a.autor.apellidos_autor.capitalize}}
+					</td>
+                    <td>{{a.categoria.nombre_categoria.capitalize}}
+                    </td>
+                    <td>
+						{{a.editorial.nombre_editorial.capitalize}}
+					</td>
+                    <td>
+						{{a.no_paginas_libro}}
+					</td>
+                    <td>
+
+                        {{a.fecha_creacion_libro}}
+
+                    </td>
+                    <td>{{a.fecha_modificacion_libro}}
+                    </td>
+
+				</tr>
+        {%endif%}
+    {%endfor%}
+
+</tbody>
+</table>
+
+{% endblock %}

@@ -1,0 +1,24 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Les fleurs du mal</title>
+    {% block link %}<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">{% endblock %}
+
+<script src="{% static 'js/editar.js' %}">
+</script>
+
+</head>
+{% block body %}<body onload="eliminar()">{% endblock %}
+
+
+<h1>Agregar Autor</h1>
+
+	<form method="post">{% csrf_token %}
+		{{ form.as_p}}
+		<button type="submit" name="button" class="btn btn-primary" id="borrar">Guardar</button>
+
+	</form>
+</body>
+</html>

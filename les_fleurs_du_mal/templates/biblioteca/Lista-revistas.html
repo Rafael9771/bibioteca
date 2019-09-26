@@ -1,0 +1,55 @@
+{% extends 'base/baseLista.html'%}
+{% block tituloNav%}REVISTAS{% endblock%}
+{% block formBuscar %}<form class="form-inline my-2 my-lg-0" id="formulario" action="#" onsubmit="return buscarrevista()" >{% endblock %}
+
+
+{% block thead %} <thead>
+    <th>Titulo</th>
+    <th>Categoria</th>
+    <th>Sucirsales</th>
+    <th>Numero de paginas</th>
+    <th>Fecha de Creacion</th>
+    <th>Fecha de modificacion</th>
+    <th>Eliminar</th>
+    <th>Editar</th>
+    </thead>
+{% endblock %}
+
+{% block tr %}
+    {% if a.categoria.status_categoria.lower == 'a' and a.status_revista.lower == 'a'%}
+                <tr>
+					<td>
+						{{a.titulo_revista.capitalize}}
+					</td>
+
+                    <td>{{a.categoria.nombre_categoria.capitalize}}
+                    </td>
+                    <td>
+                        <p>
+                    {% for u in a.sucursal.all %}
+                        {% if u.status_sucursal.lower == 'a'%}
+                        {{u}},
+                            {% endif %}
+
+                    {% endfor %}
+                        </p>
+                    </td>
+
+                    <td>
+						{{a.no_paginas_revista}}
+					</td>
+                    <td>{{a.fecha_creacion_revista}}
+                    </td>
+                    <td>{{a.fecha_modificacion_revista}}
+                    </td>
+					<td>
+                        <a class="btn btn-danger" href="{%url 'biblioteca_app:eliminar_revista' a.id_revista%}">Eliminar</a>
+					</td>
+                    <td>
+                        <a href="{%url 'biblioteca_app:editar_revista' a.id_revista%}" class="btn btn-info">Editar</a>
+                    </td>
+				</tr>
+    {% endif%}
+{% endblock%}
+
+{% block nohay %}NO HAY REVISTAS{% endblock %}
