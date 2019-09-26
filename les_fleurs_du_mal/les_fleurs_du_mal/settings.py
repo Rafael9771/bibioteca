@@ -128,3 +128,10 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'statics'),)
 
 LOGIN_REDIRECT_URL = reverse_lazy('biblioteca_app:index')
 
+EMAIL_USE_TLS = True
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 25
+EMAIL_HOST_USER = "rafael.ramosmoreno97@gmail.com"
+EMAIL_HOST_PASSWORD = "Omeghax9771"
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
