@@ -1,5 +1,6 @@
 from django.db.models import Count
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse
 from django import  forms
 from django.template.loader import get_template
@@ -182,6 +183,7 @@ class script(TemplateView):
 class registro(CreateView):
     model = User
     template_name = "biblioteca/add-libro.html"
+    form_class = UserCreationForm
     success_url = "biblioteca/"
 
 class addAutor(CreateView):

@@ -2,18 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d3a2fa64-53fe-4620-b289-2bb90487f212" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/les_fleurs_du_mal/templates/registration/base.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/les_fleurs_du_mal/templates/registration/password_reset_subject.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/les_fleurs_du_mal/aplications/biblioteca/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/les_fleurs_du_mal/aplications/biblioteca/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/les_fleurs_du_mal/aplications/biblioteca/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/les_fleurs_du_mal/aplications/biblioteca/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/les_fleurs_du_mal/les_fleurs_du_mal/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/les_fleurs_du_mal/les_fleurs_du_mal/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/les_fleurs_du_mal/templates/biblioteca/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/les_fleurs_du_mal/templates/biblioteca/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/les_fleurs_du_mal/templates/registration/password_reset_complete.html" beforeDir="false" afterPath="$PROJECT_DIR$/les_fleurs_du_mal/templates/registration/password_reset_complete.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/les_fleurs_du_mal/templates/registration/password_reset_confirm.html" beforeDir="false" afterPath="$PROJECT_DIR$/les_fleurs_du_mal/templates/registration/password_reset_confirm.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/les_fleurs_du_mal/templates/registration/password_reset_done.html" beforeDir="false" afterPath="$PROJECT_DIR$/les_fleurs_du_mal/templates/registration/password_reset_done.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/les_fleurs_du_mal/templates/registration/password_reset_email.html" beforeDir="false" afterPath="$PROJECT_DIR$/les_fleurs_du_mal/templates/registration/password_reset_email.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/les_fleurs_du_mal/templates/registration/password_reset_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/les_fleurs_du_mal/templates/registration/password_reset_form.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
