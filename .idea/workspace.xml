@@ -2,14 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d3a2fa64-53fe-4620-b289-2bb90487f212" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/les_fleurs_du_mal/aplications/registration/password_reset_complete.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/les_fleurs_du_mal/aplications/registration/password_reset_confirm.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/les_fleurs_du_mal/aplications/registration/password_reset_done.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/les_fleurs_du_mal/aplications/registration/password_reset_email.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/les_fleurs_du_mal/aplications/registration/password_reset_form.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/les_fleurs_du_mal/les_fleurs_du_mal/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/les_fleurs_du_mal/les_fleurs_du_mal/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/les_fleurs_du_mal/aplications/biblioteca/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/les_fleurs_du_mal/aplications/biblioteca/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/les_fleurs_du_mal/aplications/registration/password_reset_complete.html" beforeDir="false" afterPath="$PROJECT_DIR$/les_fleurs_du_mal/templates/registration/password_reset_complete.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/les_fleurs_du_mal/aplications/registration/password_reset_confirm.html" beforeDir="false" afterPath="$PROJECT_DIR$/les_fleurs_du_mal/templates/registration/password_reset_confirm.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/les_fleurs_du_mal/aplications/registration/password_reset_done.html" beforeDir="false" afterPath="$PROJECT_DIR$/les_fleurs_du_mal/templates/registration/password_reset_done.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/les_fleurs_du_mal/aplications/registration/password_reset_email.html" beforeDir="false" afterPath="$PROJECT_DIR$/les_fleurs_du_mal/templates/registration/password_reset_email.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/les_fleurs_du_mal/aplications/registration/password_reset_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/les_fleurs_du_mal/templates/registration/password_reset_form.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -39,19 +38,19 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="F:\Python\les fleurs du mal\les_fleurs_du_mal\templates" />
-      <recent name="F:\Python\les fleurs du mal\les_fleurs_du_mal" />
-      <recent name="F:\Python\les fleurs du mal\les_fleurs_du_mal\aplications\biblioteca\migrations" />
-      <recent name="F:\Python\les fleurs du mal\les_fleurs_du_mal\templates\statics" />
-      <recent name="F:\Python\les fleurs du mal\les_fleurs_du_mal\templates\biblioteca" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\princ\Documents\les fleurs du mal\les_fleurs_du_mal\templates\biblioteca" />
       <recent name="F:\Python\les fleurs du mal\les_fleurs_du_mal\templates\biblioteca" />
       <recent name="F:\Python\les fleurs du mal\les_fleurs_du_mal\statics\css" />
       <recent name="F:\Python\les fleurs du mal\les_fleurs_du_mal\templates\base" />
       <recent name="F:\Python\les fleurs du mal\les_fleurs_du_mal\templates\biblioteca\base" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\princ\Documents\github\les fleurs du mal\les_fleurs_du_mal\templates" />
+      <recent name="F:\Python\les fleurs du mal\les_fleurs_du_mal\templates" />
+      <recent name="F:\Python\les fleurs du mal\les_fleurs_du_mal" />
+      <recent name="F:\Python\les fleurs du mal\les_fleurs_du_mal\aplications\biblioteca\migrations" />
+      <recent name="F:\Python\les fleurs du mal\les_fleurs_du_mal\templates\statics" />
     </key>
   </component>
   <component name="RunDashboard">

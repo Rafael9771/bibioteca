@@ -2,7 +2,7 @@ from django.urls import path, re_path, include
 from django.conf.urls import url, include
 
 from . import views
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView ,PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 from django.contrib.auth.decorators import login_required
 
 app_name="biblioteca_app"
