@@ -18,7 +18,12 @@ from django.views.generic import(
 )
 
 from .models import *
-
+class sesion:
+    sesion=False
+    def setsesion(self,valor):
+        self.sesion = valor
+    def getsesion(self):
+        return self.sesion
 
 class opcionesReportesAutores(ListView):
     template_name = "biblioteca/opciones-reportes-autores.html"
@@ -28,6 +33,7 @@ class opcionesReportesAutores(ListView):
         lista2 = Autor.objects.order_by("nacionalidad_autor").distinct("nacionalidad_autor")
 
         return lista, lista2
+
     context_object_name = "l"
 
 class reporteAutoresLibro(ListView):
@@ -175,16 +181,58 @@ class listaReportesLibrosCategorias(ListView):
 
 
 class Inicio(TemplateView):
-    template_name = "biblioteca/inicio.html"
+    if sesion.getsesion(sesion):
+        template_name = "biblioteca/inicio.html"
+    else:
+        template_name="biblioteca/metodopost.html"
+
+
 
 class script(TemplateView):
     template_name = "statics/jsAutores.js"
 
-class registro(CreateView):
-    model = User
-    template_name = "biblioteca/add-libro.html"
-    form_class = UserCreationForm
-    success_url = "biblioteca/"
+class comprobacion(TemplateView):
+
+    def post(self, request, *args, **kwargs):
+
+
+        if request.method == 'POST':
+
+            nombre = request.POST['username']
+            password = request.POST['password']
+            print(nombre+" "+password)
+            if nombre == 'axl' and password == '123':
+                print("entro al if")
+                sesion.setsesion(sesion,True)
+                print(sesion.getsesion(sesion))
+                template = get_template("biblioteca/inicio.html")
+                html = template.render()
+                return HttpResponse(html)
+            else:
+                sesion.setsesion(sesion,False)
+
+                print(sesion.getsesion(sesion))
+                template = get_template("biblioteca/metodopost.html")
+                html = template.render()
+                return HttpResponse(html)
+
+class r(ListView):
+
+    def post(self, request, *args, **kwargs):
+
+
+            pk = request.POST["name"]
+            fk = request.POST["n"]
+            template = get_template("biblioteca/nuevo.html")
+            print(pk)
+            l = Libro.objects.all()
+            params = {
+                'l': pk,
+                'l2': fk
+            }
+            html = template.render(params)
+
+            return HttpResponse(html)
 
 class addAutor(CreateView):
     template_name = "biblioteca/add-autor.html"
@@ -260,7 +308,38 @@ class addLibro(CreateView):
     model = Libro
     success_url = "/biblioteca/libros"
 
+class registro(TemplateView):
 
+
+
+    template_name = "biblioteca/metodopost.html"
+
+    def post(self, request, *args, **kwargs):
+
+        if request.method == 'POST':
+
+            nombre = request.POST['username']
+            password = request.POST['password']
+            print(nombre + " " + password)
+            if nombre == 'axl' and password == '123':
+                print("entro al if")
+                sesion.setsesion(sesion, True)
+                print(sesion.getsesion(sesion))
+                template = get_template("biblioteca/inicio.html")
+                html = template.render()
+                return HttpResponse(html)
+            else:
+                sesion.setsesion(sesion, False)
+
+                print(sesion.getsesion(sesion))
+                template = get_template("biblioteca/metodopost.html")
+                html = template.render()
+                return HttpResponse(html)
+
+
+
+
+    """form_class = UserCreationForm"""
 
 
 #-------------------------------------------------------------------Nuevos CRUD-------------------------------------------------------------------

@@ -127,6 +127,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'statics'),)
 
 LOGIN_REDIRECT_URL = reverse_lazy('biblioteca_app:index')
+LOGOUT_REDIRECT_URL = reverse_lazy('biblioteca_app:signin')
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = "smtp.gmail.com"

@@ -50,12 +50,15 @@ urlpatterns = [
     path('buscar-sucursal/<pk>/', views.buscarSucursal.as_view(), name="buscar_sucursal"),
     path('buscar-servicio/<pk>/', views.buscarServicio.as_view(), name="buscar_servicio"),
     path('reporte/libros/<pk>/<fk>', views.rangoflibros.as_view(), name="filtrar_libros"),
-    re_path('libros', views.ListaLibros.as_view(), name="lista_libros"),
+    re_path('libros', login_required(views.ListaLibros.as_view()), name="lista_libros"),
     re_path('autor/add', views.addAutor.as_view(), name="Agregar_autores"),
     re_path('libro/add', views.addLibro.as_view(), name="Agregar_libros"),
     re_path('js', views.script.as_view(), name="js"),
     re_path('sd', views.registro.as_view(), name="sd"),
-    re_path('inicio', login_required(views.Inicio.as_view()), name="index"),
+    re_path("xs",views.comprobacion.as_view(),name="xs"),
+    re_path('inicio', views.Inicio.as_view(), name="index"),
     re_path('', LoginView.as_view(template_name="biblioteca/index.html"), name="signin"),
+    re_path('logout', LogoutView.as_view(), name="logout"),
+
 
 ]
