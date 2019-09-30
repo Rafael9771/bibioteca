@@ -9447,3 +9447,14 @@ var deletes=false;
             location.href="http://127.0.0.1:8000/biblioteca/reporte/autor-nacionalidad/"+op.value+"/"
 
         }
+        function cambiarlink(){
+
+            var link = document.getElementById("cierre de sesion");
+            var usuario = document.getElementById("usuario")
+            link.href="http://127.0.0.1:8000/biblioteca/er2/"+usuario.value+"/"
+
+        }
+
+        function carga(){
+
+        }

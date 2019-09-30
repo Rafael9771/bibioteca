@@ -12,6 +12,5 @@ urlpatterns = [
     path(r'reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name="registration/password_reset_complete.html"), name='password_reset_complete'),
     re_path(r'^admin/', admin.site.urls),
     re_path(r'^biblioteca/', include('aplications.biblioteca.urls')),
-    re_path('', auth_views.LoginView.as_view(template_name="biblioteca/index.html"), name="signin"),
 
 ]

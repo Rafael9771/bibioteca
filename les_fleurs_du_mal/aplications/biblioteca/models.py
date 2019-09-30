@@ -97,3 +97,9 @@ class Revista(models.Model):
 
     def __str__(self):
         return self.titulo_revista
+
+class Usuario(models.Model):
+    id_usuario = models.AutoField(primary_key=True)
+    username = models.CharField('Username', blank=False, max_length=80)
+    password = models.CharField('Paswword', blank=False, max_length=80)
+    status = models.CharField('Status', blank=True, max_length=1)

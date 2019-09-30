@@ -54,11 +54,10 @@ urlpatterns = [
     re_path('autor/add', views.addAutor.as_view(), name="Agregar_autores"),
     re_path('libro/add', views.addLibro.as_view(), name="Agregar_libros"),
     re_path('js', views.script.as_view(), name="js"),
-    re_path('sd', views.registro.as_view(), name="sd"),
-    re_path("xs",views.comprobacion.as_view(),name="xs"),
+    path('', views.registro.as_view(), name="sd"),
+    path('er', views.errorsesion.as_view(), name="errorsesion"),
+    path('er2/<cs>/', views.errorsesion2.as_view(), name="er2"),
     re_path('inicio', views.Inicio.as_view(), name="index"),
-    re_path('', LoginView.as_view(template_name="biblioteca/index.html"), name="signin"),
-    re_path('logout', LogoutView.as_view(), name="logout"),
 
 
 ]

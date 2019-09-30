@@ -1,13 +1,13 @@
-{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" content="1;URL=http:127.0.0.1:8000/biblioteca/">
+    <meta charset="UTF-8">
     <title>metodo post</title>
 </head>
-<body onload="carga()">
-<form action="http://127.0.0.1:8000/biblioteca/er">
-    {% csrf_token %}
+<body>
+<input type="hidden">
+<form method="post" action="er2">
+
     <label for="username">Nombre de usuraio:</label>
     <input type="text" name="username">
     <label for="password">Constraseña:</label>
@@ -15,13 +15,5 @@
    <!--- <a href="http://127.0.0.1:8000/password_reset/">Olvidaste tu contraseña?</a>--->
     <button type="submit" name="button" class="btn btn-primary" >Guardar</button>
 </form>
-{% if l%}
-{% for a in l%}
-    {% if a.estado%}
-        <h1>Error de inicio de sesion</h1>
-    {% endif %}
-{% endfor %}
-{% endif %}
-<script src="{% static 'js/editar.js' %}"></script>
 </body>
 </html>

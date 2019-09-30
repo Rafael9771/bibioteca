@@ -181,10 +181,9 @@ class listaReportesLibrosCategorias(ListView):
 
 
 class Inicio(TemplateView):
-    if sesion.getsesion(sesion):
-        template_name = "biblioteca/inicio.html"
-    else:
-        template_name="biblioteca/metodopost.html"
+
+    template_name = "biblioteca/inicio.html"
+
 
 
 
@@ -310,36 +309,64 @@ class addLibro(CreateView):
 
 class registro(TemplateView):
 
-
-
     template_name = "biblioteca/metodopost.html"
 
-    def post(self, request, *args, **kwargs):
-
-        if request.method == 'POST':
-
-            nombre = request.POST['username']
-            password = request.POST['password']
-            print(nombre + " " + password)
-            if nombre == 'axl' and password == '123':
-                print("entro al if")
-                sesion.setsesion(sesion, True)
-                print(sesion.getsesion(sesion))
-                template = get_template("biblioteca/inicio.html")
-                html = template.render()
-                return HttpResponse(html)
-            else:
-                sesion.setsesion(sesion, False)
-
-                print(sesion.getsesion(sesion))
-                template = get_template("biblioteca/metodopost.html")
-                html = template.render()
-                return HttpResponse(html)
 
 
 
+class errorsesion(ListView):
 
-    """form_class = UserCreationForm"""
+
+    def get(self, request, *args, **kwargs):
+
+        id = request.GET["username"]
+
+        l = Usuario.objects.filter(
+            username=id
+        )
+        if l:
+            s = Usuario.objects.filter(
+                username=id
+            ).update(
+                status="A"
+            )
+            template = get_template('biblioteca/inicio.html')
+            params = {
+                'l':l
+            }
+            html = template.render(params)
+            return HttpResponse(html)
+        else:
+            l = {'estado':"error"}
+            params = {
+                'l':l
+            }
+            template = get_template('biblioteca/metodopost.html')
+            html = template.render(params)
+            return HttpResponse(html)
+
+class errorsesion2(ListView):
+
+
+    def get(self, request, *args, **kwargs):
+        id = self.kwargs["cs"]
+        s = Usuario.objects.filter(
+            username=id
+        ).update(
+            status="B"
+        )
+        template = get_template('biblioteca/metodopost.html')
+        params = {
+            'l':s
+        }
+        html = template.render()
+        return HttpResponse(html)
+
+
+
+
+
+
 
 
 #-------------------------------------------------------------------Nuevos CRUD-------------------------------------------------------------------

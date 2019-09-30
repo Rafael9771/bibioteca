@@ -6,7 +6,8 @@
     <title>Les fleurs du mal</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 </head>
-<body background="{% static '275.jpg'%}">
+<body background="{% static '275.jpg'%}" onload="cambiarlink()">
+
 
 
 <nav class="navbar navbar-dark bg-dark">
@@ -131,11 +132,18 @@
 
     </nav>
 
-<a href="{% url 'biblioteca_app:logout'%}">Cerrar Sesion</a>
+<a href="http://127.0.0.1:8000/biblioteca/f/" id="cierre de sesion">Cerrar Sesion</a>
 
+
+
+{% for a in l%}
+    <h1>{{a.username}}</h1>
+<input type="hidden" id="usuario" value="{{a.username}}">
+{% endfor %}
 
 <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
     <script src="{% static 'js/popper.min.js'%}"></script>
     <script src="{% static 'js/bootstrap.min.js'%}"></script>
+<script src="{% static 'js/editar.js' %}"></script>
 </body>
 </html>
