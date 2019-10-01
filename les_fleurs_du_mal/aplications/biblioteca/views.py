@@ -159,20 +159,41 @@ class ListaLibros(ListView):
     model = Libro
     context_object_name = "l"
     def get(self, request, *args, **kwargs):
-        username = self.kwargs["pk"]
+        username = self.kwargs["un"]
         print(username)
-        template = get_template("biblioteca/Lista-libros.html")
         l = Libro.objects.order_by("id_libro")
+
         s = Usuario.objects.filter(
             username = username
         )
-        params = {
-            'l':l,
-            's':s
-        }
-        html = template.render(params)
-        pdf = render_to_pdf('biblioteca/reporte-autores-nacionalidad-pdf.html',params)
-        return HttpResponse(html)
+
+        if s:
+            for a in s:
+                if a.status=='A':
+                    template = get_template('biblioteca/Lista-libros.html')
+                    params = {
+                    'l':l,
+                    's':s
+                    }
+                    html = template.render(params)
+                    return HttpResponse(html)
+                else:
+                    l = {'estado': "error"}
+                    params = {
+                        'l': l
+                    }
+                    template = get_template('biblioteca/metodopost.html')
+                    html = template.render(params)
+                    return HttpResponse(html)
+
+        else:
+            l = {'estado':"error"}
+            params = {
+                'l':l
+            }
+            template = get_template('biblioteca/metodopost.html')
+            html = template.render(params)
+            return HttpResponse(html)
 
 class listaReportesLibrosAutores(ListView):
     template_name = "biblioteca/opciones-reportes-libros-autores.html"
