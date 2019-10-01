@@ -74,6 +74,44 @@ class ListaAutores(ListView):
     template_name = "biblioteca/Lista-autores.html"
     model = Autor
     context_object_name = "l"
+    def get(self, request, *args, **kwargs):
+
+        username = self.kwargs["un"]
+        print(username)
+        l = Autor.objects.order_by("id_autor")
+
+        s = Usuario.objects.filter(
+            username=username
+        )
+
+        if s:
+            for a in s:
+                if a.status == 'A':
+                    template = get_template('biblioteca/Lista-autores.html')
+                    params = {
+                        'l': l,
+                        's': s
+                    }
+                    html = template.render(params)
+                    return HttpResponse(html)
+                else:
+                    l = {'estado': "error"}
+                    params = {
+                        'l': l
+                    }
+                    template = get_template('biblioteca/metodopost.html')
+                    html = template.render(params)
+                    return HttpResponse(html)
+
+        else:
+            l = {'estado': "error"}
+            params = {
+                'l': l
+            }
+            template = get_template('biblioteca/metodopost.html')
+            html = template.render(params)
+            return HttpResponse(html)
+
 
 class lista(ListView):
 
@@ -412,20 +450,42 @@ class ListaCategorias(ListView):
     model = Categoria
     context_object_name = "l"
     def get(self, request, *args, **kwargs):
+
         username = self.kwargs["un"]
         print(username)
-        template = get_template("biblioteca/Lista-Categorias.html")
         l = Categoria.objects.order_by("id_categoria")
+
         s = Usuario.objects.filter(
-            username = username
+            username=username
         )
-        params = {
-            'l':l,
-            's':s
-        }
-        html = template.render(params)
-        pdf = render_to_pdf('biblioteca/reporte-autores-nacionalidad-pdf.html',params)
-        return HttpResponse(html)
+
+        if s:
+            for a in s:
+                if a.status == 'A':
+                    template = get_template('biblioteca/Lista-Categorias.html')
+                    params = {
+                        'l': l,
+                        's': s
+                    }
+                    html = template.render(params)
+                    return HttpResponse(html)
+                else:
+                    l = {'estado': "error"}
+                    params = {
+                        'l': l
+                    }
+                    template = get_template('biblioteca/metodopost.html')
+                    html = template.render(params)
+                    return HttpResponse(html)
+
+        else:
+            l = {'estado': "error"}
+            params = {
+                'l': l
+            }
+            template = get_template('biblioteca/metodopost.html')
+            html = template.render(params)
+            return HttpResponse(html)
 
 class editCategoria(UpdateView):
     template_name = "biblioteca/edit-categoria.html"
@@ -521,6 +581,43 @@ class ListaRevistas(ListView):
     template_name = "biblioteca/Lista-revistas.html"
     model = Revista
     context_object_name = "l"
+    def get(self, request, *args, **kwargs):
+
+        username = self.kwargs["un"]
+        print(username)
+        l = Revista.objects.order_by("id_revista")
+
+        s = Usuario.objects.filter(
+            username=username
+        )
+
+        if s:
+            for a in s:
+                if a.status == 'A':
+                    template = get_template('biblioteca/Lista-revistas.html')
+                    params = {
+                        'l': l,
+                        's': s
+                    }
+                    html = template.render(params)
+                    return HttpResponse(html)
+                else:
+                    l = {'estado': "error"}
+                    params = {
+                        'l': l
+                    }
+                    template = get_template('biblioteca/metodopost.html')
+                    html = template.render(params)
+                    return HttpResponse(html)
+
+        else:
+            l = {'estado': "error"}
+            params = {
+                'l': l
+            }
+            template = get_template('biblioteca/metodopost.html')
+            html = template.render(params)
+            return HttpResponse(html)
 
 class editRevistaForm(forms.ModelForm):
     class Meta:
@@ -584,6 +681,43 @@ class ListaSucursales(ListView):
     template_name = "biblioteca/Lista-sucursales.html"
     model = Sucursales
     context_object_name = "l"
+    def get(self, request, *args, **kwargs):
+
+        username = self.kwargs["un"]
+        print(username)
+        l = Sucursales.objects.order_by("id_sucursal")
+
+        s = Usuario.objects.filter(
+            username=username
+        )
+
+        if s:
+            for a in s:
+                if a.status == 'A':
+                    template = get_template('biblioteca/Lista-sucursales.html')
+                    params = {
+                        'l': l,
+                        's': s
+                    }
+                    html = template.render(params)
+                    return HttpResponse(html)
+                else:
+                    l = {'estado': "error"}
+                    params = {
+                        'l': l
+                    }
+                    template = get_template('biblioteca/metodopost.html')
+                    html = template.render(params)
+                    return HttpResponse(html)
+
+        else:
+            l = {'estado': "error"}
+            params = {
+                'l': l
+            }
+            template = get_template('biblioteca/metodopost.html')
+            html = template.render(params)
+            return HttpResponse(html)
 
 class editSucursalForm(forms.ModelForm):
     class Meta:
@@ -637,6 +771,43 @@ class ListaServicios(ListView):
     template_name = "biblioteca/Lista-servicios.html"
     model = Servicios
     context_object_name = "l"
+    def get(self, request, *args, **kwargs):
+
+        username = self.kwargs["un"]
+        print(username)
+        l = Servicios.objects.order_by("id_servicio")
+
+        s = Usuario.objects.filter(
+            username=username
+        )
+
+        if s:
+            for a in s:
+                if a.status == 'A':
+                    template = get_template('biblioteca/Lista-servicios.html')
+                    params = {
+                        'l': l,
+                        's': s
+                    }
+                    html = template.render(params)
+                    return HttpResponse(html)
+                else:
+                    l = {'estado': "error"}
+                    params = {
+                        'l': l
+                    }
+                    template = get_template('biblioteca/metodopost.html')
+                    html = template.render(params)
+                    return HttpResponse(html)
+
+        else:
+            l = {'estado': "error"}
+            params = {
+                'l': l
+            }
+            template = get_template('biblioteca/metodopost.html')
+            html = template.render(params)
+            return HttpResponse(html)
 
 class editServicio(UpdateView):
     template_name = "biblioteca/edit-servicio.html"

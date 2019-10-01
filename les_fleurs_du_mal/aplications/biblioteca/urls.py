@@ -9,12 +9,12 @@ from django.contrib.auth.decorators import login_required
 app_name="biblioteca_app"
 
 urlpatterns = [
-    re_path('autores/<un>', views.ListaAutores.as_view(), name="lista_autores"),
+    path('autores/<un>', views.ListaAutores.as_view(), name="lista_autores"),
     path('categorias/<un>', views.ListaCategorias.as_view(), name="lista_categorias"),
-    re_path('editoriales/<un>', views.ListaEditoriales.as_view(), name="lista_editoriales"),
-    re_path('revistas/<un>', views.ListaRevistas.as_view(), name="lista_revistas"),
-    re_path('sucursales/<un>', views.ListaSucursales.as_view(), name="lista_sucursales"),
-    re_path('servicios/<un>', views.ListaServicios.as_view(), name="lista_servicios"),
+    path('editoriales/<un>', views.ListaEditoriales.as_view(), name="lista_editoriales"),
+    path('revistas/<un>', views.ListaRevistas.as_view(), name="lista_revistas"),
+    path('sucursales/<un>', views.ListaSucursales.as_view(), name="lista_sucursales"),
+    path('servicios/<un>', views.ListaServicios.as_view(), name="lista_servicios"),
     re_path('reportesA', views.listaReportesLibrosAutores.as_view(), name="lista_reportesA"),
     re_path('reportesC', views.listaReportesLibrosCategorias.as_view(), name="lista_reportesC"),
     re_path('reportes-Autores', views.opcionesReportesAutores.as_view(), name="opciones_reportesAutores"),

@@ -3,8 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="d3a2fa64-53fe-4620-b289-2bb90487f212" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/les_fleurs_du_mal/aplications/biblioteca/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/les_fleurs_du_mal/aplications/biblioteca/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/les_fleurs_du_mal/aplications/biblioteca/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/les_fleurs_du_mal/aplications/biblioteca/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/les_fleurs_du_mal/statics/js/editar.js" beforeDir="false" afterPath="$PROJECT_DIR$/les_fleurs_du_mal/statics/js/editar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/les_fleurs_du_mal/templates/base/baseLista.html" beforeDir="false" afterPath="$PROJECT_DIR$/les_fleurs_du_mal/templates/base/baseLista.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
