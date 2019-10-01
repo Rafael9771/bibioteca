@@ -9,12 +9,12 @@ from django.contrib.auth.decorators import login_required
 app_name="biblioteca_app"
 
 urlpatterns = [
-    re_path('autores', views.ListaAutores.as_view(), name="lista_autores"),
-    re_path('categorias', views.ListaCategorias.as_view(), name="lista_categorias"),
-    re_path('editoriales', views.ListaEditoriales.as_view(), name="lista_editoriales"),
-    re_path('revistas', views.ListaRevistas.as_view(), name="lista_revistas"),
-    re_path('sucursales', views.ListaSucursales.as_view(), name="lista_sucursales"),
-    re_path('servicios', views.ListaServicios.as_view(), name="lista_servicios"),
+    re_path('autores/<un>', views.ListaAutores.as_view(), name="lista_autores"),
+    path('categorias/<un>', views.ListaCategorias.as_view(), name="lista_categorias"),
+    re_path('editoriales/<un>', views.ListaEditoriales.as_view(), name="lista_editoriales"),
+    re_path('revistas/<un>', views.ListaRevistas.as_view(), name="lista_revistas"),
+    re_path('sucursales/<un>', views.ListaSucursales.as_view(), name="lista_sucursales"),
+    re_path('servicios/<un>', views.ListaServicios.as_view(), name="lista_servicios"),
     re_path('reportesA', views.listaReportesLibrosAutores.as_view(), name="lista_reportesA"),
     re_path('reportesC', views.listaReportesLibrosCategorias.as_view(), name="lista_reportesC"),
     re_path('reportes-Autores', views.opcionesReportesAutores.as_view(), name="opciones_reportesAutores"),
@@ -50,7 +50,7 @@ urlpatterns = [
     path('buscar-sucursal/<pk>/', views.buscarSucursal.as_view(), name="buscar_sucursal"),
     path('buscar-servicio/<pk>/', views.buscarServicio.as_view(), name="buscar_servicio"),
     path('reporte/libros/<pk>/<fk>', views.rangoflibros.as_view(), name="filtrar_libros"),
-    re_path('libros', login_required(views.ListaLibros.as_view()), name="lista_libros"),
+    path('libros/<un>', views.ListaLibros.as_view(), name="lista_libros"),
     re_path('autor/add', views.addAutor.as_view(), name="Agregar_autores"),
     re_path('libro/add', views.addLibro.as_view(), name="Agregar_libros"),
     re_path('js', views.script.as_view(), name="js"),

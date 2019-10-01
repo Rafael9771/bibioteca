@@ -159,11 +159,16 @@ class ListaLibros(ListView):
     model = Libro
     context_object_name = "l"
     def get(self, request, *args, **kwargs):
-
+        username = self.kwargs["pk"]
+        print(username)
         template = get_template("biblioteca/Lista-libros.html")
         l = Libro.objects.order_by("id_libro")
+        s = Usuario.objects.filter(
+            username = username
+        )
         params = {
-            'l':l
+            'l':l,
+            's':s
         }
         html = template.render(params)
         pdf = render_to_pdf('biblioteca/reporte-autores-nacionalidad-pdf.html',params)
@@ -320,13 +325,16 @@ class errorsesion(ListView):
     def get(self, request, *args, **kwargs):
 
         id = request.GET["username"]
+        contrasenia = request.GET["password"]
 
         l = Usuario.objects.filter(
-            username=id
+            username=id,
+            password=contrasenia
         )
         if l:
             s = Usuario.objects.filter(
-                username=id
+                username=id,
+            password=contrasenia
             ).update(
                 status="A"
             )
@@ -382,6 +390,21 @@ class ListaCategorias(ListView):
     template_name = "biblioteca/Lista-Categorias.html"
     model = Categoria
     context_object_name = "l"
+    def get(self, request, *args, **kwargs):
+        username = self.kwargs["un"]
+        print(username)
+        template = get_template("biblioteca/Lista-Categorias.html")
+        l = Categoria.objects.order_by("id_categoria")
+        s = Usuario.objects.filter(
+            username = username
+        )
+        params = {
+            'l':l,
+            's':s
+        }
+        html = template.render(params)
+        pdf = render_to_pdf('biblioteca/reporte-autores-nacionalidad-pdf.html',params)
+        return HttpResponse(html)
 
 class editCategoria(UpdateView):
     template_name = "biblioteca/edit-categoria.html"

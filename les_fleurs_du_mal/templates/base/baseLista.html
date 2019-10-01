@@ -10,7 +10,7 @@
     <script src="{% static 'js/jquery-3.4.1.min.js'%}"></script>{% endblock %}
 </head>
 
-{% block body %}<body background="{% static '275.jpg'%}">{% endblock%}
+{% block body %}<body background="{% static '275.jpg'%}" onload="cambiarlink()">{% endblock%}
 
 <nav class="navbar navbar-dark bg-dark">
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="true" aria-label="Toggle navigation">
@@ -31,6 +31,21 @@
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
         <a class="nav-link" href="/biblioteca/inicio">Inicio <span class="sr-only">(current)</span></a>
+      </li>
+        <li class="nav-item">
+
+          <div class="btn-group dropright">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {% for a in s%}
+                     {{a.username}}
+
+
+                </button>
+                <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+                   <a href="http://127.0.0.1:8000/biblioteca/f/" id="cierre de sesion">Cerrar Sesion</a>
+
+                </div>
+            </div>
       </li>
       <li class="nav-item">
 
@@ -132,6 +147,8 @@
   </div>
 
     </nav>
+<input type="hidden" id="usuario" value="{{a.username}}">
+{% endfor %}
 {% if l %}
 <div id="tabla">
 <table border="2" width="1920" class="rounded-sm" bgcolor="white">

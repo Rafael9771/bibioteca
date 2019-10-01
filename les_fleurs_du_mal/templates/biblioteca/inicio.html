@@ -30,6 +30,21 @@
       <li class="nav-item active">
         <a class="nav-link" href="/biblioteca/inicio">Inicio <span class="sr-only">(current)</span></a>
       </li>
+        <li class="nav-item">
+
+          <div class="btn-group dropright">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {% for a in l%}
+                     {{a.username}}
+
+
+                </button>
+                <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+                   <a href="http://127.0.0.1:8000/biblioteca/f/" id="cierre de sesion">Cerrar Sesion</a>
+
+                </div>
+            </div>
+      </li>
       <li class="nav-item">
 
           <div class="btn-group dropright">
@@ -37,7 +52,7 @@
                     Libros
                 </button>
                 <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a class="dropdown-item" href="/biblioteca/libros">Ver</a>
+                    <a class="dropdown-item" href="/biblioteca/libros/{{a.username}}">Ver</a>
                     <a class="dropdown-item" href="/biblioteca/libro/add">Agregar</a>
                 </div>
             </div>
@@ -48,7 +63,7 @@
                     Autores
                 </button>
                 <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a class="dropdown-item" href="/biblioteca/autores">Ver</a>
+                    <a class="dropdown-item" href="/biblioteca/autores/{{a.username}}">Ver</a>
                     <a class="dropdown-item" href="/biblioteca/autor/add">Agregar</a>
                 </div>
             </div>
@@ -60,7 +75,7 @@
                    Categorias
                 </button>
                 <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a class="dropdown-item" href="/biblioteca/categorias">Ver</a>
+                    <a class="dropdown-item" href="/biblioteca/categorias/{{a.username}}">Ver</a>
                     <a class="dropdown-item" href="/biblioteca/categoria/add">Agregar</a>
                 </div>
             </div>
@@ -72,7 +87,7 @@
                     Editoriales
                 </button>
                 <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a class="dropdown-item" href="/biblioteca/editoriales">Ver</a>
+                    <a class="dropdown-item" href="/biblioteca/editoriales/{{a.username}}">Ver</a>
                     <a class="dropdown-item" href="/biblioteca/editorial/add">Agregar</a>
                 </div>
             </div>
@@ -84,7 +99,7 @@
                     Revistas
                 </button>
                 <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a class="dropdown-item" href="/biblioteca/revistas">Ver</a>
+                    <a class="dropdown-item" href="/biblioteca/revistas/{{a.username}}">Ver</a>
                     <a class="dropdown-item" href="/biblioteca/revista/add">Agregar</a>
                 </div>
             </div>
@@ -95,7 +110,7 @@
                     Sucursales
                 </button>
                 <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a class="dropdown-item" href="/biblioteca/sucursales">Ver</a>
+                    <a class="dropdown-item" href="/biblioteca/sucursales/{{a.username}}">Ver</a>
                     <a class="dropdown-item" href="/biblioteca/sucursal/add">Agregar</a>
                 </div>
             </div>
@@ -106,7 +121,7 @@
                     Servicios
                 </button>
                 <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a class="dropdown-item" href="/biblioteca/servicios">Ver</a>
+                    <a class="dropdown-item" href="/biblioteca/servicios/{{a.username}}">Ver</a>
                     <a class="dropdown-item" href="/biblioteca/servicio/add">Agregar</a>
                 </div>
             </div>
@@ -132,14 +147,11 @@
 
     </nav>
 
-<a href="http://127.0.0.1:8000/biblioteca/f/" id="cierre de sesion">Cerrar Sesion</a>
 
 
 
-{% for a in l%}
-    <h1>{{a.username}}</h1>
 <input type="hidden" id="usuario" value="{{a.username}}">
-{% endfor %}
+{%endfor%}
 
 <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
     <script src="{% static 'js/popper.min.js'%}"></script>
