@@ -677,6 +677,7 @@ class addSucursal(CreateView):
 
 
 
+
 class ListaSucursales(ListView):
     template_name = "biblioteca/Lista-sucursales.html"
     model = Sucursales
@@ -839,7 +840,22 @@ class buscarServicio(ListView):
         return lista
 
 #---Servicio---
+#---Usuarios---
 
+class addUsuarioForm(forms.ModelForm):
+    class Meta:
+        model = Usuario
+        fields = ['username', 'password', 'fecha_creacion', 'fecha_modificacion', 'status']
+        widgets = {
+            'password': forms.PasswordInput()
+        }
+
+class addUsuario(CreateView):
+    form_class = addUsuarioForm
+    template_name = "biblioteca/add-usuario.html"
+    model = Usuario
+    success_url = "/biblioteca/"
+#---Usuarios---
 #-------------------------------------------------------------------------------------------------------------------------------------------------
 
 class buscarLibro(ListView):

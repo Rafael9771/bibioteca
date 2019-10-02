@@ -102,4 +102,6 @@ class Usuario(models.Model):
     id_usuario = models.AutoField(primary_key=True)
     username = models.CharField('Username', blank=False, max_length=80)
     password = models.CharField('Paswword', blank=False, max_length=80)
+    fecha_creacion = models.DateField()
+    fecha_modificacion = models.DateField()
     status = models.CharField('Status', blank=True, max_length=1)

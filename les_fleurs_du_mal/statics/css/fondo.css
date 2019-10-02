@@ -21,13 +21,83 @@ margin-bottom:10px;
 
 padding: 0px 10px 0px 10px;
 }
-
-label[for*="id_nombre"],label[for*="id_telefono"],label[for*="id_descripcion"],label[for*="id_titulo"],label[for*="id_autor"],label[for*="id_categoria"],label[for*="id_editorial"],label[for*="id_no_paginas"],label[for*="id_nacionalidad"],label[for*="id_apellidos"],label[for*="id_descripcion"],label[for*="id_pais"]{
+/*inicio libros */
+label[for*="id_titulo_libro"],
+label[for*="id_no_paginas_libro"],
+/*fin libros*/
+label[for*="id_nombre"],
+/*inicio autor*/
+label[for*="id_apellidos_autor"],
+label[for*="id_nombre_autor"],
+label[for*="id_nacionalidad_autor"],
+/*fin autor*/
+/*inicio categoria*/
+label[for*="id_nombre_categoria"],
+label[for*="id_descripcion_categoria"],
+/*fin categoria*/
+/*inicio editorial*/
+label[for*="id_nombre_editorial"],
+label[for*="id_pais_editorial"],
+/*fin editorial*/
+/*inicio revista*/
+label[for*="id_titulo_revista"],
+label[for*="id_no_paginas_revista"],
+/*fin revista*/
+/*inicio sucursal*/
+label[for*="id_nombre_sucursal"],
+label[for*="id_descripcion_sucursal"],
+label[for*="id_telefono_sucursal"],
+/*fin sucursal*/
+/*inicio servicio*/
+label[for*="id_nombre_servicio"],
+label[for*="id_descripcion_servicio"],
+/*fin servicio*/
+label[for*="id_telefono"],
+label[for*="id_descripcion"],
+label[for*="id_titulo"],
+label[for*="id_autor"],
+label[for*="id_categoria"],
+label[for*="id_editorial"],
+label[for*="id_no_paginas"],label[for*="id_nacionalidad"],label[for*="id_apellidos"],label[for*="id_descripcion"],label[for*="id_pais"]{
 width:80%;
 text-align: center;
 
 }
-#id_nombre,#id_telefono,#id_descripcion, #id_titulo, #id_autor, #id_categoria, #id_editorial, #id_no_paginas, #id_nacionalidad, #id_apellidos, #id_descripcion, #id_pais{
+/*inicio libros*/
+#id_titulo_libro,
+#id_no_paginas_libro,
+/*fin libros*/
+#id_nombre,
+#id_telefono,
+#id_descripcion,
+#id_titulo,
+#id_autor,
+/*inicio autor*/
+#id_nombre_autor,
+#id_nacionalidad_autor,
+/*fin autor*/
+/*inicio categoria*/
+#id_nombre_categoria,
+#id_descripcion_categoria,
+/*fin categoria*/
+/*inicio editorial*/
+#id_nombre_editorial,
+#id_pais_editorial,
+/*fin editorial*/
+/*inicio revista*/
+#id_titulo_revista,
+#id_no_paginas_revista,
+/*fin revista*/
+/*inicio sucursal*/
+#id_nombre_sucursal,
+#id_descripcion_sucursal,
+#id_telefono_sucursal,
+/*fin sucursal*/
+/*inicio servicio*/
+#id_nombre_servicio,
+#id_descripcion_servicio,
+/*fin servicio*/
+#id_categoria, #id_editorial, #id_no_paginas, #id_nacionalidad, #id_apellidos, #id_descripcion, #id_pais, #id_apellidos_autor{
 position:relative;
 width:80%;
 height:60px;

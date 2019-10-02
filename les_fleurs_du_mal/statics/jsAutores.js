@@ -9314,6 +9314,46 @@ window.jQuery = window.$ = jQuery;
 
         }
 
+        function cambiarValoresUsuario() {
+
+
+
+        var inputFModificacion = document.getElementById("id_fecha_modificacion");
+        var inputFCreacion = document.getElementById("id_fecha_creacion");
+        var inputStatus = document.getElementById("id_status");
+        var f = new Date();
+        var dia = f.getDate();
+        if(dia<10){
+        dia = "0"+dia;
+        }
+        var mes=(f.getMonth()+1);
+        if(mes<10){
+        mes="0"+mes;
+        }
+
+
+        var fecha =f.getFullYear() + "-"+mes+ "-"+dia ;
+
+        document.getElementById("id_fecha_modificacion").value= fecha
+        document.getElementById("id_fecha_creacion").value= fecha
+        document.getElementById("id_status").value='B'
+
+        /*document.getElementById("id_fecha_modificacion").disabled = true;
+        document.getElementById("id_fecha_creacion").disabled = true;
+        document.getElementById("id_status").disabled = true;
+
+        $('input[id="id_fecha_creacion"').value()="h";*/
+      var a = ['id_status','id_fecha_creacion','id_fecha_modificacion'];
+        for(var i=0; i<a.length; i++){
+        $('label[for=' + a[i] + '], input#' + a[i]).hide();
+        }
+         document.getElementById("nav").style.display = 'none';
+
+
+
+
+
+        }
 
         function cambiarValoresSucursal() {
 

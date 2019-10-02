@@ -1,0 +1,9 @@
+{% extends 'base/baseAgregar.html' %}
+{% load staticfiles %}
+{% block bodyAdd %}
+<body  onload="cambiarValoresUsuario()" background="{% static '275.jpg'%}">{% endblock %}
+{% block textoAdd %}
+Registro
+{% endblock %}
+
+{% block onclick %} onclick="lowerEditorial()" {% endblock %}
