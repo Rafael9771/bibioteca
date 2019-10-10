@@ -1,11 +1,6 @@
-h1{
-background-color:white;
-position:relative;
-text-align: center;
 
-}
 
-form{
+#agregar{
 position:relative;
 background-color: white;
 width:950px;
@@ -103,16 +98,11 @@ width:80%;
 height:60px;
 left:5px;
 }
-p{
+form p{
 	text-align: center;
 }
 
-ul > li{
-    position: relative;
-    bottom: 0px;
-    text-align: center;
-   
-}
+
 
 
 label > input{
@@ -129,7 +119,7 @@ height:60px;
 left:95px;
 }
 
-button{
+#btnAgregar{
 position:relative;
 width:80%;
 height:60px;

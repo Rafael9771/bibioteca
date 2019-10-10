@@ -43,13 +43,29 @@
                     <td>{{a.fecha_modificacion_revista}}
                     </td>
 					<td>
-                        <a class="btn btn-danger" href="{%url 'biblioteca_app:eliminar_revista' a.id_revista%}">Eliminar</a>
+                       <a id="EliminarRevista{{a.id_revista}}" class="btn btn-danger" href="http://127.0.0.1:8000/biblioteca/eliminar-revista/{{a.id_revista}}/">Eliminar</a>
 					</td>
                     <td>
-                        <a href="{%url 'biblioteca_app:editar_revista' a.id_revista%}" class="btn btn-info">Editar</a>
+                        <a href="" class="btn btn-info" id="EditarRevista{{a.id_revista}}">Editar</a>
                     </td>
 				</tr>
     {% endif%}
 {% endblock%}
+
+    {%block corr%}
+<script>
+cadVariables = window.location.toString();
+
+arrVariables = cadVariables.split("/");
+{% for a in l%}
+
+                {% if a.status_revista.lower == 'a'%}
+
+                 document.getElementById("EditarRevista{{a.id_revista}}").href="http://127.0.0.1:8000/biblioteca/editar-revista/{{a.id_revista}}/"+arrVariables[arrVariables.length-1];
+                 document.getElementById("EliminarRevista{{a.id_revista}}").href="http://127.0.0.1:8000/biblioteca/eliminar-revista/{{a.id_revista}}/"+arrVariables[arrVariables.length-1];
+                {%endif%}
+            {%endfor%}
+</script>
+{%endblock%}
 
 {% block nohay %}NO HAY REVISTAS{% endblock %}

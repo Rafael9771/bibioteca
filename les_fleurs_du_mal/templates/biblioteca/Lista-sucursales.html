@@ -42,13 +42,27 @@
                     <td>{{a.fecha_modificacion_sucursal}}
                     </td>
 					<td>
-                        <a class="btn btn-danger" href="{%url 'biblioteca_app:eliminar_sucursal' a.id_sucursal%}">Eliminar</a>
+                       <a id="EliminarSucursal{{a.id_sucursal}}" class="btn btn-danger" href="http://127.0.0.1:8000/biblioteca/eliminar-sucursal/{{a.id_sucursal}}/">Eliminar</a>
 					</td>
                     <td>
-                        <a href="{%url 'biblioteca_app:editar_sucursal' a.id_sucursal%}" class="btn btn-info">Editar</a>
+                        <a href="" class="btn btn-info" id="EditarSucursal{{a.id_sucursal}}">Editar</a>
                     </td>
 				</tr>
     {% endif %}
 {% endblock%}
+{%block corr%}
+<script>
+cadVariables = window.location.toString();
 
+arrVariables = cadVariables.split("/");
+{% for a in l%}
+
+                {% if a.status_sucursal.lower == 'a'%}
+
+                 document.getElementById("EditarSucursal{{a.id_sucursal}}").href="http://127.0.0.1:8000/biblioteca/editar-sucursal/{{a.id_sucursal}}/"+arrVariables[arrVariables.length-1];
+                 document.getElementById("EliminarSucursal{{a.id_sucursal}}").href="http://127.0.0.1:8000/biblioteca/eliminar-sucursal/{{a.id_sucursal}}/"+arrVariables[arrVariables.length-1];
+                {%endif%}
+            {%endfor%}
+</script>
+{%endblock%}
 {% block nohay %}NO HAY SUCURSALES{% endblock %}

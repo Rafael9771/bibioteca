@@ -1,13 +1,15 @@
 from django.db.models import Count
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from django.http import HttpResponse
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.http import HttpResponse, HttpResponseRedirect
 from django import  forms
 from django.template.loader import get_template
-
+from django.urls import reverse_lazy
+from django import template
 from .util import render_to_pdf
 from django.contrib.admin.views.decorators import staff_member_required
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 
 from django.views.generic import(
     View,
@@ -18,6 +20,7 @@ from django.views.generic import(
 )
 
 from .models import *
+
 class sesion:
     sesion=False
     def setsesion(self,valor):
@@ -297,39 +300,103 @@ class r(ListView):
 
             return HttpResponse(html)
 
+class addAutorForm(forms.ModelForm):
+    class Meta:
+        model = Autor
+        fields = ["nombre_autor", "apellidos_autor", "nacionalidad_autor", "fecha_creacion_autor",
+                  "fecha_modificacion_autor", "status_autor"]
+        labels = {
+            'titulo': 'Titulo',
+            'no_paginas': 'Numero de Paginas',
+            'fecha_modificacion': 'Fecha de modificacion',
+            'autor': 'Autor',
+        }
+
 class addAutor(CreateView):
-    template_name = "biblioteca/add-autor.html"
-    model = Autor
-    fields = ["nombre_autor", "apellidos_autor","nacionalidad_autor","fecha_creacion_autor","fecha_modificacion_autor","status_autor"]
-    labels = {
-        'titulo': 'Titulo',
-        'no_paginas': 'Numero de Paginas',
-        'fecha_modificacion': 'Fecha de modificacion',
-        'autor': 'Autor',
-    }
-    widgets = {
-        'titulo': forms.TextInput(),
-        'no_paginas': forms.NumberInput(),
-        'fecha_modificacion': forms.TextInput(),
-        'autor': forms.TextInput(),
-        'status': forms.TextInput(),
-    }
-    success_url = "/biblioteca/autores"
+
+    un = ''
+    def get(self, request, *args, **kwargs):
+        un = self.kwargs["un"]
+        usuario = Usuario.objects.filter(
+            username=un
+        )
+        if usuario:
+            for a in usuario:
+                if a.status=='A':
+                    context = {'form': addAutorForm()}
+                    return render(request, 'biblioteca/add-autor.html', context)
+                else:
+                    l = {'estado': "error"}
+                    params = {
+                        'l': l
+                    }
+                    template = get_template('biblioteca/metodopost.html')
+                    return render(request, 'biblioteca/metodopost.html', params)
+        else:
+            l = {'estado': "error"}
+            params = {
+                'l': l
+            }
+            template = get_template('biblioteca/metodopost.html')
+            return render(request, 'biblioteca/metodopost.html', params)
+
+
+    def post(self, request, *args, **kwargs):
+        form = addAutorForm(request.POST)
+        if form.is_valid():
+            book = form.save()
+            book.save()
+            r=self.kwargs["un"]
+
+            return HttpResponseRedirect(reverse_lazy('biblioteca_app:lista_autores',kwargs={'un':r}))
+
+class deleteAutorForm(forms.ModelForm):
+    class Meta:
+        model = Autor
+        fields = ["nombre_autor", "apellidos_autor", "nacionalidad_autor", "fecha_creacion_autor",
+                  "fecha_modificacion_autor", "status_autor"]
 
 class editAutor(UpdateView):
-    template_name = "biblioteca/edit-autor.html"
-    model = Autor
-    fields = ["nombre_autor", "apellidos_autor","nacionalidad_autor","fecha_creacion_autor","fecha_modificacion_autor","status_autor"]
 
-    success_url = "/biblioteca/autores"
+    form_class = deleteAutorForm
+    template_name = 'biblioteca/edit-autor.html'
+    model = Autor
+    def get_success_url(self, **kwargs):
+        username=self.kwargs["un"]
+        l = Usuario.objects.filter(
+            username=username
+        )
+        if l:
+            for a in l:
+                if a.status=='A':
+                    return reverse_lazy('biblioteca_app:lista_autores',kwargs={'un':username})
+                else:
+                    return reverse_lazy('biblioteca_app:sd')
+
+        else:
+            return reverse_lazy('biblioteca_app:sd')
+
+
+
+
+
+
+
 
 class deleteAutor(UpdateView):
-    template_name = "base/delete-autor.html"
+    template_name = "biblioteca/delete-autor.html"
     model = Autor
-    fields = ["nombre_autor", "apellidos_autor","nacionalidad_autor","fecha_creacion_autor","fecha_modificacion_autor","status_autor"]
+    form_class = deleteAutorForm
 
-    success_url = "/biblioteca/autores"
+    def get_success_url(self,**kwargs):
+        r=self.kwargs["un"]
+        return reverse_lazy('biblioteca_app:lista_autores',kwargs={'un':r})
 
+
+class deleteLibroForm(forms.ModelForm):
+    class Meta:
+        model = Libro
+        fields = ["titulo_libro", "no_paginas_libro","fecha_creacion_libro","fecha_modificacion_libro","autor","status_libro"]
 
 
 class editLibroForm(forms.ModelForm):
@@ -344,7 +411,21 @@ class editLibro(UpdateView):
     form_class = editLibroForm
     template_name = "biblioteca/edit-libro.html"
     model = Libro
-    success_url = "/biblioteca/libros"
+
+    def get_success_url(self, **kwargs):
+        username=self.kwargs["un"]
+        l = Usuario.objects.filter(
+            username=username
+        )
+        if l:
+            for a in l:
+                if a.status=='A':
+                    return reverse_lazy('biblioteca_app:lista_libros',kwargs={'un':username})
+                else:
+                    return reverse_lazy('biblioteca_app:sd')
+
+        else:
+            return reverse_lazy('biblioteca_app:sd')
 
 
 
@@ -352,10 +433,10 @@ class editLibro(UpdateView):
 class deleteLibro(UpdateView):
     template_name = "base/delete-libro.html"
     model = Libro
-    fields = ["titulo_libro", "no_paginas_libro","fecha_creacion_libro","fecha_modificacion_libro","autor","status_libro"]
-
-    success_url = "/biblioteca/libros"
-
+    form_class = deleteLibroForm
+    def get_success_url(self, **kwargs):
+        r = self.kwargs["un"]
+        return reverse_lazy('biblioteca_app:lista_libros', kwargs={'un': r})
 
 class addLibroForm(forms.ModelForm):
     class Meta:
@@ -365,11 +446,42 @@ class addLibroForm(forms.ModelForm):
             'sucursal': forms.CheckboxSelectMultiple()
         }
 
+
 class addLibro(CreateView):
-    form_class = addLibroForm
-    template_name = "biblioteca/add-libro.html"
-    model = Libro
-    success_url = "/biblioteca/libros"
+
+    def get(self, request, *args, **kwargs):
+        un = self.kwargs["un"]
+        usuario = Usuario.objects.filter(
+            username=un
+        )
+        if usuario:
+            for a in usuario:
+                if a.status == 'A':
+                    context = {'form': addLibroForm()}
+                    return render(request, 'biblioteca/add-libro.html', context)
+                else:
+                    l = {'estado': "error"}
+                    params = {
+                        'l': l
+                    }
+                    template = get_template('biblioteca/metodopost.html')
+                    return render(request, 'biblioteca/metodopost.html', params)
+        else:
+            l = {'estado': "error"}
+            params = {
+                'l': l
+            }
+            template = get_template('biblioteca/metodopost.html')
+            return render(request, 'biblioteca/metodopost.html', params)
+
+    def post(self, request, *args, **kwargs):
+        form = addLibroForm(request.POST)
+        if form.is_valid():
+            book = form.save()
+            book.save()
+            r = self.kwargs["un"]
+
+            return HttpResponseRedirect(reverse_lazy('biblioteca_app:lista_libros', kwargs={'un': r}))
 
 class registro(TemplateView):
 
@@ -439,11 +551,49 @@ class errorsesion2(ListView):
 #-------------------------------------------------------------------Nuevos CRUD-------------------------------------------------------------------
 
 #---Categoria---
+class addCategoriaForm(forms.ModelForm):
+    class Meta:
+        model = Categoria
+        fields = ["nombre_categoria","descripcion_categoria","fecha_creacion_categoria","fecha_modificacion_categoria","status_categoria"]
+
+
+
 class addCategoria(CreateView):
-    template_name = "biblioteca/add-categoria.html"
-    model = Categoria
-    fields = ["nombre_categoria","descripcion_categoria","fecha_creacion_categoria","fecha_modificacion_categoria","status_categoria"]
-    success_url = "/biblioteca/categorias"
+
+    def get(self, request, *args, **kwargs):
+        un = self.kwargs["un"]
+        usuario = Usuario.objects.filter(
+            username=un
+        )
+        if usuario:
+            for a in usuario:
+                if a.status == 'A':
+                    context = {'form': addCategoriaForm()}
+                    return render(request, 'biblioteca/add-categoria.html', context)
+                else:
+                    l = {'estado': "error"}
+                    params = {
+                        'l': l
+                    }
+                    template = get_template('biblioteca/metodopost.html')
+                    return render(request, 'biblioteca/metodopost.html', params)
+        else:
+            l = {'estado': "error"}
+            params = {
+                'l': l
+            }
+            template = get_template('biblioteca/metodopost.html')
+            return render(request, 'biblioteca/metodopost.html', params)
+
+    def post(self, request, *args, **kwargs):
+        form = addCategoriaForm(request.POST)
+        if form.is_valid():
+            book = form.save()
+            book.save()
+            r = self.kwargs["un"]
+
+            return HttpResponseRedirect(reverse_lazy('biblioteca_app:lista_categorias', kwargs={'un': r}))
+    
 
 class ListaCategorias(ListView):
     template_name = "biblioteca/Lista-Categorias.html"
@@ -465,7 +615,8 @@ class ListaCategorias(ListView):
                     template = get_template('biblioteca/Lista-Categorias.html')
                     params = {
                         'l': l,
-                        's': s
+                        's': s,
+                        'user':username
                     }
                     html = template.render(params)
                     return HttpResponse(html)
@@ -487,41 +638,134 @@ class ListaCategorias(ListView):
             html = template.render(params)
             return HttpResponse(html)
 
+class deleteCategoriaForm(forms.ModelForm):
+    class Meta:
+        model = Categoria
+        fields = ["nombre_categoria", "descripcion_categoria","fecha_creacion_categoria","fecha_modificacion_categoria","status_categoria"]
+
 class editCategoria(UpdateView):
     template_name = "biblioteca/edit-categoria.html"
     model = Categoria
-    fields = ["nombre_categoria", "descripcion_categoria","fecha_creacion_categoria","fecha_modificacion_categoria","status_categoria"]
+    form_class = deleteCategoriaForm
 
-    success_url = "/biblioteca/categorias"
+    def get_success_url(self, **kwargs):
+        username=self.kwargs["un"]
+        l = Usuario.objects.filter(
+            username=username
+        )
+        if l:
+            for a in l:
+                if a.status=='A':
+                    return reverse_lazy('biblioteca_app:lista_categorias',kwargs={'un':username})
+                else:
+                    return reverse_lazy('biblioteca_app:sd')
+
+        else:
+            return reverse_lazy('biblioteca_app:sd')
+
+
+
+
+
+
 
 class deleteCategoria(UpdateView):
     template_name = "base/delete-categoria.html"
     model = Categoria
-    fields = ["nombre_categoria", "descripcion_categoria","fecha_creacion_categoria","fecha_modificacion_categoria","status_categoria"]
-    success_url = "/biblioteca/categorias"
+    form_class = deleteCategoriaForm
+
+    def get_success_url(self, **kwargs):
+        r = self.kwargs["un"]
+        return reverse_lazy('biblioteca_app:lista_categorias', kwargs={'un': r})
 
 class buscarCategoria(ListView):
     template_name = "biblioteca/buscar-categoria.html"
-
+    model = Categoria
     context_object_name = "l"
 
-    def get_queryset(self):
-        # identificar el autor
+
+    def get(self, request, *args, **kwargs):
         id = self.kwargs["pk"]
-        # filtar los libros
-        lista = Categoria.objects.filter(
-            nombre_categoria=id
+        username = self.kwargs["un"]
+
+        l = Categoria.objects.filter(nombre_categoria=id)
+
+        s = Usuario.objects.filter(
+            username=username
         )
-        # DEvolver el resultado o la lista
-        return lista
+
+        if s:
+            for a in s:
+                if a.status == 'A':
+                    template = get_template('biblioteca/buscar-categoria.html')
+                    params = {
+                        'l': l
+                    }
+                    html = template.render(params)
+                    return HttpResponse(html)
+                else:
+                    l = {'estado': "error"}
+                    params = {
+                        'l': l
+                    }
+                    template = get_template('biblioteca/metodopost.html')
+                    html = template.render(params)
+                    return HttpResponse(html)
+
+        else:
+            l = {'estado': "error"}
+            params = {
+                'l': l
+            }
+            template = get_template('biblioteca/metodopost.html')
+            html = template.render(params)
+            return HttpResponse(html)
 #---Categoria---
 
 # ---Editorial---
+class addEditorialForm(forms.ModelForm):
+    class Meta:
+        model = Editorial
+        fields = ["nombre_editorial", "pais_editorial", "fecha_creacion_editorial", "fecha_modificacion_editorial", "status_editorial"]
+
+
+
 class addEditorial(CreateView):
-    template_name = "biblioteca/add-editorial.html"
-    model = Editorial
-    fields = ["nombre_editorial", "pais_editorial", "fecha_creacion_editorial", "fecha_modificacion_editorial", "status_editorial"]
-    success_url = "/biblioteca/editoriales"
+
+    def get(self, request, *args, **kwargs):
+        un = self.kwargs["un"]
+        usuario = Usuario.objects.filter(
+            username=un
+        )
+        if usuario:
+            for a in usuario:
+                if a.status == 'A':
+                    context = {'form': addEditorialForm()}
+                    return render(request, 'biblioteca/add-editorial.html', context)
+                else:
+                    l = {'estado': "error"}
+                    params = {
+                        'l': l
+                    }
+                    template = get_template('biblioteca/metodopost.html')
+                    return render(request, 'biblioteca/metodopost.html', params)
+        else:
+            l = {'estado': "error"}
+            params = {
+                'l': l
+            }
+            template = get_template('biblioteca/metodopost.html')
+            return render(request, 'biblioteca/metodopost.html', params)
+
+    def post(self, request, *args, **kwargs):
+        form = addServicioForm(request.POST)
+        if form.is_valid():
+            book = form.save()
+            book.save()
+            r = self.kwargs["un"]
+
+            return HttpResponseRedirect(reverse_lazy('biblioteca_app:lista_editoriales', kwargs={'un': r}))
+
 
 
 class ListaEditoriales(ListView):
@@ -529,34 +773,128 @@ class ListaEditoriales(ListView):
     model = Editorial
     context_object_name = "l"
 
+    def get(self, request, *args, **kwargs):
+
+        username = self.kwargs["un"]
+        print(username)
+        l = Editorial.objects.order_by("id_editorial")
+
+        s = Usuario.objects.filter(
+            username=username
+        )
+
+        if s:
+            for a in s:
+                if a.status == 'A':
+                    template = get_template('biblioteca/Lista-editoriales.html')
+                    params = {
+                        'l': l,
+                        's': s,
+                        'user': username
+                    }
+                    html = template.render(params)
+                    return HttpResponse(html)
+                else:
+                    l = {'estado': "error"}
+                    params = {
+                        'l': l
+                    }
+                    template = get_template('biblioteca/metodopost.html')
+                    html = template.render(params)
+                    return HttpResponse(html)
+
+        else:
+            l = {'estado': "error"}
+            params = {
+                'l': l
+            }
+            template = get_template('biblioteca/metodopost.html')
+            html = template.render(params)
+            return HttpResponse(html)
+
+
+class deleteEditorialForm(forms.ModelForm):
+    class Meta:
+        model = Editorial
+        fields = ["nombre_editorial", "pais_editorial", "fecha_creacion_editorial", "fecha_modificacion_editorial",
+                  "status_editorial"]
+
 class editEditorial(UpdateView):
     template_name = "biblioteca/edit-editorial.html"
     model = Editorial
-    fields = ["nombre_editorial", "pais_editorial","fecha_creacion_editorial","fecha_modificacion_editorial","status_editorial"]
+    form_class = deleteEditorialForm
 
-    success_url = "/biblioteca/editoriales"
+    def get_success_url(self, **kwargs):
+        username=self.kwargs["un"]
+        l = Usuario.objects.filter(
+            username=username
+        )
+        if l:
+            for a in l:
+                if a.status=='A':
+                    return reverse_lazy('biblioteca_app:lista_editoriales',kwargs={'un':username})
+                else:
+                    return reverse_lazy('biblioteca_app:sd')
+
+        else:
+            return reverse_lazy('biblioteca_app:sd')
+
+
+
+
 
 class deleteEditorial(UpdateView):
     template_name = "base/delete-editorial.html"
     model = Editorial
-    fields = ["nombre_editorial", "pais_editorial", "fecha_creacion_editorial", "fecha_modificacion_editorial", "status_editorial"]
-    success_url = "/biblioteca/editoriales"
+    form_class = deleteEditorialForm
 
+    def get_success_url(self, **kwargs):
+        r = self.kwargs["un"]
+        return reverse_lazy('biblioteca_app:lista_editoriales', kwargs={'un': r})
 
 class buscarEditorial(ListView):
     template_name = "biblioteca/buscar-editorial.html"
-
+    model = Editorial
     context_object_name = "l"
 
-    def get_queryset(self):
-        # identificar el autor
+    def get(self, request, *args, **kwargs):
         id = self.kwargs["pk"]
-        # filtar los libros
-        lista = Editorial.objects.filter(
-            nombre_editorial=id
+        username = self.kwargs["un"]
+
+        l = Categoria.objects.filter(nombre_editorial=id).order_by("id_editorial")
+
+        s = Usuario.objects.filter(
+            username=username
         )
-        # DEvolver el resultado o la lista
-        return lista
+
+        if s:
+            for a in s:
+                if a.status == 'A':
+                    template = get_template('biblioteca/buscar-editorial.html')
+                    params = {
+                        'l': l,
+                        's': s,
+                        'user': username
+                    }
+                    html = template.render(params)
+                    return HttpResponse(html)
+                else:
+                    l = {'estado': "error"}
+                    params = {
+                        'l': l
+                    }
+                    template = get_template('biblioteca/metodopost.html')
+                    html = template.render(params)
+                    return HttpResponse(html)
+
+        else:
+            l = {'estado': "error"}
+            params = {
+                'l': l
+            }
+            template = get_template('biblioteca/metodopost.html')
+            html = template.render(params)
+            return HttpResponse(html)
 
 
 # ---Editorial---
@@ -570,11 +908,48 @@ class addRevistaForm(forms.ModelForm):
             'sucursal': forms.CheckboxSelectMultiple()
         }
 
+
+
 class addRevista(CreateView):
     form_class = addRevistaForm
     template_name = "biblioteca/add-revista.html"
     model = Revista
     success_url = "/biblioteca/revistas"
+
+    def get(self, request, *args, **kwargs):
+        un = self.kwargs["un"]
+        usuario = Usuario.objects.filter(
+            username=un
+        )
+        if usuario:
+            for a in usuario:
+                if a.status == 'A':
+                    context = {'form': addRevistaForm()}
+                    return render(request, 'biblioteca/add-revista.html', context)
+                else:
+                    l = {'estado': "error"}
+                    params = {
+                        'l': l
+                    }
+                    template = get_template('biblioteca/metodopost.html')
+                    return render(request, 'biblioteca/metodopost.html', params)
+        else:
+            l = {'estado': "error"}
+            params = {
+                'l': l
+            }
+            template = get_template('biblioteca/metodopost.html')
+            return render(request, 'biblioteca/metodopost.html', params)
+
+    def post(self, request, *args, **kwargs):
+        form = addRevistaForm(request.POST)
+        if form.is_valid():
+            book = form.save()
+            book.save()
+            r = self.kwargs["un"]
+
+            return HttpResponseRedirect(reverse_lazy('biblioteca_app:lista_revistas', kwargs={'un': r}))
+
 
 
 class ListaRevistas(ListView):
@@ -631,29 +1006,85 @@ class editRevista(UpdateView):
     form_class = editRevistaForm
     template_name = "biblioteca/edit-revista.html"
     model = Libro
-    success_url = "/biblioteca/revistas"
+
+    def get_success_url(self, **kwargs):
+        username=self.kwargs["un"]
+        l = Usuario.objects.filter(
+            username=username
+        )
+        if l:
+            for a in l:
+                if a.status=='A':
+                    return reverse_lazy('biblioteca_app:lista_revistas',kwargs={'un':username})
+                else:
+                    return reverse_lazy('biblioteca_app:sd')
+
+        else:
+            return reverse_lazy('biblioteca_app:sd')
+
+
+class deleteRevistaForm(forms.ModelForm):
+    class Meta:
+        model = Revista
+        fields = ["titulo_revista", "no_paginas_revista", "fecha_creacion_revista", "fecha_modificacion_revista",
+                  "categoria", "status_revista"]
+
+
+
 
 class deleteRevista(UpdateView):
     template_name = "base/delete-revista.html"
     model = Revista
-    fields = ["titulo_revista", "no_paginas_revista", "fecha_creacion_revista", "fecha_modificacion_revista","categoria", "status_revista"]
-    success_url = "/biblioteca/revistas"
+    form_class = deleteRevistaForm
 
+    def get_success_url(self, **kwargs):
+        r = self.kwargs["un"]
+        return reverse_lazy('biblioteca_app:lista_revistas', kwargs={'un': r})
 
 class buscarRevista(ListView):
     template_name = "biblioteca/buscar-revista.html"
-
+    model = Revista
     context_object_name = "l"
 
-    def get_queryset(self):
-        # identificar el autor
+
+    def get(self, request, *args, **kwargs):
         id = self.kwargs["pk"]
-        # filtar los libros
-        lista = Revista.objects.filter(
-            titulo_revista=id
+        username = self.kwargs["un"]
+
+        l = Categoria.objects.filter(titulo_revista=id).order_by("id_revista")
+
+        s = Usuario.objects.filter(
+            username=username
         )
-        # DEvolver el resultado o la lista
-        return lista
+
+        if s:
+            for a in s:
+                if a.status == 'A':
+                    template = get_template('biblioteca/buscar-revista.html')
+                    params = {
+                        'l': l,
+                        's': s,
+                        'user': username
+                    }
+                    html = template.render(params)
+                    return HttpResponse(html)
+                else:
+                    l = {'estado': "error"}
+                    params = {
+                        'l': l
+                    }
+                    template = get_template('biblioteca/metodopost.html')
+                    html = template.render(params)
+                    return HttpResponse(html)
+
+        else:
+            l = {'estado': "error"}
+            params = {
+                'l': l
+            }
+            template = get_template('biblioteca/metodopost.html')
+            html = template.render(params)
+            return HttpResponse(html)
 
 
 # ---Revista---
@@ -668,14 +1099,41 @@ class addSucursalForm(forms.ModelForm):
             'servicio': forms.CheckboxSelectMultiple()
         }
 
+
 class addSucursal(CreateView):
-    form_class = addSucursalForm
-    template_name = "biblioteca/add-sucursal.html"
-    model = Sucursales
-    success_url = "/biblioteca/sucursales"
+    def get(self, request, *args, **kwargs):
+        un = self.kwargs["un"]
+        usuario = Usuario.objects.filter(
+            username=un
+        )
+        if usuario:
+            for a in usuario:
+                if a.status == 'A':
+                    context = {'form': addSucursalForm()}
+                    return render(request, 'biblioteca/add-sucursal.html', context)
+                else:
+                    l = {'estado': "error"}
+                    params = {
+                        'l': l
+                    }
+                    template = get_template('biblioteca/metodopost.html')
+                    return render(request, 'biblioteca/metodopost.html', params)
+        else:
+            l = {'estado': "error"}
+            params = {
+                'l': l
+            }
+            template = get_template('biblioteca/metodopost.html')
+            return render(request, 'biblioteca/metodopost.html', params)
 
+    def post(self, request, *args, **kwargs):
+        form = addSucursalForm(request.POST)
+        if form.is_valid():
+            book = form.save()
+            book.save()
+            r = self.kwargs["un"]
 
-
+            return HttpResponseRedirect(reverse_lazy('biblioteca_app:lista_sucursales', kwargs={'un': r}))
 
 
 class ListaSucursales(ListView):
@@ -731,41 +1189,134 @@ class editSucursalForm(forms.ModelForm):
 class editSucursal(UpdateView):
     form_class = addSucursalForm
     model = Sucursales
-    success_url = "/biblioteca/sucursales"
+    template_name = 'biblioteca/edit-sucursal.html'
+    def get_success_url(self, **kwargs):
+        username=self.kwargs["un"]
+        l = Usuario.objects.filter(
+            username=username
+        )
+        if l:
+            for a in l:
+                if a.status=='A':
+                    return reverse_lazy('biblioteca_app:lista_sucursales',kwargs={'un':username})
+                else:
+                    return reverse_lazy('biblioteca_app:sd')
+
+        else:
+            return reverse_lazy('biblioteca_app:sd')
+
+
+class deleteSucursalForm(forms.ModelForm):
+    class Meta:
+        model = Sucursales
+        fields = ["nombre_sucursal", "descripcion_sucursal", "telefono_sucursal", "fecha_creacion_sucursal",
+                  "fecha_modificacion_sucursal", "status_sucursal"]
+
+
+
 
 
 
 class deleteSucursal(UpdateView):
     template_name = "base/delete-sucursal.html"
     model = Sucursales
-    fields = ["nombre_sucursal", "descripcion_sucursal","telefono_sucursal", "fecha_creacion_sucursal", "fecha_modificacion_sucursal", "status_sucural"]
-    success_url = "/biblioteca/sucursales"
-
+    form_class = deleteSucursalForm
+    def get_success_url(self, **kwargs):
+        r = self.kwargs["un"]
+        return reverse_lazy('biblioteca_app:lista_sucursales', kwargs={'un': r})
 
 class buscarSucursal(ListView):
     template_name = "biblioteca/buscar-sucursal.html"
-
+    model = Sucursales
     context_object_name = "l"
 
-    def get_queryset(self):
-        # identificar el autor
+    def get(self, request, *args, **kwargs):
         id = self.kwargs["pk"]
-        # filtar los libros
-        lista = Sucursales.objects.filter(
-            nombre_sucursal=id
+        username = self.kwargs["un"]
+
+        l = Categoria.objects.filter(nombre_sucursal=id).order_by("id_sucursal")
+
+        s = Usuario.objects.filter(
+            username=username
         )
-        # DEvolver el resultado o la lista
-        return lista
+
+        if s:
+            for a in s:
+                if a.status == 'A':
+                    template = get_template('biblioteca/buscar-sucursal.html')
+                    params = {
+                        'l': l,
+                        's': s,
+                        'user': username
+                    }
+                    html = template.render(params)
+                    return HttpResponse(html)
+                else:
+                    l = {'estado': "error"}
+                    params = {
+                        'l': l
+                    }
+                    template = get_template('biblioteca/metodopost.html')
+                    html = template.render(params)
+                    return HttpResponse(html)
+
+        else:
+            l = {'estado': "error"}
+            params = {
+                'l': l
+            }
+            template = get_template('biblioteca/metodopost.html')
+            html = template.render(params)
+            return HttpResponse(html)
 
 
 # ---Sucursal---
 
 #---Servicio---
+class addServicioForm(forms.ModelForm):
+    class Meta:
+        model = Servicios
+        fields = ["nombre_servicio", "descripcion_servicio", "fecha_creacion_servicio", "fecha_modificacion_servicio", "status_servicio"]
+
+
 class addServicio(CreateView):
-    template_name = "biblioteca/add-servicio.html"
-    model = Servicios
-    fields = ["nombre_servicio", "descripcion_servicio", "fecha_creacion_servicio", "fecha_modificacion_servicio", "status_servicio"]
-    success_url = "/biblioteca/servicios"
+
+
+    def get(self, request, *args, **kwargs):
+        un = self.kwargs["un"]
+        usuario = Usuario.objects.filter(
+            username=un
+        )
+        if usuario:
+            for a in usuario:
+                if a.status == 'A':
+                    context = {'form': addServicioForm()}
+                    return render(request, 'biblioteca/add-servicio.html', context)
+                else:
+                    l = {'estado': "error"}
+                    params = {
+                        'l': l
+                    }
+                    template = get_template('biblioteca/metodopost.html')
+                    return render(request, 'biblioteca/metodopost.html', params)
+        else:
+            l = {'estado': "error"}
+            params = {
+                'l': l
+            }
+            template = get_template('biblioteca/metodopost.html')
+            return render(request, 'biblioteca/metodopost.html', params)
+
+    def post(self, request, *args, **kwargs):
+        form = addServicioForm(request.POST)
+        if form.is_valid():
+            book = form.save()
+            book.save()
+            r = self.kwargs["un"]
+
+            return HttpResponseRedirect(reverse_lazy('biblioteca_app:lista_servicios', kwargs={'un': r}))
+
+
 
 
 class ListaServicios(ListView):
@@ -810,34 +1361,88 @@ class ListaServicios(ListView):
             html = template.render(params)
             return HttpResponse(html)
 
+class deleteServicioForm(forms.ModelForm):
+    class Meta:
+        model = Servicios
+        fields = ["nombre_servicio", "descripcion_servicio","fecha_creacion_servicio", "fecha_modificacion_servicio", "status_servicio"]
+
 class editServicio(UpdateView):
     template_name = "biblioteca/edit-servicio.html"
     model = Servicios
-    fields = ["nombre_servicio", "descripcion_servicio","fecha_creacion_servicio","fecha_modificacion_servicio","status_servicio"]
+    form_class = deleteServicioForm
 
-    success_url = "/biblioteca/servicios"
+    def get_success_url(self, **kwargs):
+        username=self.kwargs["un"]
+        l = Usuario.objects.filter(
+            username=username
+        )
+        if l:
+            for a in l:
+                if a.status=='A':
+                    return reverse_lazy('biblioteca_app:lista_servicios',kwargs={'un':username})
+                else:
+                    return reverse_lazy('biblioteca_app:sd')
+
+        else:
+            return reverse_lazy('biblioteca_app:sd')
+
+
+
+
 
 class deleteServicio(UpdateView):
     template_name = "base/delete-servicio.html"
     model = Servicios
-    fields = ["nombre_servicio", "descripcion_servicio","fecha_creacion_servicio", "fecha_modificacion_servicio", "status_servicio"]
-    success_url = "/biblioteca/servicios"
+    form_class = deleteCategoriaForm
+
+    def get_success_url(self, **kwargs):
+        r = self.kwargs["un"]
+        return reverse_lazy('biblioteca_app:lista_servicios', kwargs={'un': r})
 
 
 class buscarServicio(ListView):
     template_name = "biblioteca/buscar-servicio.html"
-
+    model = Servicios
     context_object_name = "l"
 
-    def get_queryset(self):
-        # identificar el autor
+    def get(self, request, *args, **kwargs):
         id = self.kwargs["pk"]
-        # filtar los libros
-        lista = Servicios.objects.filter(
-            nombre_servicio=id
+        username = self.kwargs["un"]
+
+        l = Categoria.objects.filter(nombre_servicio=id).order_by("id_servicio")
+
+        s = Usuario.objects.filter(
+            username=username
         )
-        # DEvolver el resultado o la lista
-        return lista
+
+        if s:
+            for a in s:
+                if a.status == 'A':
+                    template = get_template('biblioteca/buscar-servicio.html')
+                    params = {
+                        'l': l,
+                        's': s,
+                        'user': username
+                    }
+                    html = template.render(params)
+                    return HttpResponse(html)
+                else:
+                    l = {'estado': "error"}
+                    params = {
+                        'l': l
+                    }
+                    template = get_template('biblioteca/metodopost.html')
+                    html = template.render(params)
+                    return HttpResponse(html)
+
+        else:
+            l = {'estado': "error"}
+            params = {
+                'l': l
+            }
+            template = get_template('biblioteca/metodopost.html')
+            html = template.render(params)
+            return HttpResponse(html)
 
 #---Servicio---
 #---Usuarios---
@@ -860,35 +1465,92 @@ class addUsuario(CreateView):
 
 class buscarLibro(ListView):
     template_name = "biblioteca/buscar-libros.html"
-
+    model = Libro
     context_object_name = "l"
 
-    def get_queryset(self):
-        # identificar el autor
+    def get(self, request, *args, **kwargs):
         id = self.kwargs["pk"]
-        # filtar los libros
-        lista = Libro.objects.filter(
-            titulo_libro=id
+        username = self.kwargs["un"]
+
+        l = Libro.objects.filter(titulo_libro=id).order_by("id_libro")
+
+        s = Usuario.objects.filter(
+            username=username
         )
-        # DEvolver el resultado o la lista
-        return lista
+
+        if s:
+            for a in s:
+                if a.status == 'A':
+                    template = get_template('biblioteca/buscar-libros.html')
+                    params = {
+                        'l': l,
+                        's': s,
+                        'user': username
+                    }
+                    html = template.render(params)
+                    return HttpResponse(html)
+                else:
+                    l = {'estado': "error"}
+                    params = {
+                        'l': l
+                    }
+                    template = get_template('biblioteca/metodopost.html')
+                    html = template.render(params)
+                    return HttpResponse(html)
+
+        else:
+            l = {'estado': "error"}
+            params = {
+                'l': l
+            }
+            template = get_template('biblioteca/metodopost.html')
+            html = template.render(params)
+            return HttpResponse(html)
 
 class buscarAutor(ListView):
     template_name = "biblioteca/buscar-Autor.html"
-
+    model = Autor
     context_object_name = "l"
 
-
-    def get_queryset(self):
-        # identificar el autor
+    def get(self, request, *args, **kwargs):
         id = self.kwargs["pk"]
-        # filtar los libros
-        lista = Autor.objects.filter(
-            nombre_autor=id
+        username = self.kwargs["un"]
+
+        l = Autor.objects.filter(nombre_autor=id).order_by("id_autor")
+
+        s = Usuario.objects.filter(
+            username=username
         )
 
-        # DEvolver el resultado o la lista
-        return lista
+        if s:
+            for a in s:
+                if a.status == 'A':
+                    template = get_template('biblioteca/buscar-Autor.html')
+                    params = {
+                        'l': l,
+                        's': s,
+                        'user': username
+                    }
+                    html = template.render(params)
+                    return HttpResponse(html)
+                else:
+                    l = {'estado': "error"}
+                    params = {
+                        'l': l
+                    }
+                    template = get_template('biblioteca/metodopost.html')
+                    html = template.render(params)
+                    return HttpResponse(html)
+
+        else:
+            l = {'estado': "error"}
+            params = {
+                'l': l
+            }
+            template = get_template('biblioteca/metodopost.html')
+            html = template.render(params)
+            return HttpResponse(html)
+
 
 class rangoflibros(ListView):
 

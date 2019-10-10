@@ -1,3 +1,5 @@
+var us ='0';
+
 
 /*!
  * jQuery JavaScript Library v1.6.3
@@ -9044,6 +9046,13 @@ jQuery.each([ "Height", "Width" ], function( i, name ) {
 window.jQuery = window.$ = jQuery;
 })(window);
 
+function urlBuscar(pagina,id,nombres) {
+
+
+            pagina +=id+"/"+nombres;
+            pagina = pagina.substring(0,pagina.length);
+            return pagina;
+        }
 
 var deletes=false;
 
@@ -9185,72 +9194,113 @@ var deletes=false;
         }
 
         function buscarLibro(){
+
+        cadVariables = window.location.toString();
+
+            arrVariables = cadVariables.split("/");
+         var usuario = arrVariables[arrVariables.length-1];
+
         var inputBuscar = document.getElementById("buscar");
-        var busqueda = '/biblioteca/buscar-libro/'+inputBuscar.value.toLowerCase()+'/';
+        var busqueda = urlBuscar('/biblioteca/buscar-libro/',inputBuscar.value.toLowerCase(),usuario);
+
         formulario = document.getElementById("formulario");
         formulario.setAttribute('action',busqueda);
-
-        //formulario.Submit();
+		//formulario.Submit();
 
 
         }
 
          function buscarcategoria(){
-        var inputBuscar = document.getElementById("buscar");
-        var busqueda = '/biblioteca/buscar-categoria/'+inputBuscar.value.toLowerCase()+'/';
-        formulario = document.getElementById("formulario")
-        formulario.setAttribute('action',busqueda)
-        formulario.Submit()
 
+
+        cadVariables = window.location.toString();
+
+            arrVariables = cadVariables.split("/");
+         var usuario = arrVariables[arrVariables.length-1];
+
+        var inputBuscar = document.getElementById("buscar");
+        var busqueda = urlBuscar('/biblioteca/buscar-categoria/',inputBuscar.value.toLowerCase(),usuario);
+
+        formulario = document.getElementById("formulario");
+        formulario.setAttribute('action',busqueda);
+		//formulario.Submit();
 
         }
 
         function buscareditorial(){
-        var inputBuscar = document.getElementById("buscar");
-        var busqueda = '/biblioteca/buscar-editorial/'+inputBuscar.value.toLowerCase()+'/';
-        formulario = document.getElementById("formulario")
-        formulario.setAttribute('action',busqueda)
-        formulario.Submit()
 
+        cadVariables = window.location.toString();
+
+            arrVariables = cadVariables.split("/");
+         var usuario = arrVariables[arrVariables.length-1];
+
+        var inputBuscar = document.getElementById("buscar");
+        var busqueda = urlBuscar('/biblioteca/buscar-editorial/',inputBuscar.value.toLowerCase(),usuario);
+
+        formulario = document.getElementById("formulario");
+        formulario.setAttribute('action',busqueda);
+		//formulario.Submit();
 
         }
 
         function buscarsucursal(){
+
+        cadVariables = window.location.toString();
+
+            arrVariables = cadVariables.split("/");
+         var usuario = arrVariables[arrVariables.length-1];
+
         var inputBuscar = document.getElementById("buscar");
-        var busqueda = '/biblioteca/buscar-sucursal/'+inputBuscar.value.toLowerCase()+'/';
-        formulario = document.getElementById("formulario")
-        formulario.setAttribute('action',busqueda)
-        formulario.Submit()
+        var busqueda = urlBuscar('/biblioteca/buscar-sucursal/',inputBuscar.value.toLowerCase(),usuario);
 
-
+        formulario = document.getElementById("formulario");
+        formulario.setAttribute('action',busqueda);
+		//formulario.Submit();
         }
 
         function buscarservicio(){
+
+
+        cadVariables = window.location.toString();
+
+            arrVariables = cadVariables.split("/");
+         var usuario = arrVariables[arrVariables.length-1];
+
         var inputBuscar = document.getElementById("buscar");
-        var busqueda = '/biblioteca/buscar-servicio/'+inputBuscar.value.toLowerCase()+'/';
-        formulario = document.getElementById("formulario")
-        formulario.setAttribute('action',busqueda)
-        formulario.Submit()
+        var busqueda = urlBuscar('/biblioteca/buscar-servicio/',inputBuscar.value.toLowerCase(),usuario);
 
-
+        formulario = document.getElementById("formulario");
+        formulario.setAttribute('action',busqueda);
+		//formulario.Submit();
         }
 
         function buscarrevista(){
+
+        cadVariables = window.location.toString();
+
+            arrVariables = cadVariables.split("/");
+         var usuario = arrVariables[arrVariables.length-1];
+
         var inputBuscar = document.getElementById("buscar");
-        var busqueda = '/biblioteca/buscar-revista/'+inputBuscar.value.toLowerCase()+'/';
-        formulario = document.getElementById("formulario")
-        formulario.setAttribute('action',busqueda)
-        formulario.Submit()
+        var busqueda = urlBuscar('/biblioteca/buscar-revista/',inputBuscar.value.toLowerCase(),usuario);
 
-
+        formulario = document.getElementById("formulario");
+        formulario.setAttribute('action',busqueda);
+		//formulario.Submit();
         }
 
         function buscarautor(){
+            cadVariables = window.location.toString();
+
+            arrVariables = cadVariables.split("/");
+         var usuario = arrVariables[arrVariables.length-1];
+
         var inputBuscar = document.getElementById("buscar");
-        var busqueda = '/biblioteca/buscar-autor/'+inputBuscar.value.toLowerCase()+'/';
+        var busqueda = urlBuscar('/biblioteca/buscar-autor/',inputBuscar.value.toLowerCase(),usuario);
+
         formulario = document.getElementById("formulario");
         formulario.setAttribute('action',busqueda);
-		formulario.Submit();
+		//formulario.Submit();
 
         }
 
@@ -9451,14 +9501,60 @@ var deletes=false;
         }
         function cambiarlink(){
 
+
             var link = document.getElementById("cierre de sesion");
-            var usuario = document.getElementById("usuario")
-            
-            link.href="http://127.0.0.1:8000/biblioteca/er2/"+usuario.value+"/"
+            var usuario = document.getElementById("usuario");
+            if(usuario.value != null || usuario.value != undefined){
+                us = usuario.value;
+                document.getElementById("cierre de sesion").href="http://127.0.0.1:8000/biblioteca/er2/"+us+"/";
+            }else{
+                location.href="http://127.0.0.1:8000/biblioteca";
+            }
            
 
         }
 
+        function link(){
+
+            var cont = 0;
+            cadVariables = window.location.toString();
+
+            arrVariables = cadVariables.split("/");
+            var link = document.getElementById("cierre de sesion");
+            link.href="http://127.0.0.1:8000/biblioteca/er2/"+arrVariables[arrVariables.length-1]+"/";
+            var ni=arrVariables[arrVariables.length-1];
+            document.getElementById("btnUsuario").innerText=arrVariables[arrVariables.length-1];
+
+        }
+
+        function pasarUsuario(pagina, nombres) {
+
+            var nombre='';
+            var comp='';
+
+            nomVec = nombres.split(",");
+            for (i=0; i<nomVec.length; i++){
+                nombre = eval(nomVec[i]);
+                comp = nomVec[i] + "=" + escape(eval(nomVec[i]))+"&";
+            }
+            pagina +=nombre
+            pagina = pagina.substring(0,pagina.length);
+            location.href=pagina;
+        }
+
+        function obtenerUser(url){
+            location.href=url+us;
+        }
+
         function carga(){
+            cadVariables = window.location.toString();
+
+            arrVariables = cadVariables.split("/");
+            return arrVariables[arrVariables.length-1];
+
+        }
+
+        function resetearUsuario(){
+            window.value=''
 
         }

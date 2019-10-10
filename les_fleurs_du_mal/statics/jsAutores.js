@@ -9105,7 +9105,13 @@ window.jQuery = window.$ = jQuery;
 
         function cambiarValoresAutor() {
 
+        cadVariables = window.location.toString();
 
+            arrVariables = cadVariables.split("/");
+            var link = document.getElementById("cierre de sesion");
+            link.href="http://127.0.0.1:8000/biblioteca/er2/"+arrVariables[arrVariables.length-1]+"/";
+            var usuario = document.getElementById("btnUsuario");
+            usuario.innerText=arrVariables[arrVariables.length-1];
         var inputFModificacion = document.getElementById("id_fecha_modificacion_autor");
         var inputFCreacion = document.getElementById("id_fecha_creacion_autor");
         var inputStatus = document.getElementById("id_status_autor");
@@ -9139,7 +9145,13 @@ window.jQuery = window.$ = jQuery;
         }
 
         function cambiarValoresCategoria() {
+        cadVariables = window.location.toString();
 
+            arrVariables = cadVariables.split("/");
+            var link = document.getElementById("cierre de sesion");
+            link.href="http://127.0.0.1:8000/biblioteca/er2/"+arrVariables[arrVariables.length-1]+"/";
+            var usuario = document.getElementById("btnUsuario");
+            usuario.innerText=arrVariables[arrVariables.length-1];
 
         var inputFModificacion = document.getElementById("id_fecha_modificacion_categoria");
         var inputFCreacion = document.getElementById("id_fecha_creacion_categoria");
@@ -9174,7 +9186,13 @@ window.jQuery = window.$ = jQuery;
         }
 
         function cambiarValoresEditorial() {
+        cadVariables = window.location.toString();
 
+            arrVariables = cadVariables.split("/");
+            var link = document.getElementById("cierre de sesion");
+            link.href="http://127.0.0.1:8000/biblioteca/er2/"+arrVariables[arrVariables.length-1]+"/";
+            var usuario = document.getElementById("btnUsuario");
+            usuario.innerText=arrVariables[arrVariables.length-1];
 
         var inputFModificacion = document.getElementById("id_fecha_modificacion_editorial");
         var inputFCreacion = document.getElementById("id_fecha_creacion_editorial");
@@ -9210,7 +9228,13 @@ window.jQuery = window.$ = jQuery;
 
 
         function cambiarValoresLibro() {
+        cadVariables = window.location.toString();
 
+            arrVariables = cadVariables.split("/");
+            var link = document.getElementById("cierre de sesion");
+            link.href="http://127.0.0.1:8000/biblioteca/er2/"+arrVariables[arrVariables.length-1]+"/";
+            var usuario = document.getElementById("btnUsuario");
+            usuario.innerText=arrVariables[arrVariables.length-1];
 
         var inputFModificacion = document.getElementById("id_fecha_modificacion_libro");
         var inputFCreacion = document.getElementById("id_fecha_creacion_libro");
@@ -9245,7 +9269,13 @@ window.jQuery = window.$ = jQuery;
         }
 
         function cambiarValoresRevista() {
+        cadVariables = window.location.toString();
 
+            arrVariables = cadVariables.split("/");
+            var link = document.getElementById("cierre de sesion");
+            link.href="http://127.0.0.1:8000/biblioteca/er2/"+arrVariables[arrVariables.length-1]+"/";
+            var usuario = document.getElementById("btnUsuario");
+            usuario.innerText=arrVariables[arrVariables.length-1];
 
         var inputFModificacion = document.getElementById("id_fecha_modificacion_revista");
         var inputFCreacion = document.getElementById("id_fecha_creacion_revista");
@@ -9280,7 +9310,13 @@ window.jQuery = window.$ = jQuery;
         }
 
         function cambiarValoresServicio() {
+        cadVariables = window.location.toString();
 
+            arrVariables = cadVariables.split("/");
+            var link = document.getElementById("cierre de sesion");
+            link.href="http://127.0.0.1:8000/biblioteca/er2/"+arrVariables[arrVariables.length-1]+"/";
+            var usuario = document.getElementById("btnUsuario");
+            usuario.innerText=arrVariables[arrVariables.length-1];
 
         var inputFModificacion = document.getElementById("id_fecha_modificacion_servicio");
         var inputFCreacion = document.getElementById("id_fecha_creacion_servicio");
@@ -9356,7 +9392,13 @@ window.jQuery = window.$ = jQuery;
         }
 
         function cambiarValoresSucursal() {
+        cadVariables = window.location.toString();
 
+            arrVariables = cadVariables.split("/");
+            var link = document.getElementById("cierre de sesion");
+            link.href="http://127.0.0.1:8000/biblioteca/er2/"+arrVariables[arrVariables.length-1]+"/";
+            var usuario = document.getElementById("btnUsuario");
+            usuario.innerText=arrVariables[arrVariables.length-1];
 
         var inputFModificacion = document.getElementById("id_fecha_modificacion_sucursal");
         var inputFCreacion = document.getElementById("id_fecha_creacion_sucursal");

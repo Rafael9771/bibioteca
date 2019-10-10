@@ -29,12 +29,27 @@
                     <td>{{a.fecha_modificacion_servicio}}
                     </td>
 					<td>
-                        <a class="btn btn-danger" href="{%url 'biblioteca_app:eliminar_servicio' a.id_servicio%}">Eliminar</a>
+                       <a id="EliminarServicio{{a.id_servicio}}" class="btn btn-danger" href="http://127.0.0.1:8000/biblioteca/eliminar-servicio/{{a.id_servicio}}/">Eliminar</a>
 					</td>
                     <td>
-                        <a href="{%url 'biblioteca_app:editar_servicio' a.id_servicio%}" class="btn btn-info">Editar</a>
+                        <a href="" class="btn btn-info" id="EditarServicio{{a.id_servicio}}">Editar</a>
                     </td>
-{% endif %}
-
+				</tr>
+    {% endif %}
 {% endblock%}
+{%block corr%}
+<script>
+cadVariables = window.location.toString();
+
+arrVariables = cadVariables.split("/");
+{% for a in l%}
+
+                {% if a.status_servicio.lower == 'a'%}
+
+                 document.getElementById("EditarServicio{{a.id_servicio}}").href="http://127.0.0.1:8000/biblioteca/editar-servicio/{{a.id_servicio}}/"+arrVariables[arrVariables.length-1];
+                 document.getElementById("EliminarServicio{{a.id_servicio}}").href="http://127.0.0.1:8000/biblioteca/eliminar-servicio/{{a.id_servicio}}/"+arrVariables[arrVariables.length-1];
+                {%endif%}
+            {%endfor%}
+</script>
+{%endblock%}
 {% block nohay %}NO HAY EDITORIALES CON ESE NOMBRE :({% endblock %}

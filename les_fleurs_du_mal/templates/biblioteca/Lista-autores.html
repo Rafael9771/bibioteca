@@ -20,11 +20,29 @@
                     <td>{{a.fecha_modificacion_autor}}
                     </td>
 					<td>
-                        <a class="btn btn-danger" href="{%url 'biblioteca_app:eliminar_autor' a.id_autor%}">Eliminar</a>
+                        {% for k in s %}
+                        <a id="EliminarAutor{{a.id_autor}}" class="btn btn-danger" href="http://127.0.0.1:8000/biblioteca/eliminar-autor/{{a.id_autor}}/">Eliminar</a>
+
 					</td>
                     <td>
-                        <a href="{%url 'biblioteca_app:editar_autor' a.id_autor%}" class="btn btn-info">Editar</a>
+                        <a href="" class="btn btn-info" id="EditarAutor{{a.id_autor}}">Editar</a>
+                        {% endfor %}
                     </td>
 				</tr>
             {% endif %}
                 {% endblock%}
+{%block corr%}
+<script>
+cadVariables = window.location.toString();
+
+arrVariables = cadVariables.split("/");
+{% for a in l%}
+
+                {% if a.status_autor.lower == 'a'%}
+
+                 document.getElementById("EditarAutor{{a.id_autor}}").href="http://127.0.0.1:8000/biblioteca/editar-autor/{{a.id_autor}}/"+arrVariables[arrVariables.length-1];
+                 document.getElementById("EliminarAutor{{a.id_autor}}").href="http://127.0.0.1:8000/biblioteca/eliminar-autor/{{a.id_autor}}/"+arrVariables[arrVariables.length-1];
+                {%endif%}
+            {%endfor%}
+</script>
+{%endblock%}

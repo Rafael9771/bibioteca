@@ -27,13 +27,28 @@
                     <td>{{a.fecha_modificacion_editorial}}
                     </td>
 					<td>
-                        <a class="btn btn-danger" href="{%url 'biblioteca_app:eliminar_editorial' a.id_editorial%}">Eliminar</a>
+                       <a id="EliminarEditorial{{a.id_editorial}}" class="btn btn-danger" href="http://127.0.0.1:8000/biblioteca/eliminar-editorial/{{a.id_editorial}}/">Eliminar</a>
 					</td>
                     <td>
-                        <a href="{%url 'biblioteca_app:editar_editorial' a.id_editorial%}" class="btn btn-info">Editar</a>
+                        <a href="" class="btn btn-info" id="EditarEditorial{{a.id_editorial}}">Editar</a>
                     </td>
 				</tr>
     {% endif %}
 {% endblock%}
+{%block corr%}
+    <script>
+cadVariables = window.location.toString();
+
+arrVariables = cadVariables.split("/");
+{% for a in l%}
+
+                {% if a.status_editorial.lower == 'a'%}
+
+                 document.getElementById("EditarEditorial{{a.id_editorial}}").href="http://127.0.0.1:8000/biblioteca/editar-editorial/{{a.id_editorial}}/"+arrVariables[arrVariables.length-1];
+                 document.getElementById("EliminarEditorial{{a.id_editorial}}").href="http://127.0.0.1:8000/biblioteca/eliminar-editorial/{{a.id_editorial}}/"+arrVariables[arrVariables.length-1];
+                {%endif%}
+            {%endfor%}
+</script>
+{%endblock%}
 
 {% block nohay %}NO HAY EDITORIALES{% endblock %}

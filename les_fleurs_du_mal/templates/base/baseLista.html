@@ -10,7 +10,7 @@
     <script src="{% static 'js/jquery-3.4.1.min.js'%}"></script>{% endblock %}
 </head>
 
-{% block body %}<body background="{% static '275.jpg'%}" onload="cambiarlink()">{% endblock%}
+{% block body %}<body background="{% static '275.jpg'%}" onload="link()">{% endblock%}
 
 <nav class="navbar navbar-dark bg-dark">
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="true" aria-label="Toggle navigation">
@@ -35,10 +35,7 @@
         <li class="nav-item">
 
           <div class="btn-group dropright">
-                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {% for a in s%}
-                     {{a.username}}
-
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="btnUsuario">
 
                 </button>
                 <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
@@ -54,8 +51,8 @@
                     Libros
                 </button>
                 <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a class="dropdown-item" href="/biblioteca/libros/{{a.username}}">Ver</a>
-                    <a class="dropdown-item" href="/biblioteca/libro/add">Agregar</a>
+                    <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/libros/','ni')">Ver</a>
+                    <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/libro/add/','ni')">Agregar</a>
                 </div>
             </div>
       </li>
@@ -65,8 +62,8 @@
                     Autores
                 </button>
                 <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a class="dropdown-item" href="/biblioteca/autores/{{a.username}}">Ver</a>
-                    <a class="dropdown-item" href="/biblioteca/autor/add">Agregar</a>
+                    <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/autores/','ni')">Ver</a>
+                    <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/autor/add/','ni')">Agregar</a>
                 </div>
             </div>
       </li>
@@ -77,8 +74,8 @@
                    Categorias
                 </button>
                 <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a class="dropdown-item" href="/biblioteca/categorias/{{a.username}}">Ver</a>
-                    <a class="dropdown-item" href="/biblioteca/categoria/add">Agregar</a>
+                    <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/categorias/','ni')">Ver</a>
+                    <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/categoria/add/','ni')">Agregar</a>
                 </div>
             </div>
       </li>
@@ -89,8 +86,8 @@
                     Editoriales
                 </button>
                 <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a class="dropdown-item" href="/biblioteca/editoriales/{{a.username}}">Ver</a>
-                    <a class="dropdown-item" href="/biblioteca/editorial/add">Agregar</a>
+                    <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/editoriales/','ni')">Ver</a>
+                    <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/editorial/add/','ni')">Agregar</a>
                 </div>
             </div>
       </li>
@@ -101,8 +98,8 @@
                     Revistas
                 </button>
                 <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a class="dropdown-item" href="/biblioteca/revistas/{{a.username}}">Ver</a>
-                    <a class="dropdown-item" href="/biblioteca/revista/add">Agregar</a>
+                    <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/revistas/','ni')">Ver</a>
+                    <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/revista/add/','ni')">Agregar</a>
                 </div>
             </div>
       </li>
@@ -112,8 +109,8 @@
                     Sucursales
                 </button>
                 <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a class="dropdown-item" href="/biblioteca/sucursales/{{a.username}}">Ver</a>
-                    <a class="dropdown-item" href="/biblioteca/sucursal/add">Agregar</a>
+                    <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/sucursales/','ni')">Ver</a>
+                    <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/sucursal/add/','ni')">Agregar</a>
                 </div>
             </div>
       </li>
@@ -123,8 +120,8 @@
                     Servicios
                 </button>
                 <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a class="dropdown-item" href="/biblioteca/servicios/{{a.username}}">Ver</a>
-                    <a class="dropdown-item" href="/biblioteca/servicio/add">Agregar</a>
+                    <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/servicios/','ni')">Ver</a>
+                    <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/servicio/add/','ni')">Agregar</a>
                 </div>
             </div>
       </li>
@@ -148,7 +145,7 @@
 
     </nav>
 <input type="hidden" id="usuario" value="{{a.username}}">
-{% endfor %}
+
 {% if l %}
 <div id="tabla">
 <table border="2" width="1920" class="rounded-sm" bgcolor="white">
@@ -186,23 +183,31 @@
                         <a class="btn btn-danger" href="{%url 'biblioteca_app:eliminar_autor' a.id_autor%}">Eliminar</a>
 					</td>
                     <td>
-                        <a href="{%url 'biblioteca_app:editar_autor' a.id_autor%}" class="btn btn-info">Editar</a>
+                        <a href="{%url 'biblioteca_app:editar_autor' a.id_autor%}" class="btn btn-info" >Editar</a>
                     </td>
 				</tr>
                 {% endblock%}
 
+    {%endfor%}
 
 
 
-			{% endfor %}
     </tbody>
 </table>
 
+
 </div>
+
+<button onclick="carga()">Usuario</button>
 {% else %}
         <h1 style="background-color:white">{% block nohay %}NO HAY LIBROS{% endblock %}</h1>
+<button onclick="carga()">Usuario</button>
 {% endif %}
-
+<script>
+    var ni = carga();
+</script>
+{%block corr%}
+{%endblock%}
 <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
     <script src="{% static 'js/popper.min.js'%}"></script>
     <script src="{% static 'js/bootstrap.min.js'%}"></script>

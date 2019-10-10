@@ -27,13 +27,29 @@
                     <td>{{a.fecha_modificacion_categoria}}
                     </td>
 					<td>
-                        <a class="btn btn-danger" href="{%url 'biblioteca_app:eliminar_categoria' a.id_categoria%}">Eliminar</a>
+                       <a id="EliminarCategoria{{a.id_categoria}}" class="btn btn-danger" href="http://127.0.0.1:8000/biblioteca/eliminar-categoria/{{a.id_categoria}}/">Eliminar</a>
 					</td>
                     <td>
-                        <a href="{%url 'biblioteca_app:editar_categoria' a.id_categoria%}" class="btn btn-info">Editar</a>
+                        <a href="" class="btn btn-info" id="EditarCategoria{{a.id_categoria}}">Editar</a>
                     </td>
 				</tr>
     {% endif %}
 {% endblock%}
+
+    {%block corr%}
+<script>
+cadVariables = window.location.toString();
+
+arrVariables = cadVariables.split("/");
+{% for a in l%}
+
+                {% if a.status_categoria.lower == 'a'%}
+
+                 document.getElementById("EditarCategoria{{a.id_categoria}}").href="http://127.0.0.1:8000/biblioteca/editar-categoria/{{a.id_categoria}}/"+arrVariables[arrVariables.length-1];
+                 document.getElementById("EliminarCategoria{{a.id_categoria}}").href="http://127.0.0.1:8000/biblioteca/eliminar-categoria/{{a.id_categoria}}/"+arrVariables[arrVariables.length-1];
+                {%endif%}
+            {%endfor%}
+</script>
+{%endblock%}
 
 {% block nohay %}NO HAY CATEGORIAS{% endblock %}

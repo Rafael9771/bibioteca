@@ -1,0 +1,18 @@
+{% load staticfiles %}
+<!doctype html>
+<html lang="en">
+<head>
+    {% block head %}
+    <script src="{% static 'js/calis.js' %}"></script>
+    {% endblock %}
+</head>
+{% block body %}<body onload="calis()">{% endblock %}
+{% block contenido %}
+{% endblock %}
+
+
+
+<input type="hidden" id="usuariot" value="{{a.username}}">
+<input type="hidden" id="usuario">
+</body>
+</html>
