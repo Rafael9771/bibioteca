@@ -3,23 +3,61 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" content="1;URL=http:127.0.0.1:8000/biblioteca/">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/fondo.css'%}">
+    <link rel="stylesheet" href="{% static 'css/tabla.css'%}">
+    <link rel="stylesheet" href="{% static 'css/login.css'%}">
     <title>metodo post</title>
 </head>
-<body onload="">
-<form action="http://127.0.0.1:8000/biblioteca/er">
-    {% csrf_token %}
-    <label for="username">Nombre de usuraio:</label>
-    <input type="text" name="username">
-    <label for="password">Constraseña:</label>
-    <input type="password" name="password">
+<body onload="" background="{% static '275.jpg'%}">
+<nav class="navbar navbar-dark bg-dark">
+
+
+
+    <h1 style="color:white" id="biblio">BIBLIOTECA</h1>
+    <h1 style="color:white">{% block tituloNav %}BIENVENIDO{% endblock %}</h1>
+
+
+
+    <button class="navbar-toggler navbar-toggler-left" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="true" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>inicio sesion
+    </button>
+      <div class="navbar-collapse collapse" id="navbarColor01" style="">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+            <div id="div">
+                <form action="http://127.0.0.1:8000/biblioteca/er" autocomplete="off">
+                    {% csrf_token %}
+                    <label class="label" for="username">Nombre de usuraio:</label>
+                    <input class="input" type="text" name="username">
+                    <label class="label" for="password">Constraseña:</label>
+                    <input class="input" type="password" name="password">
    <!--- <a href="http://127.0.0.1:8000/password_reset/">Olvidaste tu contraseña?</a>--->
-    <button type="submit" name="button" class="btn btn-primary" >Guardar</button>
-</form>
-<a href="http://127.0.0.1:8000/biblioteca/registro">Registrarse</a>
+                    <button class="button" type="submit" name="button"  >Guardar</button>
+                </form>
+                <a class="a" href="http://127.0.0.1:8000/biblioteca/registro">Registrarse</a>
+            </div>
+      </li>
+
+
+
+    </ul>
+
+  </div>
+
+    </nav>
+
+
 {% if l %}
-        <h1>Error de inicio de sesion</h1>
+<script>
+    alert("Usuario o contraseña incorrectos");
+</script>
+
 
 {%endif%}
 <script src="{% static 'js/editar.js' %}"></script>
+<script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js'%}"></script>
+    <script src="{% static 'js/bootstrap.min.js'%}"></script>
 </body>
 </html>

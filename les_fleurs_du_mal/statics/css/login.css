@@ -1,0 +1,36 @@
+.label{
+width:70%;
+margin-left: 30px;
+color: white;
+}
+
+#biblio{
+}
+.input{
+width: 90%;
+margin-left: 30px;
+}
+
+.button{
+display: inline-block;
+position: relative;
+margin-left: 78%;
+margin-top: 5px;
+}
+
+.a{
+display: inline-block;
+position: relative;
+color: red;
+top: -25px;
+margin-left: 30px;	
+}
+
+#div{
+margin-top: 5px;
+
+/*background-color: black;*/
+width: 400px;
+margin-left: 805px;
+border-radius: 15px;
+}

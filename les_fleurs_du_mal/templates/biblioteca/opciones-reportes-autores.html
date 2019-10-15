@@ -190,13 +190,13 @@ Por nacionalidad</label>
     {% if l %}
     <select name="" id="lib">
         <option value="">--Seleccione el libro--</option>
-        {%for s in l%}
-            {%for a in s%}
+        {%for a in l%}
+
                 {% if a.id_libro and a.status_libro.lower == 'a'%}
 
                     <option value="{{a.id_libro}}">{{a.titulo_libro.capitalize}}</option>
                 {% endif %}
-            {% endfor %}
+
         {% endfor %}
     </select>
     {% else %}
@@ -207,15 +207,15 @@ Por nacionalidad</label>
 
 {% block nacionalidad%}
 <div id="nacionalidades">
-    {% if l%}
+    {% if l2%}
     <select name="" id="nac">
         <option value="">--Seleccione la nacinalidad</option>
-        {% for s in l%}
-            {%for a in s%}
+        {% for a in l2%}
+
                 {% if a.id_autor and a.status_autor.lower == 'a'%}
                     <option value="{{a.nacionalidad_autor}}">{{a.nacionalidad_autor.capitalize}}</option>
                 {%endif%}
-            {% endfor %}
+
         {%endfor%}
     </select>
     {% endif %}

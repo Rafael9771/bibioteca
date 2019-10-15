@@ -25,7 +25,7 @@
 
 
     <h1	style="color:white">AGREGAR {%block agregar%}AUTOR{%endblock%}</h1>
-	<form class="form-inline" id="formulario" action="#" onsubmit="return buscarautor()">
+	<form class="form-inline" id="formulario" action="#" onsubmit="return buscarautor()" autocomplete="off">
       <input class="form-control mr-sm-2" type="text" placeholder="Search" id="buscar">
       <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
     </form>
@@ -161,7 +161,7 @@
 <!---<h1 ><a href="javascript:history.back(-1);" id="menu">Regresar</a>{% block textoAdd %}Agregar Libro{% endblock %} </h1>--->
 {% endblock%}
 
-	<form method="post" id="agregar">{% csrf_token %}
+	<form method="post" id="agregar" autocomplete="off">{% csrf_token %}
 		{{ form.as_p}}
 		<button type="submit" name="button" class="btn btn-primary" id="btnAgregar" {% block onclick %} onclick="lowerT()" {% endblock %}>Guardar</button>
 

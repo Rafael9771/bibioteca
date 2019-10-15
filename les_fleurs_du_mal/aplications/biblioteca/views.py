@@ -10,7 +10,7 @@ from django import template
 from .util import render_to_pdf
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import get_object_or_404, render
-
+from django import template
 from django.views.generic import(
     View,
     TemplateView,
@@ -21,6 +21,8 @@ from django.views.generic import(
 
 from .models import *
 
+
+
 class sesion:
     sesion=False
     def setsesion(self,valor):
@@ -28,16 +30,66 @@ class sesion:
     def getsesion(self):
         return self.sesion
 
+class verlibros(ListView):
+    template_name = 'biblioteca/libros.html'
+    model = Libro
+    context_object_name = 'l'
+
+
+class mostrarlibro(ListView):
+
+
+    def get(self, request, *args, **kwargs):
+        libro = self.kwargs["lb"]
+        print(libro)
+        template=get_template('biblioteca/libro.html')
+        params={
+            'l':libro
+        }
+        html = template.render(params)
+        return HttpResponse(html)
+
 class opcionesReportesAutores(ListView):
-    template_name = "biblioteca/opciones-reportes-autores.html"
 
-    def get_queryset(self):
-        lista = Libro.objects.all()
-        lista2 = Autor.objects.order_by("nacionalidad_autor").distinct("nacionalidad_autor")
+    def get(self, request, *args, **kwargs):
 
-        return lista, lista2
+        username = self.kwargs["un"]
+        l2 = Autor.objects.order_by("nacionalidad_autor").distinct("nacionalidad_autor")
+        l = Libro.objects.all()
 
-    context_object_name = "l"
+        s = Usuario.objects.filter(
+            username=username
+        )
+
+        if s:
+            for a in s:
+                if a.status == 'A':
+                    template = get_template('biblioteca/opciones-reportes-autores.html')
+                    params = {
+                        'l': l,
+                        'l2':l2,
+                        's': s
+                    }
+                    html = template.render(params)
+                    return HttpResponse(html)
+                else:
+                    l = {'estado': "error"}
+                    params = {
+                        'l': l
+                    }
+                    template = get_template('biblioteca/metodopost.html')
+                    html = template.render(params)
+                    return HttpResponse(html)
+
+        else:
+            l = {'estado': "error"}
+            params = {
+                'l': l
+            }
+            template = get_template('biblioteca/metodopost.html')
+            html = template.render(params)
+            return HttpResponse(html)
+
 
 class reporteAutoresLibro(ListView):
 
@@ -431,7 +483,7 @@ class editLibro(UpdateView):
 
 
 class deleteLibro(UpdateView):
-    template_name = "base/delete-libro.html"
+    template_name = "biblioteca/delete-libro.html"
     model = Libro
     form_class = deleteLibroForm
     def get_success_url(self, **kwargs):
@@ -446,6 +498,12 @@ class addLibroForm(forms.ModelForm):
             'sucursal': forms.CheckboxSelectMultiple()
         }
 
+    def __init__(self, *args, **kwargs):
+        super(addLibroForm, self).__init__(*args, **kwargs)
+        self.fields['categoria'].queryset = Categoria.objects.filter(status_categoria='A')
+        self.fields['autor'].queryset = Autor.objects.filter(status_autor='A')
+        self.fields['editorial'].queryset = Editorial.objects.filter(status_editorial='A')
+        self.fields['sucursal'].queryset = Sucursales.objects.filter(status_sucursal='A')
 
 class addLibro(CreateView):
 
@@ -670,7 +728,7 @@ class editCategoria(UpdateView):
 
 
 class deleteCategoria(UpdateView):
-    template_name = "base/delete-categoria.html"
+    template_name = "biblioteca/delete-categoria.html"
     model = Categoria
     form_class = deleteCategoriaForm
 
@@ -731,7 +789,7 @@ class addEditorialForm(forms.ModelForm):
 
 
 class addEditorial(CreateView):
-
+    un = ''
     def get(self, request, *args, **kwargs):
         un = self.kwargs["un"]
         usuario = Usuario.objects.filter(
@@ -758,7 +816,7 @@ class addEditorial(CreateView):
             return render(request, 'biblioteca/metodopost.html', params)
 
     def post(self, request, *args, **kwargs):
-        form = addServicioForm(request.POST)
+        form = addEditorialForm(request.POST)
         if form.is_valid():
             book = form.save()
             book.save()
@@ -908,6 +966,11 @@ class addRevistaForm(forms.ModelForm):
             'sucursal': forms.CheckboxSelectMultiple()
         }
 
+        def __init__(self, *args, **kwargs):
+            super(addRevistaForm, self).__init__(*args, **kwargs)
+            self.fields['categoria'].queryset = Categoria.objects.filter(status_categoria='A')
+            self.fields['sucursal'].queryset = Sucursales.objects.filter(status_sucursal='A')
+
 
 
 class addRevista(CreateView):
@@ -1033,7 +1096,7 @@ class deleteRevistaForm(forms.ModelForm):
 
 
 class deleteRevista(UpdateView):
-    template_name = "base/delete-revista.html"
+    template_name = "biblioteca/delete-revista.html"
     model = Revista
     form_class = deleteRevistaForm
 
@@ -1098,6 +1161,11 @@ class addSucursalForm(forms.ModelForm):
         widgets = {
             'servicio': forms.CheckboxSelectMultiple()
         }
+
+    def __init__(self, *args, **kwargs):
+        super(addSucursalForm, self).__init__(*args, **kwargs)
+        self.fields['servicio'].queryset = Servicios.objects.filter(status_servicio='A')
+
 
 
 class addSucursal(CreateView):
@@ -1218,7 +1286,7 @@ class deleteSucursalForm(forms.ModelForm):
 
 
 class deleteSucursal(UpdateView):
-    template_name = "base/delete-sucursal.html"
+    template_name = "biblioteca/delete-sucursal.html"
     model = Sucursales
     form_class = deleteSucursalForm
     def get_success_url(self, **kwargs):
@@ -1391,9 +1459,9 @@ class editServicio(UpdateView):
 
 
 class deleteServicio(UpdateView):
-    template_name = "base/delete-servicio.html"
+    template_name = "biblioteca/delete-servicio.html"
     model = Servicios
-    form_class = deleteCategoriaForm
+    form_class = deleteServicioForm
 
     def get_success_url(self, **kwargs):
         r = self.kwargs["un"]

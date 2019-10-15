@@ -9516,6 +9516,7 @@ var deletes=false;
 
         function link(){
 
+
             var cont = 0;
             cadVariables = window.location.toString();
 

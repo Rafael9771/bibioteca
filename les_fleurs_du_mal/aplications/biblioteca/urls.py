@@ -9,6 +9,8 @@ from django.contrib.auth.decorators import login_required
 app_name="biblioteca_app"
 
 urlpatterns = [
+    path('libros/ver', views.verlibros.as_view(), name='ver_libros'),
+    path('mostrarlibro/<lb>', views.mostrarlibro.as_view(), name='mostrar_libro'),
     path('autores/<un>', views.ListaAutores.as_view(), name="lista_autores"),
     path('categorias/<un>', views.ListaCategorias.as_view(), name="lista_categorias"),
     path('editoriales/<un>', views.ListaEditoriales.as_view(), name="lista_editoriales"),
@@ -17,7 +19,7 @@ urlpatterns = [
     path('servicios/<un>', views.ListaServicios.as_view(), name="lista_servicios"),
     re_path('reportesA', views.listaReportesLibrosAutores.as_view(), name="lista_reportesA"),
     re_path('reportesC', views.listaReportesLibrosCategorias.as_view(), name="lista_reportesC"),
-    re_path('reportes-Autores', views.opcionesReportesAutores.as_view(), name="opciones_reportesAutores"),
+    path('reportes-Autores/<un>', views.opcionesReportesAutores.as_view(), name="opciones_reportesAutores"),
     re_path('z',views.lista.as_view(), name="veamos"),
     path('categoria/add/<un>', views.addCategoria.as_view(),name="agregar_categoria"),
     path('reporte/libro-categoria/<pk>/',views.CantidadCategoria_libros.as_view(),name="CantidadLibros-categoria"),
