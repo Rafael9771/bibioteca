@@ -6,7 +6,9 @@
     <title>Les fleurs du mal</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/tabla.css'%}">
-    <script src="{% static 'js/editar.js'%}"></script>
+    <script src="{% static 'js/jquery-3.4.1.min.js'%}"></script>
+    <script src="{% static 'js/buscar.js'%}"></script>
+    <script src="{% static 'js/url.js'%}"></script>
 </head>
 <body background="{% static '275.jpg'%}">
 
@@ -20,7 +22,7 @@
 
 
     <h1	style="color:white">AGREGAR {%block agregar%}AUTOR{%endblock%}</h1>
-	<form class="form-inline" id="formulario" action="#" onsubmit="return buscarautor()" autocomplete="off">
+	<form class="form-inline" id="formulario" action="#" onsubmit='return buscarNombre("libro")' autocomplete="off">
       <input class="form-control mr-sm-2" type="text" placeholder="Search" id="buscar">
       <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
     </form>
@@ -183,9 +185,9 @@
                         {% for u in a.sucursal.all %}
                         {% if u.status_sucursal.lower == 'a'%}
                         {{u}},
-                            {% endif %}
+                        {% endif %}
 
-                    {% endfor %}
+                        {% endfor %}
                     </td>
 					<td>
 					{{a.no_paginas_libro}}
@@ -201,9 +203,10 @@
                         <a href="" class="btn btn-info" id="EditarLibro{{a.id_libro}}">Editar</a>
                     </td>
 				</tr>
-    {% endif %}
+        {% endif %}
+    {%endfor%}
 
-{% endblock%}
+
 {%block corr%}
 <script>
 cadVariables = window.location.toString();

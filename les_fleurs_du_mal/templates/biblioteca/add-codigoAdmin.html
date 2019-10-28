@@ -1,0 +1,23 @@
+
+
+{% extends 'base/baseAgregar.html' %}
+{% load staticfiles %}
+{% block script%}<script src="{% static 'js/codigoAdmin.js' %}"></script>
+
+        {% endblock %}
+{% block bodyAdd %}
+<body  onload="agregarCodigo()" background="{% static '275.jpg'%}">{% endblock %}
+{%block agregar%}USUARIO{%endblock%}
+{%block nav%}{%endblock%}
+{% block onclick %} onclick="" {% endblock %}
+
+{%block alerta%}
+{% if errorCodigoAdmin %}
+            {% for a in errorCodigoAdmin %}
+                <script>
+                alert("Error el codigo ya existe");
+
+                </script>
+            {%endfor%}
+        {%endif%}
+{%endblock%}

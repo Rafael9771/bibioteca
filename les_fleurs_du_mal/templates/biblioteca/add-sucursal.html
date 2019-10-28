@@ -1,6 +1,6 @@
 {% extends 'base/baseAgregar.html' %}
 {% load staticfiles %}
 {% block bodyAdd %}
-<body  onload="cambiarValoresSucursal()" background="{% static '275.jpg'%}">{% endblock %}
+<body  onload="cambiarValores('sucursal')" background="{% static '275.jpg'%}">{% endblock %}
 {%block agregar%}SUCURSAL{%endblock%}
-{% block onclick %} onclick="lowerSucursal()" {% endblock %}
+{% block onclick %} onclick="lowerNombre('sucursal')" {% endblock %}

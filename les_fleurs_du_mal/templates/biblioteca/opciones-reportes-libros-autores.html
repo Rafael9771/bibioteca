@@ -10,6 +10,8 @@
   <link rel="stylesheet" href="{% static 'css/opciones.css'%}">  {% endblock %}
     {% block script %}<script src="{% static 'js/editar.js'%}"></script>
     <script src="{% static 'js/jquery-3.4.1.min.js'%}"></script>{% endblock %}
+      <script src="{% static 'js/url.js'%}"></script>
+     <script src="{% static 'js/buscar.js'%}"></script>
 </head>
 
 {% block body %}<body background="{% static '275.jpg'%}" onload="desactivarA()">{% endblock%}
@@ -26,12 +28,27 @@
     <h1 style="color:white">{% block tituloNav %}BIENVENIDO{% endblock %}</h1>
 
 
-
+     {% block formBuscar %}<form class="form-inline" id="formulario" action="#" onsubmit="return buscarNombre('autor')" autocomplete="off">{% endblock %}
+      <input class="form-control mr-sm-2" type="text" placeholder="Search" id="buscar">
+      <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+    </form>
 
       <div class="navbar-collapse collapse" id="navbarColor01" style="">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="/biblioteca/inicio">Inicio <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="javascript:pasarUsuario('/biblioteca/inicio/','ni')">Inicio <span class="sr-only">(current)</span></a>
+      </li>
+        <li class="nav-item">
+
+          <div class="btn-group dropright">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="btnUsuario">
+
+                </button>
+                <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+                   <a href="http://127.0.0.1:8000/biblioteca/f/" id="cierre de sesion">Cerrar Sesion</a>
+
+                </div>
+            </div>
       </li>
       <li class="nav-item">
 
@@ -40,8 +57,8 @@
                     Libros
                 </button>
                 <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a class="dropdown-item" href="/biblioteca/libros">Ver</a>
-                    <a class="dropdown-item" href="/biblioteca/libro/add">Agregar</a>
+                    <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/libros/','ni')">Ver</a>
+                    <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/libro/add/','ni')">Agregar</a>
                 </div>
             </div>
       </li>
@@ -51,8 +68,8 @@
                     Autores
                 </button>
                 <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a class="dropdown-item" href="/biblioteca/autores">Ver</a>
-                    <a class="dropdown-item" href="/biblioteca/autor/add">Agregar</a>
+                    <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/autores/','ni')">Ver</a>
+                    <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/autor/add/','ni')">Agregar</a>
                 </div>
             </div>
       </li>
@@ -63,8 +80,8 @@
                    Categorias
                 </button>
                 <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a class="dropdown-item" href="/biblioteca/categorias">Ver</a>
-                    <a class="dropdown-item" href="/biblioteca/categoria/add">Agregar</a>
+                    <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/categorias/','ni')">Ver</a>
+                    <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/categoria/add/','ni')">Agregar</a>
                 </div>
             </div>
       </li>
@@ -75,8 +92,8 @@
                     Editoriales
                 </button>
                 <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a class="dropdown-item" href="/biblioteca/editoriales">Ver</a>
-                    <a class="dropdown-item" href="/biblioteca/editorial/add">Agregar</a>
+                    <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/editoriales/','ni')">Ver</a>
+                    <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/editorial/add/','ni')">Agregar</a>
                 </div>
             </div>
       </li>
@@ -87,8 +104,8 @@
                     Revistas
                 </button>
                 <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a class="dropdown-item" href="/biblioteca/revistas">Ver</a>
-                    <a class="dropdown-item" href="/biblioteca/revista/add">Agregar</a>
+                    <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/revistas/','ni')">Ver</a>
+                    <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/revista/add/','ni')">Agregar</a>
                 </div>
             </div>
       </li>
@@ -98,8 +115,8 @@
                     Sucursales
                 </button>
                 <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a class="dropdown-item" href="/biblioteca/sucursales">Ver</a>
-                    <a class="dropdown-item" href="/biblioteca/sucursal/add">Agregar</a>
+                    <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/sucursales/','ni')">Ver</a>
+                    <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/sucursal/add/','ni')">Agregar</a>
                 </div>
             </div>
       </li>
@@ -109,8 +126,8 @@
                     Servicios
                 </button>
                 <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a class="dropdown-item" href="/biblioteca/servicios">Ver</a>
-                    <a class="dropdown-item" href="/biblioteca/servicio/add">Agregar</a>
+                    <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/servicios/','ni')">Ver</a>
+                    <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/servicio/add/','ni')">Agregar</a>
                 </div>
             </div>
       </li>
@@ -120,10 +137,10 @@
                     Reportes
                 </button>
                 <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a class="dropdown-item" href="/biblioteca/reportesA">Libros</a>
-                    <a class="dropdown-item" href="#">Revistas</a>
-                    <a class="dropdown-item" href="#">Autores</a>
-                    <a class="dropdown-item" href="#">Sucursales</a>
+                    <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/reportes-Libros/','ni')">Libros</a>
+                    <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/reportes-Revistas/','ni')">Revistas</a>
+                    <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/reportes-Autores/','ni')">Autores</a>
+                    <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/reportes-Sucursales/','ni')">Sucursales</a>
                 </div>
             </div>
         </li>
@@ -199,7 +216,9 @@ categoria</label>
 </div>
 
 {%endblock%}
-
+<script>
+    var ni = carga();
+</script>
 {% block reporte2%}
 {%endblock%}
 

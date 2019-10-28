@@ -1,0 +1,47 @@
+{% extends 'biblioteca/opciones-reportes-libros-categorias.html' %}
+{% load staticfiles %}
+
+{% block body %}<body background="{% static '275.jpg'%}" onload="desclickearCat()">{% endblock%}
+{%block nav%}
+{%endblock%}
+{%block reporte%}
+{%endblock%}
+{% block reporte2%}
+<div id="categorias2">
+<h1 style="background-color:white">Reporte de libro por Categoria</h1>
+
+
+<table border="0.5" width="1920" class="rounded-sm" bgcolor="white">
+    <thead>
+    <th>Revista</th>
+
+    <th>Categoria</th>
+    </thead>
+
+    <tbody id="ta">
+
+        {%for a in l2 %}
+            {%if a.id_revista%}
+                <tr>
+                    <td>{{a.titulo_revista.capitalize}}</td>
+
+                    <td>{{a.categoria.nombre_categoria.capitalize}}</td>
+                </tr>
+            {%endif%}
+        {%endfor%}
+        {%for a in l%}
+            {%if a.categoria%}
+                <tr>
+                    <td><b>TOTAL</b></td>
+                    <td>{{a.total}}</td>
+                </tr>
+            {%endif%}
+        {%endfor%}
+
+    </tbody>
+</table>
+</div>
+{%endblock%}
+{%block categorias%}
+
+{% endblock%}

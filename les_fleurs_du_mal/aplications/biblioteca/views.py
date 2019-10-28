@@ -11,6 +11,7 @@ from .util import render_to_pdf
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import get_object_or_404, render
 from django import template
+from django.contrib import messages
 from django.views.generic import(
     View,
     TemplateView,
@@ -31,9 +32,22 @@ class sesion:
         return self.sesion
 
 class verlibros(ListView):
-    template_name = 'biblioteca/libros.html'
-    model = Libro
-    context_object_name = 'l'
+
+    def get(self, request, *args, **kwargs):
+        l = Libro.objects.filter(
+            status_libro="A"
+        ).order_by('-vistas')
+        c = Categoria.objects.filter(
+            status_categoria="A"
+        ).order_by('nombre_categoria')
+        template = get_template('biblioteca/libros.html')
+        params={
+            'l':l,
+            'c':c
+        }
+        html = template.render(params)
+        return HttpResponse(html)
+
 
 
 class mostrarlibro(ListView):
@@ -41,10 +55,15 @@ class mostrarlibro(ListView):
 
     def get(self, request, *args, **kwargs):
         libro = self.kwargs["lb"]
-        print(libro)
+        v = self.kwargs["v"]
+        s = Libro.objects.filter(titulo_libro=libro)
+        l = Libro.objects.filter(
+            titulo_libro=libro
+        ).update(vistas=int(v)+1)
+
         template=get_template('biblioteca/libro.html')
         params={
-            'l':libro
+            'l':s
         }
         html = template.render(params)
         return HttpResponse(html)
@@ -77,7 +96,7 @@ class opcionesReportesAutores(ListView):
                     params = {
                         'l': l
                     }
-                    template = get_template('biblioteca/metodopost.html')
+                    template = get_template('biblioteca/index.html')
                     html = template.render(params)
                     return HttpResponse(html)
 
@@ -86,7 +105,7 @@ class opcionesReportesAutores(ListView):
             params = {
                 'l': l
             }
-            template = get_template('biblioteca/metodopost.html')
+            template = get_template('biblioteca/index.html')
             html = template.render(params)
             return HttpResponse(html)
 
@@ -154,7 +173,7 @@ class ListaAutores(ListView):
                     params = {
                         'l': l
                     }
-                    template = get_template('biblioteca/metodopost.html')
+                    template = get_template('biblioteca/index.html')
                     html = template.render(params)
                     return HttpResponse(html)
 
@@ -163,7 +182,7 @@ class ListaAutores(ListView):
             params = {
                 'l': l
             }
-            template = get_template('biblioteca/metodopost.html')
+            template = get_template('biblioteca/index.html')
             html = template.render(params)
             return HttpResponse(html)
 
@@ -203,6 +222,28 @@ class CantidadCategoria_libros(ListView):
         }
         html = template.render(params)
         pdf = render_to_pdf('biblioteca/reporte-cantidad-libros-categoria-pdf.html',params)
+        return HttpResponse(pdf, content_type='application/pdf')
+
+class CantidadCategoria_revistas(ListView):
+
+    def get(self, request, *args, **kwargs):
+
+        template = get_template("biblioteca/reporte-cantidad-revistas-categoria-pdf.html")
+        id = self.kwargs["pk"]
+        l = Revista.objects.filter(
+            categoria=id
+        ).values("categoria").annotate(total=Count("categoria"))
+
+        l2 = Revista.objects.filter(
+            categoria=id
+        ).order_by("id_revista")
+        params = {
+            'l':l,
+            'l2':l2
+
+        }
+        html = template.render(params)
+        pdf = render_to_pdf('biblioteca/reporte-cantidad-revistas-categoria-pdf.html',params)
         return HttpResponse(pdf, content_type='application/pdf')
 
 
@@ -275,7 +316,7 @@ class ListaLibros(ListView):
                     params = {
                         'l': l
                     }
-                    template = get_template('biblioteca/metodopost.html')
+                    template = get_template('biblioteca/index.html')
                     html = template.render(params)
                     return HttpResponse(html)
 
@@ -284,25 +325,146 @@ class ListaLibros(ListView):
             params = {
                 'l':l
             }
-            template = get_template('biblioteca/metodopost.html')
+            template = get_template('biblioteca/index.html')
             html = template.render(params)
             return HttpResponse(html)
 
 class listaReportesLibrosAutores(ListView):
-    template_name = "biblioteca/opciones-reportes-libros-autores.html"
-    model = Autor
-    context_object_name = "l"
+
+
+    def get(self, request, *args, **kwargs):
+        username = self.kwargs["un"]
+
+        l = Revista.objects.filter(status_revista='A')
+
+        s = Usuario.objects.filter(
+            username=username
+        )
+
+        c = Categoria.objects.filter(
+            status_categoria="A"
+        ).order_by('nombre_categoria')
+
+        if s:
+            for a in s:
+                if a.status == 'A':
+                    template = get_template('biblioteca/opciones-reportes-revista.html')
+                    params = {
+                        'l': l,
+                        's': s,
+                        'c':c
+                    }
+                    html = template.render(params)
+                    return HttpResponse(html)
+                else:
+                    l = {'estado': "error"}
+                    params = {
+                        'l': l
+                    }
+                    template = get_template('biblioteca/index.html')
+                    html = template.render(params)
+                    return HttpResponse(html)
+
+        else:
+            l = {'estado': "error"}
+            params = {
+                'l': l
+            }
+            template = get_template('biblioteca/index.html')
+            html = template.render(params)
+            return HttpResponse(html)
 
 class listaReportesLibrosCategorias(ListView):
-    template_name = "biblioteca/opciones-reportes-libros-categorias.html"
-    model = Categoria
-    context_object_name = "l"
 
 
-class Inicio(TemplateView):
+    def get(self, request, *args, **kwargs):
+        username = self.kwargs["un"]
 
-    template_name = "biblioteca/inicio.html"
+        l = Autor.objects.filter(status_autor='A')
 
+        s = Usuario.objects.filter(
+            username=username
+        )
+
+        c = Categoria.objects.filter(
+            status_categoria="A"
+        ).order_by('nombre_categoria')
+
+        if s:
+            for a in s:
+                if a.status == 'A':
+                    template = get_template('biblioteca/opciones-reportes-libros-categorias.html')
+                    params = {
+                        'l': l,
+                        's': s,
+                        'c':c
+                    }
+                    html = template.render(params)
+                    return HttpResponse(html)
+                else:
+                    l = {'estado': "error"}
+                    params = {
+                        'l': l
+                    }
+                    template = get_template('biblioteca/index.html')
+                    html = template.render(params)
+                    return HttpResponse(html)
+
+        else:
+            l = {'estado': "error"}
+            params = {
+                'l': l
+            }
+            template = get_template('biblioteca/index.html')
+            html = template.render(params)
+            return HttpResponse(html)
+
+class Inicio(ListView):
+
+
+    def get(self, request, *args, **kwargs):
+        username = self.kwargs["un"]
+        print(username)
+        l = Libro.objects.filter(
+            status_libro="A"
+        ).order_by('-vistas')
+
+        s = Usuario.objects.filter(
+            username=username
+        )
+
+        c = Categoria.objects.filter(
+            status_categoria="A"
+        ).order_by('nombre_categoria')
+
+        if s:
+            for a in s:
+                if a.status == 'A':
+                    template = get_template('biblioteca/inicio2.html')
+                    params = {
+                        'l': l,
+                        's': s,
+                        'c':c
+                    }
+                    html = template.render(params)
+                    return HttpResponse(html)
+                else:
+                    l = {'estado': "error"}
+                    params = {
+                        'l': l
+                    }
+                    template = get_template('biblioteca/index.html')
+                    html = template.render(params)
+                    return HttpResponse(html)
+
+        else:
+            l = {'estado': "error"}
+            params = {
+                'l': l
+            }
+            template = get_template('biblioteca/index.html')
+            html = template.render(params)
+            return HttpResponse(html)
 
 
 
@@ -330,7 +492,7 @@ class comprobacion(TemplateView):
                 sesion.setsesion(sesion,False)
 
                 print(sesion.getsesion(sesion))
-                template = get_template("biblioteca/metodopost.html")
+                template = get_template("biblioteca/index.html")
                 html = template.render()
                 return HttpResponse(html)
 
@@ -382,25 +544,37 @@ class addAutor(CreateView):
                     params = {
                         'l': l
                     }
-                    template = get_template('biblioteca/metodopost.html')
-                    return render(request, 'biblioteca/metodopost.html', params)
+                    template = get_template('biblioteca/index.html')
+                    return render(request, 'biblioteca/index.html', params)
         else:
             l = {'estado': "error"}
             params = {
                 'l': l
             }
-            template = get_template('biblioteca/metodopost.html')
-            return render(request, 'biblioteca/metodopost.html', params)
+            template = get_template('biblioteca/index.html')
+            return render(request, 'biblioteca/index.html', params)
 
 
     def post(self, request, *args, **kwargs):
         form = addAutorForm(request.POST)
-        if form.is_valid():
-            book = form.save()
-            book.save()
-            r=self.kwargs["un"]
 
-            return HttpResponseRedirect(reverse_lazy('biblioteca_app:lista_autores',kwargs={'un':r}))
+        nombre = request.POST['nombre_autor']
+        apellidos = request.POST['apellidos_autor']
+
+        user = Autor.objects.filter(nombre_autor=nombre,apellidos_autor=apellidos).exists()
+        if user:
+            r = self.kwargs["un"]
+            messages.error(request,'Error el autor ya exixte')
+            return HttpResponseRedirect(reverse_lazy('biblioteca_app:lista_autores', kwargs={'un': r}))
+
+
+        else:
+            if form.is_valid():
+                book = form.save()
+                book.save()
+                r=self.kwargs["un"]
+
+                return HttpResponseRedirect(reverse_lazy('biblioteca_app:lista_autores',kwargs={'un':r}))
 
 class deleteAutorForm(forms.ModelForm):
     class Meta:
@@ -454,7 +628,7 @@ class deleteLibroForm(forms.ModelForm):
 class editLibroForm(forms.ModelForm):
     class Meta:
         model = Libro
-        fields = ['titulo_libro', 'no_paginas_libro','fecha_creacion_libro', 'fecha_modificacion_libro','autor','editorial','categoria','sucursal', 'status_libro']
+        fields = ['titulo_libro', 'no_paginas_libro','fecha_creacion_libro', 'fecha_modificacion_libro','autor','editorial','categoria','sucursal','costo', 'status_libro']
         widgets = {
             'sucursal': forms.CheckboxSelectMultiple()
         }
@@ -493,7 +667,7 @@ class deleteLibro(UpdateView):
 class addLibroForm(forms.ModelForm):
     class Meta:
         model = Libro
-        fields = ['titulo_libro', 'no_paginas_libro', 'fecha_creacion_libro', 'fecha_modificacion_libro', 'autor', 'categoria','editorial','sucursal', 'status_libro']
+        fields = ['titulo_libro', 'no_paginas_libro', 'fecha_creacion_libro', 'fecha_modificacion_libro', 'autor', 'categoria','editorial','sucursal', 'status_libro','vistas','costo']
         widgets = {
             'sucursal': forms.CheckboxSelectMultiple()
         }
@@ -522,28 +696,225 @@ class addLibro(CreateView):
                     params = {
                         'l': l
                     }
-                    template = get_template('biblioteca/metodopost.html')
-                    return render(request, 'biblioteca/metodopost.html', params)
+                    template = get_template('biblioteca/index.html')
+                    return render(request, 'biblioteca/index.html', params)
         else:
             l = {'estado': "error"}
             params = {
                 'l': l
             }
-            template = get_template('biblioteca/metodopost.html')
-            return render(request, 'biblioteca/metodopost.html', params)
+            template = get_template('biblioteca/index.html')
+            return render(request, 'biblioteca/index.html', params)
 
     def post(self, request, *args, **kwargs):
         form = addLibroForm(request.POST)
-        if form.is_valid():
-            book = form.save()
-            book.save()
+        nombre = request.POST['titulo_libro']
+        user = Libro.objects.filter(titulo_libro=nombre).exists()
+        if user:
             r = self.kwargs["un"]
-
+            messages.error(request, 'Error el autor ya exixte')
             return HttpResponseRedirect(reverse_lazy('biblioteca_app:lista_libros', kwargs={'un': r}))
 
-class registro(TemplateView):
 
-    template_name = "biblioteca/metodopost.html"
+        else:
+            if form.is_valid():
+                book = form.save()
+                book.save()
+                r = self.kwargs["un"]
+
+                return HttpResponseRedirect(reverse_lazy('biblioteca_app:lista_libros', kwargs={'un': r}))
+
+
+class errorCA(TemplateView):
+    template_name = 'biblioteca/errorAdmin.html'
+
+class addLoginForm(forms.ModelForm):
+    class Meta:
+        model = login
+        fields = ['nombre','apellido_paterno','apellido_materno','username', 'password', 'fecha_creacion', 'fecha_modificacion', 'status']
+        widgets = {
+            'password': forms.PasswordInput(),
+
+        }
+
+
+
+
+
+class addLogin(CreateView):
+
+
+    def get(self, request, *args, **kwargs):
+
+        context = {'form': addLoginForm}
+        return render(request, 'biblioteca/add-login.html', context)
+
+
+
+
+    def post(self, request, *args, **kwargs):
+        form = addLoginForm(request.POST)
+        nombre = request.POST['nombre']
+        apellidoP = request.POST['apellido_paterno']
+        apellidoM = request.POST['apellido_materno']
+        nickname = request.POST['username']
+        contrasenia = request.POST['password']
+        if len(contrasenia) > 8:
+
+            user = login.objects.filter(username=nickname, nombre=nombre, apellido_paterno=apellidoP, apellido_materno=apellidoM).exists()
+            if user:
+                s = {'ErrorLoginExist':'Error el usuario ya existe'}
+                params = {'ErrorLoginExist':s}
+                template = get_template('biblioteca/add-login.html')
+                html = template.render(params)
+                return HttpResponse(html)
+
+
+
+            else:
+                if form.is_valid():
+                    book = form.save()
+                    book.save()
+
+
+                    return HttpResponseRedirect(reverse_lazy('biblioteca_app:sesionLogin', kwargs={'us': nickname}))
+        else:
+            s = {'errorTamanioContra': 'La contraseña debe de ser de almenos 8 caracteres'}
+            params = {
+                'errorTamanioContra': s
+            }
+            template = get_template('biblioteca/add-login.html')
+            html = template.render(params)
+            return HttpResponse(html)
+
+
+
+class sesionLogin(ListView):
+
+    def get(self, request, *args, **kwargs):
+        usuario = self.kwargs["us"]
+        l = Libro.objects.filter(
+            status_libro="A"
+        ).order_by('-vistas')
+        c = Categoria.objects.filter(
+            status_categoria="A"
+        ).order_by('nombre_categoria')
+
+        us = login.objects.filter(
+            username=usuario,status='A'
+        )
+        if us:
+            params = {
+                'l':l,
+                'c':c,
+                'us':us
+            }
+            template = get_template('biblioteca/sesionLogin.html')
+            html = template.render(params)
+            return HttpResponse(html)
+        else:
+            s = {'errorLoginStatus':'este usuario no ha iniciado sesion'}
+            params = {
+                'l': l,
+                'c': c,
+                'errorLoginStatus': s
+            }
+            template = get_template('biblioteca/sesionLogin.html')
+            html = template.render(params)
+            return HttpResponse(html)
+
+class inicioLogin(ListView):
+
+    def get(self, request, *args, **kwargs):
+        l = Libro.objects.filter(
+            status_libro="A"
+        ).order_by('-vistas')
+        c = Categoria.objects.filter(
+            status_categoria="A"
+        ).order_by('nombre_categoria')
+
+
+        template = get_template('biblioteca/inicioLogin.html')
+        params = {
+            'l': l,
+            'c': c
+        }
+        html = template.render(params)
+        return HttpResponse(html)
+
+
+class errorLogin(ListView):
+
+    def get(self, request, *args, **kwargs):
+        usuario = request.GET["username"]
+        contrasenia = request.GET["password"]
+        l = Libro.objects.filter(
+            status_libro="A"
+        ).order_by('-vistas')
+        c = Categoria.objects.filter(
+            status_categoria="A"
+        ).order_by('nombre_categoria')
+
+        us =login.objects.filter(
+            username = usuario,
+            password = contrasenia
+        )
+
+        if us:
+            s = login.objects.filter(
+                username=usuario,
+                password=contrasenia
+            ).update(
+                status="A"
+            )
+            template = get_template('biblioteca/sesionLogin.html')#Falta hacer el inicio con el login echo
+            params = {
+                'l':l,
+                'c':c,
+                'us':us
+            }
+
+            html = template.render(params)
+            return HttpResponse(html)
+        else:
+            s = {'estado': "error"}
+            template = get_template('biblioteca/sesionLogin.html')
+            params = {
+                'l': l,
+                'c': c,
+                'errorLogin':s
+            }
+
+            html = template.render(params)
+            return HttpResponse(html)
+
+
+
+class registro(ListView):
+
+    def get(self, request, *args, **kwargs):
+        l = Libro.objects.filter(
+            status_libro="A"
+        ).order_by('-vistas')
+        c = Categoria.objects.filter(
+            status_categoria="A"
+        ).order_by('nombre_categoria')
+        codigoAmin = self.kwargs['ca']
+
+        ca = codigoAdmin.objects.filter(codigo=codigoAmin)
+        if ca:
+            template = get_template('biblioteca/index.html')
+            params = {
+                'l': l,
+                'c': c
+            }
+            html = template.render(params)
+            return HttpResponse(html)
+        else:
+            template = get_template('biblioteca/errorAdmin.html')
+            html = template.render()
+            return HttpResponse(html)
+
 
 
 
@@ -555,32 +926,82 @@ class errorsesion(ListView):
 
         id = request.GET["username"]
         contrasenia = request.GET["password"]
-
-        l = Usuario.objects.filter(
+        codigoAd = request.GET['codigoAdmin']
+        print(id+" "+contrasenia+" "+codigoAd)
+        l2 = Libro.objects.filter(
+            status_libro="A"
+        ).order_by('-vistas')
+        c = Categoria.objects.filter(
+            status_categoria="A"
+        ).order_by('nombre_categoria')
+        us = Usuario.objects.filter(
             username=id,
             password=contrasenia
         )
-        if l:
-            s = Usuario.objects.filter(
-                username=id,
-            password=contrasenia
-            ).update(
-                status="A"
-            )
-            template = get_template('biblioteca/inicio.html')
-            params = {
-                'l':l
-            }
-            html = template.render(params)
-            return HttpResponse(html)
+
+        if us:
+
+            for a in us:
+                l = codigoAdmin.objects.filter(
+                    codigo=codigoAd,usuario=a.id_usuario
+                )
+            if l:
+                s = Usuario.objects.filter(
+                    username=id,
+                    password=contrasenia
+                ).update(
+                    status="A"
+                )
+                template = get_template('biblioteca/inicio.html')
+                params = {
+                    'l': us,
+                    'l2': l2,
+                    'c': c
+                }
+                html = template.render(params)
+                return HttpResponse(html)
+            else:
+                error = {'estado': "usuario no iniciado",'codigoAdmin':codigoAd}
+
+                l2 = Libro.objects.filter(
+                    status_libro="A"
+                ).order_by('-vistas')
+                c = Categoria.objects.filter(
+                    status_categoria="A"
+                ).order_by('nombre_categoria')
+                s = {'estado': "error"}
+                l = Libro.objects.filter(status_libro="A")
+                params = {
+                    's': s,
+                    'l': l,
+                    'l2': l2,
+                    'c': c,
+                    'errorSesionCodigo': error
+                }
+                template = get_template('biblioteca/index.html')
+                html = template.render(params)
+                return HttpResponseRedirect(reverse_lazy('biblioteca_app:sd', kwargs={'ca': codigoAd}))
         else:
-            l = {'estado':"error"}
+            error = {'estado': "usuario no iniciado",'codigoAdmin':codigoAd}
+
+            l2 = Libro.objects.filter(
+                status_libro="A"
+            ).order_by('-vistas')
+            c = Categoria.objects.filter(
+                status_categoria="A"
+            ).order_by('nombre_categoria')
+            s = {'estado': "error"}
+            l = Libro.objects.filter(status_libro="A")
             params = {
-                'l':l
+                's': s,
+                'l': l,
+                'l2': l2,
+                'c': c,
+                'errorSesion': error
             }
-            template = get_template('biblioteca/metodopost.html')
+            template = get_template('biblioteca/index.html')
             html = template.render(params)
-            return HttpResponse(html)
+            return HttpResponseRedirect(reverse_lazy('biblioteca_app:sd', kwargs={'ca': codigoAd}))
 
 class errorsesion2(ListView):
 
@@ -592,11 +1013,20 @@ class errorsesion2(ListView):
         ).update(
             status="B"
         )
-        template = get_template('biblioteca/metodopost.html')
+        s2 = Usuario.objects.filter(
+            username=id
+        )
+        c = Categoria.objects.filter(
+            status_categoria="A"
+        ).order_by('nombre_categoria')
+        l = Libro.objects.filter(status_libro="A")
+        template = get_template('biblioteca/index.html')
         params = {
-            'l':s
+            's':s2,
+            'l':l,
+            'c':c
         }
-        html = template.render()
+        html = template.render(params)
         return HttpResponse(html)
 
 
@@ -633,25 +1063,34 @@ class addCategoria(CreateView):
                     params = {
                         'l': l
                     }
-                    template = get_template('biblioteca/metodopost.html')
-                    return render(request, 'biblioteca/metodopost.html', params)
+                    template = get_template('biblioteca/index.html')
+                    return render(request, 'biblioteca/index.html', params)
         else:
             l = {'estado': "error"}
             params = {
                 'l': l
             }
-            template = get_template('biblioteca/metodopost.html')
-            return render(request, 'biblioteca/metodopost.html', params)
+            template = get_template('biblioteca/index.html')
+            return render(request, 'biblioteca/index.html', params)
 
     def post(self, request, *args, **kwargs):
         form = addCategoriaForm(request.POST)
-        if form.is_valid():
-            book = form.save()
-            book.save()
-            r = self.kwargs["un"]
 
+        nombre = request.POST['nombre_categoria']
+        user = Categoria.objects.filter(nombre_categoria=nombre).exists()
+        if user:
+            r = self.kwargs["un"]
+            messages.error(request, 'Error el autor ya exixte')
             return HttpResponseRedirect(reverse_lazy('biblioteca_app:lista_categorias', kwargs={'un': r}))
-    
+
+        else:
+            if form.is_valid():
+                book = form.save()
+                book.save()
+                r = self.kwargs["un"]
+
+                return HttpResponseRedirect(reverse_lazy('biblioteca_app:lista_categorias', kwargs={'un': r}))
+
 
 class ListaCategorias(ListView):
     template_name = "biblioteca/Lista-Categorias.html"
@@ -683,7 +1122,7 @@ class ListaCategorias(ListView):
                     params = {
                         'l': l
                     }
-                    template = get_template('biblioteca/metodopost.html')
+                    template = get_template('biblioteca/index.html')
                     html = template.render(params)
                     return HttpResponse(html)
 
@@ -692,7 +1131,7 @@ class ListaCategorias(ListView):
             params = {
                 'l': l
             }
-            template = get_template('biblioteca/metodopost.html')
+            template = get_template('biblioteca/index.html')
             html = template.render(params)
             return HttpResponse(html)
 
@@ -766,7 +1205,7 @@ class buscarCategoria(ListView):
                     params = {
                         'l': l
                     }
-                    template = get_template('biblioteca/metodopost.html')
+                    template = get_template('biblioteca/index.html')
                     html = template.render(params)
                     return HttpResponse(html)
 
@@ -775,7 +1214,7 @@ class buscarCategoria(ListView):
             params = {
                 'l': l
             }
-            template = get_template('biblioteca/metodopost.html')
+            template = get_template('biblioteca/index.html')
             html = template.render(params)
             return HttpResponse(html)
 #---Categoria---
@@ -805,24 +1244,33 @@ class addEditorial(CreateView):
                     params = {
                         'l': l
                     }
-                    template = get_template('biblioteca/metodopost.html')
-                    return render(request, 'biblioteca/metodopost.html', params)
+                    template = get_template('biblioteca/index.html')
+                    return render(request, 'biblioteca/index.html', params)
         else:
             l = {'estado': "error"}
             params = {
                 'l': l
             }
-            template = get_template('biblioteca/metodopost.html')
-            return render(request, 'biblioteca/metodopost.html', params)
+            template = get_template('biblioteca/index.html')
+            return render(request, 'biblioteca/index.html', params)
 
     def post(self, request, *args, **kwargs):
         form = addEditorialForm(request.POST)
-        if form.is_valid():
-            book = form.save()
-            book.save()
+        nombre = request.POST['nombre_editorial']
+        user = Editorial.objects.filter(nombre_editorial=nombre).exists()
+        if user:
             r = self.kwargs["un"]
-
+            messages.error(request, 'Error el autor ya exixte')
             return HttpResponseRedirect(reverse_lazy('biblioteca_app:lista_editoriales', kwargs={'un': r}))
+
+
+        else:
+            if form.is_valid():
+                book = form.save()
+                book.save()
+                r = self.kwargs["un"]
+
+                return HttpResponseRedirect(reverse_lazy('biblioteca_app:lista_editoriales', kwargs={'un': r}))
 
 
 
@@ -857,7 +1305,7 @@ class ListaEditoriales(ListView):
                     params = {
                         'l': l
                     }
-                    template = get_template('biblioteca/metodopost.html')
+                    template = get_template('biblioteca/index.html')
                     html = template.render(params)
                     return HttpResponse(html)
 
@@ -866,7 +1314,7 @@ class ListaEditoriales(ListView):
             params = {
                 'l': l
             }
-            template = get_template('biblioteca/metodopost.html')
+            template = get_template('biblioteca/index.html')
             html = template.render(params)
             return HttpResponse(html)
 
@@ -919,7 +1367,7 @@ class buscarEditorial(ListView):
         id = self.kwargs["pk"]
         username = self.kwargs["un"]
 
-        l = Categoria.objects.filter(nombre_editorial=id).order_by("id_editorial")
+        l = Editorial.objects.filter(nombre_editorial=id).order_by("id_editorial")
 
         s = Usuario.objects.filter(
             username=username
@@ -941,7 +1389,7 @@ class buscarEditorial(ListView):
                     params = {
                         'l': l
                     }
-                    template = get_template('biblioteca/metodopost.html')
+                    template = get_template('biblioteca/index.html')
                     html = template.render(params)
                     return HttpResponse(html)
 
@@ -950,7 +1398,7 @@ class buscarEditorial(ListView):
             params = {
                 'l': l
             }
-            template = get_template('biblioteca/metodopost.html')
+            template = get_template('biblioteca/index.html')
             html = template.render(params)
             return HttpResponse(html)
 
@@ -961,7 +1409,7 @@ class buscarEditorial(ListView):
 class addRevistaForm(forms.ModelForm):
     class Meta:
         model = Revista
-        fields = ['titulo_revista', 'no_paginas_revista','fecha_creacion_revista', 'fecha_modificacion_revista','categoria','sucursal', 'status_revista']
+        fields = ['titulo_revista', 'no_paginas_revista','fecha_creacion_revista', 'fecha_modificacion_revista','categoria','sucursal','costo', 'status_revista']
         widgets = {
             'sucursal': forms.CheckboxSelectMultiple()
         }
@@ -994,15 +1442,15 @@ class addRevista(CreateView):
                     params = {
                         'l': l
                     }
-                    template = get_template('biblioteca/metodopost.html')
-                    return render(request, 'biblioteca/metodopost.html', params)
+                    template = get_template('biblioteca/index.html')
+                    return render(request, 'biblioteca/index.html', params)
         else:
             l = {'estado': "error"}
             params = {
                 'l': l
             }
-            template = get_template('biblioteca/metodopost.html')
-            return render(request, 'biblioteca/metodopost.html', params)
+            template = get_template('biblioteca/index.html')
+            return render(request, 'biblioteca/index.html', params)
 
     def post(self, request, *args, **kwargs):
         form = addRevistaForm(request.POST)
@@ -1044,7 +1492,7 @@ class ListaRevistas(ListView):
                     params = {
                         'l': l
                     }
-                    template = get_template('biblioteca/metodopost.html')
+                    template = get_template('biblioteca/index.html')
                     html = template.render(params)
                     return HttpResponse(html)
 
@@ -1053,14 +1501,14 @@ class ListaRevistas(ListView):
             params = {
                 'l': l
             }
-            template = get_template('biblioteca/metodopost.html')
+            template = get_template('biblioteca/index.html')
             html = template.render(params)
             return HttpResponse(html)
 
 class editRevistaForm(forms.ModelForm):
     class Meta:
         model = Revista
-        fields = ['titulo_revista', 'no_paginas_revista','fecha_creacion_revista', 'fecha_modificacion_revista','categoria','sucursal', 'status_revista']
+        fields = ['titulo_revista', 'no_paginas_revista','fecha_creacion_revista', 'fecha_modificacion_revista','categoria','sucursal','costo', 'status_revista']
         widgets = {
             'sucursal': forms.CheckboxSelectMultiple()
         }
@@ -1068,7 +1516,7 @@ class editRevistaForm(forms.ModelForm):
 class editRevista(UpdateView):
     form_class = editRevistaForm
     template_name = "biblioteca/edit-revista.html"
-    model = Libro
+    model = Revista
 
     def get_success_url(self, **kwargs):
         username=self.kwargs["un"]
@@ -1114,7 +1562,7 @@ class buscarRevista(ListView):
         id = self.kwargs["pk"]
         username = self.kwargs["un"]
 
-        l = Categoria.objects.filter(titulo_revista=id).order_by("id_revista")
+        l = Revista.objects.filter(titulo_revista=id).order_by("id_revista")
 
         s = Usuario.objects.filter(
             username=username
@@ -1136,7 +1584,7 @@ class buscarRevista(ListView):
                     params = {
                         'l': l
                     }
-                    template = get_template('biblioteca/metodopost.html')
+                    template = get_template('biblioteca/index.html')
                     html = template.render(params)
                     return HttpResponse(html)
 
@@ -1145,7 +1593,7 @@ class buscarRevista(ListView):
             params = {
                 'l': l
             }
-            template = get_template('biblioteca/metodopost.html')
+            template = get_template('biblioteca/index.html')
             html = template.render(params)
             return HttpResponse(html)
 
@@ -1184,15 +1632,15 @@ class addSucursal(CreateView):
                     params = {
                         'l': l
                     }
-                    template = get_template('biblioteca/metodopost.html')
-                    return render(request, 'biblioteca/metodopost.html', params)
+                    template = get_template('biblioteca/index.html')
+                    return render(request, 'biblioteca/index.html', params)
         else:
             l = {'estado': "error"}
             params = {
                 'l': l
             }
-            template = get_template('biblioteca/metodopost.html')
-            return render(request, 'biblioteca/metodopost.html', params)
+            template = get_template('biblioteca/index.html')
+            return render(request, 'biblioteca/index.html', params)
 
     def post(self, request, *args, **kwargs):
         form = addSucursalForm(request.POST)
@@ -1233,7 +1681,7 @@ class ListaSucursales(ListView):
                     params = {
                         'l': l
                     }
-                    template = get_template('biblioteca/metodopost.html')
+                    template = get_template('biblioteca/index.html')
                     html = template.render(params)
                     return HttpResponse(html)
 
@@ -1242,7 +1690,7 @@ class ListaSucursales(ListView):
             params = {
                 'l': l
             }
-            template = get_template('biblioteca/metodopost.html')
+            template = get_template('biblioteca/index.html')
             html = template.render(params)
             return HttpResponse(html)
 
@@ -1324,7 +1772,7 @@ class buscarSucursal(ListView):
                     params = {
                         'l': l
                     }
-                    template = get_template('biblioteca/metodopost.html')
+                    template = get_template('biblioteca/index.html')
                     html = template.render(params)
                     return HttpResponse(html)
 
@@ -1333,7 +1781,7 @@ class buscarSucursal(ListView):
             params = {
                 'l': l
             }
-            template = get_template('biblioteca/metodopost.html')
+            template = get_template('biblioteca/index.html')
             html = template.render(params)
             return HttpResponse(html)
 
@@ -1365,15 +1813,15 @@ class addServicio(CreateView):
                     params = {
                         'l': l
                     }
-                    template = get_template('biblioteca/metodopost.html')
-                    return render(request, 'biblioteca/metodopost.html', params)
+                    template = get_template('biblioteca/index.html')
+                    return render(request, 'biblioteca/index.html', params)
         else:
             l = {'estado': "error"}
             params = {
                 'l': l
             }
-            template = get_template('biblioteca/metodopost.html')
-            return render(request, 'biblioteca/metodopost.html', params)
+            template = get_template('biblioteca/index.html')
+            return render(request, 'biblioteca/index.html', params)
 
     def post(self, request, *args, **kwargs):
         form = addServicioForm(request.POST)
@@ -1416,7 +1864,7 @@ class ListaServicios(ListView):
                     params = {
                         'l': l
                     }
-                    template = get_template('biblioteca/metodopost.html')
+                    template = get_template('biblioteca/index.html')
                     html = template.render(params)
                     return HttpResponse(html)
 
@@ -1425,7 +1873,7 @@ class ListaServicios(ListView):
             params = {
                 'l': l
             }
-            template = get_template('biblioteca/metodopost.html')
+            template = get_template('biblioteca/index.html')
             html = template.render(params)
             return HttpResponse(html)
 
@@ -1499,7 +1947,7 @@ class buscarServicio(ListView):
                     params = {
                         'l': l
                     }
-                    template = get_template('biblioteca/metodopost.html')
+                    template = get_template('biblioteca/index.html')
                     html = template.render(params)
                     return HttpResponse(html)
 
@@ -1508,7 +1956,7 @@ class buscarServicio(ListView):
             params = {
                 'l': l
             }
-            template = get_template('biblioteca/metodopost.html')
+            template = get_template('biblioteca/index.html')
             html = template.render(params)
             return HttpResponse(html)
 
@@ -1523,11 +1971,135 @@ class addUsuarioForm(forms.ModelForm):
             'password': forms.PasswordInput()
         }
 
-class addUsuario(CreateView):
-    form_class = addUsuarioForm
-    template_name = "biblioteca/add-usuario.html"
-    model = Usuario
-    success_url = "/biblioteca/"
+
+
+class addUsuarioAdmin(CreateView):
+
+
+    def get(self, request, *args, **kwargs):
+        id = self.kwargs["ca"]
+        username = self.kwargs["us"]
+        print(id+" "+username)
+        user = Usuario.objects.filter(username=username)
+        for a in user:
+            u = codigoAdmin.objects.filter(codigo=id,usuario=a.id_usuario)
+
+        if u:
+
+            for a in u:
+
+                if a.usuario.status == 'A':
+
+                    context = {'form': addUsuarioForm}
+                    return render(request, 'biblioteca/add-usuario.html', context)
+                else:
+                    error = {'estado': "usuario no iniciado"}
+                    params = {
+                        'error': error
+                    }
+                    template = get_template('biblioteca/index.html')
+                    return render(request, 'biblioteca/index.html', params)
+
+        else:
+            l = {'estado': "error"}
+            params = {
+                'l': l
+            }
+            template = get_template('biblioteca/index.html')
+            html = template.render(params)
+            return HttpResponse(html)
+
+    def post(self, request, *args, **kwargs):
+        form = addUsuarioForm(request.POST)
+        nombre = request.POST['username']
+        user = Usuario.objects.filter(username=nombre).exists()
+        if user:
+
+            messages.error(request, 'Error el autor ya exixte')
+            return HttpResponseRedirect(reverse_lazy('biblioteca_app:index'))
+
+
+        else:
+            if form.is_valid():
+                book = form.save()
+                book.save()
+                r = self.kwargs["us"]
+                id = self.kwargs["ca"]
+
+                return HttpResponseRedirect(reverse_lazy('biblioteca_app:codigoAdmin', kwargs={'us': r,'ca':id}))
+
+
+class addcAdminForm(forms.ModelForm):
+    class Meta:
+        model = codigoAdmin
+        fields = ['codigo', 'usuario']
+
+
+class addCodigoAdmin(CreateView):
+    def get(self, request, *args, **kwargs):
+        id = self.kwargs["ca"]
+        username = self.kwargs["us"]
+        print(id+" "+username)
+        user = Usuario.objects.filter(username=username)
+        for a in user:
+            u = codigoAdmin.objects.filter(codigo=id,usuario=a.id_usuario)
+
+        if u:
+
+            for a in u:
+
+                if a.usuario.status == 'A':
+
+                    context = {'form': addcAdminForm}
+                    return render(request, 'biblioteca/add-codigoAdmin.html', context)
+                else:
+                    error = {'estado': "usuario no iniciado"}
+                    params = {
+                        'error': error
+                    }
+                    template = get_template('biblioteca/index.html')
+                    return render(request, 'biblioteca/index.html', params)
+
+        else:
+            l = {'estado': "error"}
+            params = {
+                'l': l
+            }
+            template = get_template('biblioteca/index.html')
+            html = template.render(params)
+            return HttpResponse(html)
+
+    def post(self, request, *args, **kwargs):
+        form = addcAdminForm(request.POST)
+        nombre = request.POST['codigo']
+        user = codigoAdmin.objects.filter(codigo=nombre).exists()
+        if user:
+            """r = self.kwargs["us"]
+            messages.error(request, 'Error el autor ya exixte')
+            return HttpResponseRedirect(reverse_lazy('biblioteca_app:index', kwargs={'un': r}))"""
+            error = {'estado': "usuario no iniciado"}
+            params = {
+                'errorCodigoAdmin': error,
+                'form': addcAdminForm
+            }
+            template = get_template('biblioteca/add-codigoAdmin.html')
+            html = template.render(params)
+            return render(request, 'biblioteca/add-codigoAdmin.html', params)
+
+
+
+        else:
+            if form.is_valid():
+                book = form.save()
+                book.save()
+                r = self.kwargs["us"]
+
+                return HttpResponseRedirect(reverse_lazy('biblioteca_app:index', kwargs={'un': r}))
+
+
+class inicioAdmin():
+    print("L")
+
 #---Usuarios---
 #-------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -1562,7 +2134,7 @@ class buscarLibro(ListView):
                     params = {
                         'l': l
                     }
-                    template = get_template('biblioteca/metodopost.html')
+                    template = get_template('biblioteca/index.html')
                     html = template.render(params)
                     return HttpResponse(html)
 
@@ -1571,7 +2143,7 @@ class buscarLibro(ListView):
             params = {
                 'l': l
             }
-            template = get_template('biblioteca/metodopost.html')
+            template = get_template('biblioteca/index.html')
             html = template.render(params)
             return HttpResponse(html)
 
@@ -1606,7 +2178,7 @@ class buscarAutor(ListView):
                     params = {
                         'l': l
                     }
-                    template = get_template('biblioteca/metodopost.html')
+                    template = get_template('biblioteca/index.html')
                     html = template.render(params)
                     return HttpResponse(html)
 
@@ -1615,7 +2187,7 @@ class buscarAutor(ListView):
             params = {
                 'l': l
             }
-            template = get_template('biblioteca/metodopost.html')
+            template = get_template('biblioteca/index.html')
             html = template.render(params)
             return HttpResponse(html)
 
@@ -1630,8 +2202,9 @@ class rangoflibros(ListView):
         fecha = [rango]
 
         l = Libro.objects.filter(
-            fecha_creacion_libro__range=[str(fi), str(ff)]
-        )
+            fecha_creacion_libro__range=[str(fi), str(ff)],
+            status_libro='A'
+        ).order_by('fecha_creacion_libro')
 
         params = {
             'l': l,
@@ -1641,3 +2214,90 @@ class rangoflibros(ListView):
         html = template.render(params)
         pdf = render_to_pdf('biblioteca/reporte-fecha-libros.html', params)
         return HttpResponse(pdf, content_type='application/pdf')
+
+
+class rangofrevistas(ListView):
+
+    def get(self, request, *args, **kwargs):
+        template = get_template("biblioteca/reporte-fecha-revistas.html")
+        fi = self.kwargs["pk"]
+        ff = self.kwargs["fk"]
+        rango = fi+" y "+ff
+        fecha = [rango]
+
+        l = Revista.objects.filter(
+            fecha_creacion_revista__range=[str(fi), str(ff)],
+            status_revista='A'
+        ).order_by('fecha_creacion_revista')
+
+        params = {
+            'l': l,
+            'l2': rango
+
+        }
+        html = template.render(params)
+        pdf = render_to_pdf('biblioteca/reporte-fecha-revistas.html', params)
+        return HttpResponse(pdf, content_type='application/pdf')
+
+
+class CantidadSucursal_libros(ListView):
+
+    def get(self, request, *args, **kwargs):
+
+        template = get_template("biblioteca/reporte-cantidad-libros-sucursal-pdf.html")
+        id = self.kwargs["pk"]
+        l = Libro.objects.filter(
+            sucursal=id
+        ).values("sucursal").annotate(total=Count("sucursal"))
+        l2 = Libro.objects.filter(
+            sucursal=id,status_libro='A'
+        ).order_by("id_libro")
+        params = {
+            'l':l,
+            'l2':l2
+
+        }
+        html = template.render(params)
+        pdf = render_to_pdf('biblioteca/reporte-cantidad-libros-sucursal-pdf.html',params)
+        return HttpResponse(pdf, content_type='application/pdf')
+
+class opcionesReportesSucursales(ListView):
+
+    def get(self, request, *args, **kwargs):
+
+        username = self.kwargs["un"]
+        l2 = Sucursales.objects.order_by("nombre_sucursal").distinct("nombre_sucursal")
+        l = Libro.objects.all()
+
+        s = Usuario.objects.filter(
+            username=username
+        )
+
+        if s:
+            for a in s:
+                if a.status == 'A':
+                    template = get_template('biblioteca/opciones-reportes-Sucursales.html')
+                    params = {
+                        'l': l,
+                        'l2':l2,
+                        's': s
+                    }
+                    html = template.render(params)
+                    return HttpResponse(html)
+                else:
+                    l = {'estado': "error"}
+                    params = {
+                        'l': l
+                    }
+                    template = get_template('biblioteca/index.html')
+                    html = template.render(params)
+                    return HttpResponse(html)
+
+        else:
+            l = {'estado': "error"}
+            params = {
+                'l': l
+            }
+            template = get_template('biblioteca/index.html')
+            html = template.render(params)
+            return HttpResponse(html)

@@ -1,7 +1,7 @@
 {% extends 'base/baseAgregar.html' %}
 {% load staticfiles %}
 {% block bodyAdd %}
-<body  onload="cambiarValoresEditorial()" background="{% static '275.jpg'%}">{% endblock %}
+<body  onload="cambiarValores('editorial')" background="{% static '275.jpg'%}">{% endblock %}
 {%block agregar%}EDITORIAL{%endblock%}
 
 {% block onclick %} onclick="lowerEditorial()" {% endblock %}

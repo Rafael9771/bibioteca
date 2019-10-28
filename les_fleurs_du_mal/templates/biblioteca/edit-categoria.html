@@ -1,4 +1,5 @@
 {% extends 'base/baseEditar.html' %}
 {% load staticfiles %}
-{% block h1 %}Editar Categoria{% endblock %}
-{% block body %}<body onload="cambiarValoresCategoria()" background="{% static '275.jpg'%}">{% endblock %}
+{%block agregar%}CATEGORIA{%endblock%}
+{% block body %}<body onload='cambiarValoreseditar("categoria")' {% endblock %}
+{%block onclickedit%}<button type="submit" name="button" class="btn btn-primary" onclick='cambiarValoreseditar("categoria")' id="guardar">Guardar</button>{%endblock%}

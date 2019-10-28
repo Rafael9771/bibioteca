@@ -1,19 +1,30 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
+<body background="{% static '275.jpg'%}">
+<link rel="stylesheet" href="{% static 'css/efectos.css'%}">
 
-{%for a in l%}
+
+
+
+
+{%for s in c%}
     {%load tz%}
-    {% if a.status_libro.lower == 'a' %}
-    <a href="http://127.0.0.1:8000/biblioteca/mostrarlibro/{{ a.titulo_libro.split|join:'' }}"><img
-            src="https://s3-eu-west-1.amazonaws.com/bucket.images.1/portadas/{{ a.titulo_libro.split|join:'' }}.jpg" alt="" width="200px" height="300px" border="2"></a>
-
-    {%endif%}
-
+    <h1 style="color:white">{{s.nombre_categoria.capitalize}}</h1>
+    {%for a in l%}
+        {%if a.categoria.nombre_categoria == s.nombre_categoria%}
+            <div class="container">
+                <div class="div-img" >
+                    <a href="http://127.0.0.1:8000/biblioteca/mostrarlibro/{{ a.titulo_libro }}/{{ a.vistas }}"><img class="img" src="https://s3-eu-west-1.amazonaws.com/bucket.images.1/portadas/{{ a.titulo_libro.split|join:'' }}.jpg" title="Foto10" alt="Foto10"></a>
+                    <div class="text" >{{a.titulo_libro.capitalize}}</div>
+                </div>
+            </div>
+        {%endif%}
+    {%endfor%}
 {%endfor%}
 
 </body>

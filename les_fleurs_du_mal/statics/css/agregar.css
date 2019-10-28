@@ -1,0 +1,141 @@
+/*inicio Labels*/
+	/*inicio Labels para libro*/
+	label[for*="id_titulo_libro"],
+	label[for*="id_no_paginas_libro"],
+	label[for*="id_autor"],
+	label[for*="id_editorial"],
+	label[for*="id_categoria"],
+	/*fin labels para libro*/
+
+	/*inicio labels para autor*/
+	label[for*="id_nombre_autor"],
+	label[for*="id_apellidos_autor"],
+	label[for*="id_nacionalidad_autor"],
+	/*fin labels para autor*/
+
+	/*inicio labels para categoria*/
+	label[for*="id_nombre_categoria"],
+	label[for*="id_descripcion_categoria"],
+	/*fin lables para categoria*/
+
+	/*inicio labels para editorial*/
+	label[for*="id_nombre_editorial"],
+	label[for*="id_pais_editorial"],
+	/*fin labels para editorial*/
+	
+	/*inicio labels para revista*/
+	label[for*="id_titulo_revista"],
+	label[for*="id_no_paginas_revista"],
+	/*fin labels para revista*/
+
+	/*inicio labels para sucursal*/
+	label[for*="id_nombre_sucursal"],
+	label[for*="id_descripcion_sucursal"],
+	label[for*="id_telefono_sucursal"],
+	/*fin lables para sucursal*/
+
+	/*inicio labels para servicio*/
+	label[for*="id_nombre_servicio"],
+	label[for*="id_descripcion_servicio"]
+	/*fin labels para servicio*/
+	{
+		width:80%;
+		text-align: center;
+	}
+/*Fin Labels*/
+
+/*inicio opciones*/
+	/*inicio opciones para libro*/
+		#id_sucursal > li{
+			position: relative;
+			bottom: 0px;
+			left: 400px;
+		}
+
+	/*fin opciones para libro*/
+
+	/*inicio opciones para sucursal*/
+		#id_servicio > li{
+			position: relative;
+			bottom: 0px;
+			left: 400px;
+		}
+	/*fin opciones para sucursal*/
+/*fin opciones*/
+
+/*inicio inputs*/
+	/*inicio inputs para libro*/
+		#id_titulo_libro,
+		#id_no_paginas_libro,
+		#id_autor,
+		#id_editorial,
+		#id_categoria,
+	/*fin inputs para libro*/
+	
+	/*inicio inputs para autor*/
+		#id_nombre_autor,
+		#id_apellidos_autor,
+		#id_nacionalidad_autor,
+	/*fin inputs para autor*/
+
+	/*inicio inputs para categoria*/
+		#id_nombre_categoria,
+		#id_descripcion_categoria,
+	/*fin inputs para categoria*/
+
+	/*inicio inputs para editorial*/
+		#id_nombre_editorial,
+		#id_pais_editorial,
+	/*fin inputs para editorial*/
+
+	/*inicio inputs para revista*/
+		#id_titulo_revista,
+		#id_no_paginas_revista,
+	/*fin inputs para revista*/
+
+	/*inicio inputs para sucursal*/
+		#id_nombre_sucursal,
+		#id_descripcion_sucursal,
+		#id_telefono_sucursal,
+	/*fin inputs para sucursal*/
+
+	/*inicio inputs para servicio*/
+		#id_nombre_servicio,
+		#id_descripcion_servicio
+	/*fin inputs para servicio*/
+		{
+			position:relative;
+			width:80%;
+			height:60px;
+			left:5px;
+		}
+	
+/*Fin inputs*/
+
+/*inicio form*/
+	#agregar p{/*centrar texto en el formulario*/
+		text-align: center;
+
+	}
+	#agregar{/*forma del formulario*/
+		position:relative;
+		background-color: white;
+		width:950px;
+		left:25%;
+		height:auto;
+		border-radius:20px;
+		margin-bottom:10px;
+}
+/*fin form*/
+
+
+
+/*boton agregar*/
+#btnAgregar{
+position:relative;
+width:80%;
+height:60px;
+left:95px;
+margin-bottom: 10px;
+}
+/*boton agregar*/

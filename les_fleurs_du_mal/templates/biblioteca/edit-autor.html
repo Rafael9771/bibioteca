@@ -1,1 +1,4 @@
 {% extends 'base/baseEditar.html' %}
+{%block agregar%}AUTOR{%endblock%}
+{% block body %}<body onload='cambiarValoreseditar("autor")' {% endblock %}
+{%block onclickedit%}<button type="submit" name="button" class="btn btn-primary" onclick='cambiarValoreseditar("autor")' id="guardar">Guardar</button>{%endblock%}

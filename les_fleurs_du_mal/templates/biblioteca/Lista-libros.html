@@ -1,15 +1,20 @@
 {% extends 'base/baseLista.html'%}
 {% block tituloNav%}LIBROS{% endblock%}
-{% block formBuscar %}<form class="form-inline my-2 my-lg-0" id="formulario" action="#" onsubmit="return buscarLibro()" autocomplete="off">{% endblock %}
+{% block formBuscar %}<form class="form-inline my-2 my-lg-0" id="formulario" action="#" onsubmit="return buscarNombre('libro')" autocomplete="off">{% endblock %}
 
 
-{% block thead %} <thead>
+{% block thead %}
+
+
+    <thead>
     <th>Titulo</th>
     <th>Autor</th>
     <th>Categoria</th>
     <th>Editorial</th>
     <th>Numero de paginas</th>
     <th>Sucursales</th>
+    <th>Vistas</th>
+    <th>Costo</th>
     <th>Fecha de Creacion</th>
     <th>Fecha de modificacion</th>
     <th>Eliminar</th>
@@ -46,6 +51,12 @@
                         </p>
                     </td>
                     <td>
+                        {{a.vistas}}
+                    </td>
+                    <td>
+                        {{a.costo}}
+                    </td>
+                    <td>
                         
                         {{a.fecha_creacion_libro}}
 
@@ -76,5 +87,16 @@ arrVariables = cadVariables.split("/");
                 {%endif%}
             {%endfor%}
 </script>
+
+    {% if messages %}
+    <script>
+        alert("entro");
+    </script>
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
 {%endblock%}
 {% block nohay %}NO HAY LIBROS{% endblock %}

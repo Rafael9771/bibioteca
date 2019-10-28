@@ -1,0 +1,52 @@
+{% extends 'base/baseNav.html'%}
+{%block nav%}
+{%endblock%}
+{% block reporte %}
+
+
+
+            <h1 id="fechareporte" style="background-color:white">REPORTES DE LIBROS CREADOS ENTRE {{l2}}</h1>
+
+<table border="0.5" bgcolor="white">
+    <thead>
+    <th>Titulo</th>
+    <th>Categoria</th>
+    <th>Numero de paginas</th>
+    <th>Fecha de Creacion</th>
+    <th>Fecha de modificacion</th>
+    <th>estatus</th>
+
+    </thead>
+<tbody>
+
+    {%for a in l%}
+        {% if a.id_revista%}
+                <tr>
+					<td height="40px">
+                        <center>
+						{{a.titulo_revista.capitalize}}
+                        </center>
+					</td>
+
+                    <td>{{a.categoria.nombre_categoria.capitalize}}
+                    </td>
+                    <td>
+						{{a.no_paginas_revista}}
+					</td>
+                    <td>
+
+                        {{a.fecha_creacion_revista}}
+
+                    </td>
+                    <td>{{a.fecha_modificacion_revista}}
+                    </td>
+                    <td>{{a.status_revista}}</td>
+
+				</tr>
+        {%endif%}
+    {%endfor%}
+
+</tbody>
+</table>
+
+{% endblock %}

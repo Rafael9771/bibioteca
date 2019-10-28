@@ -1,6 +1,6 @@
 {% extends 'base/baseAgregar.html' %}
 {% load staticfiles %}
 {% block bodyAdd %}
-<body  onload="cambiarValoresCategoria()" background="{% static '275.jpg'%}">{% endblock %}
+<body  onload="cambiarValores('categoria')" background="{% static '275.jpg'%}">{% endblock %}
 {%block agregar%}CATEGORIA{%endblock%}
 {% block onclick %} onclick="lowerCategoria()" {% endblock %}

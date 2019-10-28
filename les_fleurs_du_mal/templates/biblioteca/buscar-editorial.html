@@ -1,7 +1,7 @@
 {% extends 'base/baseBuscar.html'%}
 {% block tituloNav %}EDITORIALES{% endblock %}
 {% block regresar%}<a class="navbar-brand" href="/biblioteca/editoriales">EDITORIALES</a>{% endblock %}
-{% block formBuscar %}<form class="form-inline" id="formulario" action="#" onsubmit="return buscareditorial()" autocomplete="off">{% endblock %}
+{% block formBuscar %}<form class="form-inline" id="formulario" action="#" onsubmit='return buscarNombre("editorial")' autocomplete="off">{% endblock %}
 
 
 {% block thead %}

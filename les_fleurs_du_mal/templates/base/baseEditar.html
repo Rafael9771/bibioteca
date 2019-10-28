@@ -6,16 +6,18 @@
     <title>Les fleurs du mal</title>
 	{% block links %}
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-	<link rel="stylesheet" href="{% static 'css/fondo.css'%}">
+	<link rel="stylesheet" href="{% static 'css/editar.css'%}">
 	{% endblock %}
 
-{% block script %}<script src="{% static 'js/editar.js' %}">
+{% block script %}
+    <script src="{% static 'js/jquery-3.4.1.min.js'%}"></script>
+	<script src="{% static 'js/editars.js' %}">
+
 </script>
-	<script src="{% static 'jsAutores.js' %}">
-</script>{% endblock %}
+    <script src="{% static 'js/url.js'%}"></script>{% endblock %}
 
 </head>
-{% block body %}<body onload="cambiarValoresLibros() " background="{% static '275.jpg'%}">{% endblock %}
+{% block body %}<body onload='cambiarValoreseditar("libro")' {% endblock %} background="{% static '275.jpg'%}">
 
 <nav class="navbar navbar-dark bg-dark">
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="true" aria-label="Toggle navigation">
@@ -24,7 +26,7 @@
 
 
 
-    <h1	style="color:white">AGREGAR {%block agregar%}AUTOR{%endblock%}</h1>
+    <h1	style="color:white">EDITAR {%block agregar%}AUTOR{%endblock%}</h1>
 	<form class="form-inline" id="formulario" action="#" onsubmit="return buscarautor()" autocomplete="off">
       <input class="form-control mr-sm-2" type="text" placeholder="Search" id="buscar">
       <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
@@ -35,7 +37,7 @@
       {%block nav%}<div class="navbar-collapse collapse" id="navbarColor01" style="">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="/biblioteca/inicio">Inicio <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="javascript:pasarUsuario('/biblioteca/libros/','ni')">Inicio <span class="sr-only">(current)</span></a>
       </li>
         <li class="nav-item">
 
@@ -139,10 +141,10 @@
                     Reportes
                 </button>
                 <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a class="dropdown-item" href="/biblioteca/reportesA">Libros</a>
-                    <a class="dropdown-item" href="#">Revistas</a>
-                    <a class="dropdown-item" href="/biblioteca/reportes-Autores">Autores</a>
-                    <a class="dropdown-item" href="#">Sucursales</a>
+                   <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/reportes-Libros/','ni')">Libros</a>
+                    <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/reportes-Revistas/','ni')">Revistas</a>
+                    <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/reportes-Autores/','ni')">Autores</a>
+                    <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/reportes-Sucursales/','ni')">Sucursales</a>
                 </div>
             </div>
         </li>
@@ -154,10 +156,10 @@
     </nav>
 
 
-	<form method="post" autocomplete="off">{% csrf_token %}
+	<form method="post" autocomplete="off" id="editar">{% csrf_token %}
 		{{ form.as_p}}
-		<button type="submit" name="button" class="btn btn-primary" >Guardar</button>
-		<button class="btn btn-danger" onclick="/biblioteca/">Cancelar</button>
+		{%block onclickedit%}<button type="submit" name="button" class="btn btn-primary" onclick='cambiarValoreseditar("libro")' id="guardar">Guardar</button>{%endblock%}
+		<button class="btn btn-danger" onclick="/biblioteca/" id="cancelar">Cancelar</button>
 
 	</form>
 <script>

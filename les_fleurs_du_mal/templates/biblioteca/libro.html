@@ -1,12 +1,20 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    {%for a in l %}
+    <title>{{ a.titulo_libro }}</title>
+    {%endfor%}
+    <link rel="stylesheet" href="{% static 'css/efectos.css'%}">
 </head>
 <body>
+{%for a in l%}
 
-<embed src="https://s3-eu-west-1.amazonaws.com/bucket.images.1/Libro/{{l}}.pdf" type="application/pdf" width="100%" height="1000px" />
+<embed src="https://s3-eu-west-1.amazonaws.com/bucket.images.1/Libro/{{a.titulo_libro.split|join:''}}.pdf#toolbar=0&navpanes=0$scrollbar=0&zoom=150" type="application/pdf" width="100%" height="1000px" scrolling="no" allowfullscreen>
 
+
+
+{%endfor%}
 </body>
 </html>
