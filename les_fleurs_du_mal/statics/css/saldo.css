@@ -1,0 +1,37 @@
+#divSaldo{
+	position: relative;
+	width: 30%;
+	left: 35%;
+	height: 500px;
+	background-color: white;
+}
+
+h2{
+	position: relative;
+	text-align: center;
+	top: 20%;
+
+}
+
+#saldoT{
+	position: relative;
+	margin-top: 10%;
+}
+
+
+
+#saldo{
+	position: relative;
+	display: inline-block;
+	margin-top: 10%;
+	margin-left: 30%;
+	margin-right: 30%;
+	width: 230.4px; 
+}
+
+#btnSaldo{
+	position: relative;
+	margin-top: 10%;
+	left: 41.5%;
+	width: 100px;
+}

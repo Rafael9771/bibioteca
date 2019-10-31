@@ -5,6 +5,7 @@
 	label[for*="id_autor"],
 	label[for*="id_editorial"],
 	label[for*="id_categoria"],
+	label[for*="id_sinopsis"],
 	/*fin labels para libro*/
 
 	/*inicio labels para autor*/
@@ -70,6 +71,7 @@
 		#id_autor,
 		#id_editorial,
 		#id_categoria,
+
 	/*fin inputs para libro*/
 	
 	/*inicio inputs para autor*/
@@ -109,7 +111,13 @@
 			height:60px;
 			left:5px;
 		}
-	
+		
+		#id_sinopsis{
+			position:relative;
+			width:80%;
+			height:200px;
+			left:5px;
+		}
 /*Fin inputs*/
 
 /*inicio form*/

@@ -67,11 +67,21 @@ urlpatterns = [
 
     path('<ca>/er', views.errorsesion.as_view(), name="errorsesion"),
     path('er2/<cs>/', views.errorsesion2.as_view(), name="er2"),
-    path('inicio/<un>', views.Inicio.as_view(), name="index"),
-    path('inicioU/', views.inicioLogin.as_view(), name='inicioLogin'),
+    path('inicioA/<un>', views.Inicio.as_view(), name="index"),
+
+    path('inicio/', views.inicioLogin.as_view(), name='inicioLogin'),
     path('errorLogin', views.errorLogin.as_view(), name="errorLogin"),
     path('login/add', views.addLogin.as_view(), name="addLogin"),
     path('inicioS/<us>', views.sesionLogin.as_view(), name='sesionLogin'),
+    path('descripcionLibro/<lb>/<us>', views.descripcionLibro.as_view(), name='descripcion_libro'),
+    path('comentar',views.comentar.as_view(), name='comentar'),
+    path('Logout/<us>', views.cerarSesionLogin.as_view(), name='Logout'),
+    path('fav',views.fav.as_view(), name='Fav'),
+    path('saldo/<us>', views.saldo.as_view(), name='saldo'),
+    path('agregarSaldo', views.addSaldo.as_view(), name='addSaldo'),
+    path('comprar', views.comprar.as_view(), name='comprar'),
+    path('MiBiblioteca/<us>', views.BibliotecaCompras.as_view(), name='MiBiblioteca'),
+    path('enviarEmail/<us>', views.EnviarEmail.as_view(), name='enviarEmail'),
 
 
 ]

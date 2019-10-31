@@ -1,0 +1,185 @@
+#libro_contenido {
+	position: relative;
+	background-color: gray;
+	left: 480px;
+	right: 9.2px;
+	width: 50%;
+	border-radius: 15px;
+	height: auto;
+	
+}
+
+
+
+#navCategorias {
+	background-color: #343a40;
+	position: relative;
+
+	
+}
+
+#navCategorias ul {
+	position: relative;
+	left: 200px;
+}
+#navCategorias li {
+	display: inline-block;
+
+	text-align: center;
+	
+	height: 10px;
+	
+}
+
+#navCategorias a {
+	color: white;
+	font-size: 25px;
+	text-decoration:none;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-left: 10px;
+	padding-top: 10px;
+	text-align: center;
+
+}
+
+#imagen {
+	position: relative;
+	float: left;
+	top: 10px;
+	left: 10px;	
+	display: inline-block;
+}
+
+
+
+#libro_contenido div{
+	display: inline-block;
+
+}
+
+#libro_contenido h1{
+	margin-left: 10px;
+}
+#libro_contenido h2{
+	margin-left: 10px;
+}
+
+#autor{
+	position: relative;
+	float: left;
+	top: 10px;
+	height: 270px;
+	width: 53%;
+	left: 10px;
+	
+	
+	
+}
+
+#libroOpiones{
+position: relative;
+float: right;
+top: 10px;
+right: 10px;
+width: 25%;
+height: 270px;
+
+text-align: center;
+}
+
+#lofavorito{
+	position: relative;
+	top: 10%;
+}
+
+#loprecio{
+	position: relative;
+	top: 2%;
+}
+
+#locomprado{
+	position: relative;
+	top: 20%;
+}
+
+#libroOpiones a{
+	position: relative;
+	top: 35%;
+	font-size: 30px;
+}
+#libroOpciones button{
+	position: relative;
+	top: 15%;
+}
+
+#comentar {
+	width: 98%;
+	background-color: white;
+		margin-top: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
+
+	
+}
+
+#comentar #id_libro{
+	display: none;
+}
+
+#comentar #id_login{
+	display: none;
+}
+
+#texto{
+	width: 98%;
+	position: relative;
+	margin-top: 10px;
+	margin-left: 10px;
+
+}
+
+#btnComentar{
+	position: relative;
+	margin-left: 10px;
+	
+}
+
+#divCom {
+	margin-bottom: 10px;
+}
+
+#tituloCom{
+	position: relative;
+	text-align: center;
+}
+
+#noCom {
+		margin-top: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+}
+
+#Com{
+	margin-top: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
+	background-color: white;
+	width: 98%;
+}
+
+#sinopsis{
+	background-color: white;
+	position: relative;
+	
+	display: inline-block;
+	margin-top: 15px;
+	margin-right: 10px;
+	margin-left: 10px;
+	border-radius: 15px;
+	width: 98%
+}
+#divCom h2{
+	color: gray;
+}

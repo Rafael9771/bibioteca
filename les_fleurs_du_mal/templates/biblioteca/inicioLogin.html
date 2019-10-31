@@ -40,7 +40,7 @@
                                     <!-- <a href="http://127.0.0.1:8000/password_reset/">Olvidaste tu contraseña?</a>-->
                                     <button class="button" type="submit" name="button"  >Guardar</button>
                                 </form>
-                                <a class="a" href="http://127.0.0.1:8000/biblioteca/registro">Registrarse</a>
+                                <a class="a" href="http://127.0.0.1:8000/biblioteca/login/add">Registrarse</a>
                             </div>
                         </li>
 
@@ -52,27 +52,36 @@
 
         </nav>
 
+        {%if errorSesionSaldo%}
+            alert('El usuario no ha iniciado sesion');
+        {%endif%}
 
-            {%if errorLogin %}
-                <script>
-                    alert("usuario o contraseña incorrectos");
-                </script>
-            {%endif%}
+        {%if errorLogin %}
+            <script>
+                alert("usuario o contraseña incorrectos");
+            </script>
+        {%endif%}
 
-                    {%for s in c%}
-                        {%load tz%}
-                        <h1 style="color:white">{{s.nombre_categoria.capitalize}}</h1>
-                        {%for a in l%}
-                            {%if a.categoria.nombre_categoria == s.nombre_categoria%}
-                                <div class="container">
-                                    <div class="div-img" >
-                                        <a href="http://127.0.0.1:8000/biblioteca/mostrarlibro/{{ a.titulo_libro }}/{{ a.vistas }}"><img class="img" src="https://s3-eu-west-1.amazonaws.com/bucket.images.1/portadas/{{ a.titulo_libro.split|join:'' }}.jpg" title="Foto10" alt="Foto10"></a>
-                                        <div class="text">{{a.titulo_libro.capitalize}}</div>
-                                    </div>
-                                </div>
-                            {%endif%}
-                        {%endfor%}
-                    {%endfor%}
+        {% if cierresesion%}
+            <script>
+                alert("{{cierresesion.username}} cerro sesion corretamente");
+            </script>
+        {%endif%}
+
+        {%for s in c%}
+            {%load tz%}
+            <h1 style="color:white">{{s.nombre_categoria.capitalize}}</h1>
+            {%for a in l%}
+                {%if a.categoria.nombre_categoria == s.nombre_categoria%}
+                    <div class="container">
+                        <div class="div-img" >
+                            <a href="http://127.0.0.1:8000/biblioteca/mostrarlibro/{{ a.titulo_libro }}/{{ a.vistas }}"><img class="img" src="https://s3-eu-west-1.amazonaws.com/bucket.images.1/portadas/{{ a.titulo_libro.split|join:'' }}.jpg" title="Foto10" alt="Foto10"></a>
+                            <div class="text">{{a.titulo_libro.capitalize}}</div>
+                        </div>
+                    </div>
+                {%endif%}
+            {%endfor%}
+        {%endfor%}
 
 
 

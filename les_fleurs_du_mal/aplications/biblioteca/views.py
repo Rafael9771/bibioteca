@@ -12,6 +12,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import get_object_or_404, render
 from django import template
 from django.contrib import messages
+from django.core.mail import EmailMessage
 from django.views.generic import(
     View,
     TemplateView,
@@ -67,6 +68,196 @@ class mostrarlibro(ListView):
         }
         html = template.render(params)
         return HttpResponse(html)
+
+class comentar(ListView):
+
+    def get(self, request, *args, **kwargs):
+        idLibro = int(request.GET['libro'])
+        idLogin = int(request.GET['login'])
+        texto = request.GET['mensaje']
+        user = login.objects.filter(id_login=idLogin)
+        c = comentario()
+
+        c.login=login.objects.get(id_login=idLogin)
+        c.libro=Libro.objects.get(id_libro=idLibro)
+
+        c.texto=texto
+        c.save()
+        for a in user:
+            u = a.username
+
+        return HttpResponseRedirect(reverse_lazy('biblioteca_app:descripcion_libro', kwargs={'us': u, 'lb': idLibro}))
+
+class fav(ListView):
+    def get(self, request, *args, **kwargs):
+        idLibro = int(request.GET['libro'])
+        idLogin = int(request.GET['login'])
+
+        user = login.objects.filter(id_login=idLogin)
+        c = favoritos()
+
+        c.login = login.objects.get(id_login=idLogin)
+        c.libro = Libro.objects.get(id_libro=idLibro)
+
+
+        c.save()
+        for a in user:
+            u = a.username
+
+        return HttpResponseRedirect(reverse_lazy('biblioteca_app:descripcion_libro', kwargs={'us': u, 'lb': idLibro}))
+
+class descripcionLibro(ListView):
+
+    def get(self, request, *args, **kwargs):
+        idLibro = self.kwargs["lb"]
+        usuario = self.kwargs["us"]
+        libro = Libro.objects.filter(id_libro=idLibro)
+        user = login.objects.filter(username=usuario)
+        comentarios = comentario.objects.filter(libro=idLibro)
+        l2 = Libro.objects.order_by("categoria").distinct("categoria")
+        for a in user:
+            compras = compra.objects.filter(login=a.id_login, libro=idLibro)
+            fav = favoritos.objects.filter(login=a.id_login,libro=idLibro)
+
+        generos = Categoria.objects.filter(status_categoria='A').order_by('nombre_categoria')
+        template = get_template('biblioteca/descripcion_libro.html')
+        params = {
+            'l':libro,
+            'us':user,
+            'c':generos,
+            'compras':compras,
+            'comentarios':comentarios,
+            'fav':fav,
+            'l2':l2
+
+        }
+        html = template.render(params)
+        return HttpResponse(html)
+
+class saldo(ListView):
+
+    def get(self, request, *args, **kwargs):
+        user = self.kwargs['us']
+        us = login.objects.filter(username=user, status='A')
+        if us:
+            params={
+                'us':us
+            }
+            template=get_template('biblioteca/saldo.html')
+            html = template.render(params)
+            return HttpResponse(html)
+
+        else:
+            l = Libro.objects.filter(
+                status_libro="A"
+            ).order_by('-vistas')
+            c = Categoria.objects.filter(
+                status_categoria="A"
+            ).order_by('nombre_categoria')
+            errorSesion = {'errosSesion':'El usuario '+user+' no ha iniciado sesion'}
+            template = get_template('biblioteca/inicioLogin.html')
+            params = {
+                'l': l,
+                'c': c,
+                'errorSesionSaldo':errorSesion
+            }
+            html = template.render(params)
+            return HttpResponse(html)
+
+class addSaldo(ListView):
+    def get(self, request, *args, **kwargs):
+        saldo = int(request.GET['saldo'])
+        print("entro al agregars")
+        idLogin = int(request.GET['idLogin'])
+        saldoActual = int(request.GET['saldoActual'])
+        us = request.GET['username']
+
+        l = login.objects.filter(
+            id_login=idLogin
+        ).update(saldo=int(saldoActual) + saldo)
+
+        total = saldo+saldoActual
+        estadoSaldo={'SaldoActual':'su saldo actual es de '+str(total)}
+        params = {
+            'estadoSaldo':estadoSaldo
+        }
+        return HttpResponseRedirect(reverse_lazy('biblioteca_app:sesionLogin', kwargs={'us': us}))
+
+class comprar(ListView):
+    def get(self, request, *args, **kwargs):
+        idLibro = int(request.GET['libro'])
+        idLogin = int(request.GET['login'])
+        saldoActual = int(request.GET['saldo'])
+        costo = int(request.GET['costo'])
+
+        user = login.objects.filter(id_login=idLogin)
+        if costo > saldoActual:
+            for a in user:
+                u = a.username
+
+            return HttpResponseRedirect(
+                reverse_lazy('biblioteca_app:descripcion_libro', kwargs={'us': u, 'lb': idLibro}))
+        else:
+            total = saldoActual-costo
+            compr = compra()
+            lib = Libro.objects.get(id_libro=idLibro)
+            log = login.objects.get(id_login=idLogin)
+            compr.login=log
+            compr.libro=lib
+            compr.save()
+            cobro = login.objects.filter(id_login=idLogin).update(saldo=total)
+
+            for a in user:
+                u = a.username
+
+            return HttpResponseRedirect(
+                reverse_lazy('biblioteca_app:descripcion_libro', kwargs={'us': u, 'lb': idLibro}))
+
+
+
+
+class BibliotecaCompras(ListView):
+    def get(self, request, *args, **kwargs):
+        user = self.kwargs['us']
+        u = login.objects.filter(username=user)
+        for a in u:
+            idlogin = a.id_login
+
+        compras = compra.objects.filter(login=idlogin)
+        if compras:
+            cat = Categoria.objects.filter(status_categoria='A')
+            template = get_template('biblioteca/BibliotecaCompras.html')
+            params = {
+                'us': u,
+                'compras': compras,
+                'categorias':cat
+            }
+            html = template.render(params)
+
+            return HttpResponse(html)
+        else:
+            error={'compras':'No hay compras'}
+            template = get_template('biblioteca/BibliotecaCompras.html')
+            params = {
+                'us': u,
+                'error': error
+            }
+            html = template.render(params)
+
+            return HttpResponse(html)
+
+class comentarForm():
+    class Meta:
+        model = comentario
+        fields = ['texto','login','libro']
+
+
+
+
+
+
+
+
 
 class opcionesReportesAutores(ListView):
 
@@ -628,9 +819,10 @@ class deleteLibroForm(forms.ModelForm):
 class editLibroForm(forms.ModelForm):
     class Meta:
         model = Libro
-        fields = ['titulo_libro', 'no_paginas_libro','fecha_creacion_libro', 'fecha_modificacion_libro','autor','editorial','categoria','sucursal','costo', 'status_libro']
+        fields = ['titulo_libro', 'no_paginas_libro','fecha_creacion_libro', 'fecha_modificacion_libro','autor','editorial','categoria','sucursal','costo','sinopsis', 'status_libro']
         widgets = {
-            'sucursal': forms.CheckboxSelectMultiple()
+            'sucursal': forms.CheckboxSelectMultiple(),
+            'sinopsis':forms.Textarea()
         }
 
 class editLibro(UpdateView):
@@ -667,9 +859,10 @@ class deleteLibro(UpdateView):
 class addLibroForm(forms.ModelForm):
     class Meta:
         model = Libro
-        fields = ['titulo_libro', 'no_paginas_libro', 'fecha_creacion_libro', 'fecha_modificacion_libro', 'autor', 'categoria','editorial','sucursal', 'status_libro','vistas','costo']
+        fields = ['titulo_libro', 'no_paginas_libro', 'fecha_creacion_libro', 'fecha_modificacion_libro', 'autor', 'categoria','editorial','sucursal', 'sinopsis','status_libro','vistas','costo']
         widgets = {
-            'sucursal': forms.CheckboxSelectMultiple()
+            'sucursal': forms.CheckboxSelectMultiple(),
+            'sinopsis': forms.Textarea()
         }
 
     def __init__(self, *args, **kwargs):
@@ -789,6 +982,16 @@ class addLogin(CreateView):
 
 
 
+class EnviarEmail(ListView):
+    def get(self, request, *args, **kwargs):
+        user = self.kwargs['us']
+
+        email = EmailMessage('calistitulo', 'calisbody', to=['rramos349@accitesz.com'])
+        email.send()
+
+        return HttpResponseRedirect(reverse_lazy('biblioteca_app:sesionLogin', kwargs={'us': user}))
+
+
 class sesionLogin(ListView):
 
     def get(self, request, *args, **kwargs):
@@ -799,15 +1002,23 @@ class sesionLogin(ListView):
         c = Categoria.objects.filter(
             status_categoria="A"
         ).order_by('nombre_categoria')
+        l2 = Libro.objects.distinct("categoria").order_by("categoria")
 
         us = login.objects.filter(
             username=usuario,status='A'
         )
+        for a in us:
+            f = favoritos.objects.filter(login=a.id_login)
+
         if us:
+
             params = {
                 'l':l,
                 'c':c,
-                'us':us
+                'us':us,
+                'f': f,
+                'l2':l2
+
             }
             template = get_template('biblioteca/sesionLogin.html')
             html = template.render(params)
@@ -822,6 +1033,34 @@ class sesionLogin(ListView):
             template = get_template('biblioteca/sesionLogin.html')
             html = template.render(params)
             return HttpResponse(html)
+
+class cerarSesionLogin(ListView):
+
+    def get(self, request, *args, **kwargs):
+        us = self.kwargs['us']
+        cierreSesion = {'estado':'correcto','username':self.kwargs['us']}
+        l = Libro.objects.filter(
+            status_libro="A"
+        ).order_by('-vistas')
+        c = Categoria.objects.filter(
+            status_categoria="A"
+        ).order_by('nombre_categoria')
+        s = login.objects.filter(
+            username=us
+        ).update(
+            status="B"
+        )
+
+        params = {
+            'l':l,
+            'c':c,
+            'cierresesion':cierreSesion
+        }
+
+        template = get_template('biblioteca/inicioLogin.html')
+        html = template.render(params)
+        return HttpResponse(html)
+
 
 class inicioLogin(ListView):
 
@@ -859,7 +1098,8 @@ class errorLogin(ListView):
             username = usuario,
             password = contrasenia
         )
-
+        for a in us:
+            f = favoritos.objects.filter(login=a.id_login)
         if us:
             s = login.objects.filter(
                 username=usuario,
@@ -871,7 +1111,8 @@ class errorLogin(ListView):
             params = {
                 'l':l,
                 'c':c,
-                'us':us
+                'us':us,
+                'f':f
             }
 
             html = template.render(params)

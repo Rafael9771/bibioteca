@@ -83,6 +83,7 @@ class Libro(models.Model):
     sucursal = models.ManyToManyField(Sucursales,blank=True)
     vistas = models.IntegerField('vistas', blank=True)
     costo = models.IntegerField('costo', blank=False, default=0)
+    sinopsis = models.CharField('sinopsis', blank=False, default='o', max_length=1000)
     status_libro = models.CharField('status',blank=False, max_length=1)
 
     def __str__(self):
@@ -127,10 +128,14 @@ class login(models.Model):
     username = models.CharField('username', blank=False, max_length=20)
     password = models.CharField('password', blank=False, max_length=20)
     saldo = models.IntegerField('saldo', blank=False, default=0)
-    favoritos = models.ManyToManyField(Libro, blank=True)
     fecha_creacion = models.DateField(default=datetime.date.today)
     fecha_modificacion = models.DateField(default=datetime.date.today)
     status = models.CharField('status', blank=True, max_length=1, default='B')
+
+class favoritos(models.Model):
+    id_favorito = models.AutoField(primary_key=True)
+    libro = models.ForeignKey(Libro, blank=False, on_delete=models.CASCADE)
+    login = models.ForeignKey(login, blank=False, on_delete=models.CASCADE)
 
 class compra(models.Model):
     id_compra = models.AutoField(primary_key=True)
@@ -144,6 +149,6 @@ class compraR(models.Model):
 
 class comentario(models.Model):
     id_comentario = models.AutoField(primary_key=True)
-    texto = models.CharField('texto', blank=False, max_length=200)
+    texto = models.CharField('texto', blank=False, max_length=1000)
     login = models.ForeignKey(login, on_delete=models.CASCADE)
     libro = models.ForeignKey(Libro, on_delete=models.CASCADE)

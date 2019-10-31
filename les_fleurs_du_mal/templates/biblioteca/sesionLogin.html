@@ -8,43 +8,86 @@
         <link rel="stylesheet" href="{% static 'css/tabla.css'%}">
         <link rel="stylesheet" href="{% static 'css/login.css'%}">
         <link rel="stylesheet" href="{% static 'css/efectos.css'%}">
+        <link rel="stylesheet" href="{% static 'css/user.css'%}">
+        <script src="{% static 'js/sesionLogin.js'%}"></script>
+
         <title>metodo post</title>
-        <script src="{% static 'js/codigoAdmin.js'%}"></script>
+        <script src="{% static 'js/url.js' %}"></script>
     </head>
     <body onload='' background="{% static '275.jpg'%}">
     <script>
 
     </script>
-        <nav class="navbar navbar-dark bg-dark">
 
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+         <a class="navbar-brand" href="javascript:pasarUsuario('/biblioteca/inicioS/','ni')">Inicio</a>
 
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-            <h1 style="color:white" id="biblio">BIBLIOTECA</h1>
-            <h1 style="color:white">{% block tituloNav %}BIENVENIDO{% endblock %}</h1>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
 
-
-
-            <button class="navbar-toggler navbar-toggler-left" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="true" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>{% for a in us %}
-                {{a.username}}
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         Categorias
+        </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="user2">
+            {%for a in l2%}
+                <a class="dropdown-item" href="#{{a.categoria.id_categoria}}">{{a.categoria.nombre_categoria.capitalize}}</a>
                 {%endfor%}
-            </button>
-                <div class="navbar-collapse collapse" id="navbarColor01" style="">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a href="#">aqui van las opciones XD</a>
-                            </div>
-                        </li>
+        </div>
+        </li>
+
+    </ul>
+      <ul class="navbar-nav navbar-right">
 
 
+          <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         {% for a in us %}
+                Usuario: {{a.username}}
+                {%endfor%}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="user">
+            <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/MiBiblioteca/','ni')">Mi biblioteca</a>
+          <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/saldo/','ni')">agregar Saldo</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/Logout/','ni')">cerrar sesion</a>
+        </div>
 
-                    </ul>
+      </li>
+      </ul>
 
-                </div>
+  </div>
+</nav>
 
-        </nav>
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
 
 
+    <div class="collapse navbar-collapse" id="navbarColor03">
+      <ul class="navbar-nav mr-auto">
+        {%for a in l2%}
+        <li class="nav-item">
+          <a class="nav-link" href="#{{a.categoria.id_categoria}}">{{a.categoria.nombre_categoria.capitalize}}</a>
+        </li>
+        {%endfor%}
+      </ul>
+
+    </div>
+  </nav>
+<!--                   EJEMPLO PARA ENVIAR UN CORREO
+{%for a in us%}
+    <form action="/biblioteca/enviarEmail/{{a.username}}" method="get">
+        <button type="submit">Enviarmail</button>
+    </form>
+-->
+{%endfor%}
+
+                {% if estadoSaldo%}
+                alert({{estadoSaldo}})
+                {%endif%}
                 {%if errorLoginStatus%}
 
     <script>
@@ -53,14 +96,29 @@
     </script>
                 {%endif%}
 
+                {%if f%}
+                    <h1 style="color:white">Favoritos</h1>
+                    {%for a in f%}
+
+                        <div class="container">
+                                    <div class="div-img" >
+                                        <a href="javascript:pasarUsuario('/biblioteca/descripcionLibro/{{ a.libro.id_libro }}/','ni')"><img class="img" src="https://s3-eu-west-1.amazonaws.com/bucket.images.1/portadas/{{ a.libro.titulo_libro.split|join:'' }}.jpg" title="Foto10" alt="Foto10"></a>
+                                        <div class="text">{{a.libro.titulo_libro.capitalize}}</div>
+                                    </div>
+                                </div>
+
+                    {%endfor%}
+
+                {%endif%}
+
                     {%for s in c%}
                         {%load tz%}
-                        <h1 style="color:white">{{s.nombre_categoria.capitalize}}</h1>
+                        <h1 style="color:white" id="{{s.id_categoria}}">{{s.nombre_categoria.capitalize}}</h1>
                         {%for a in l%}
                             {%if a.categoria.nombre_categoria == s.nombre_categoria%}
                                 <div class="container">
                                     <div class="div-img" >
-                                        <a href="http://127.0.0.1:8000/biblioteca/mostrarlibro/{{ a.titulo_libro }}/{{ a.vistas }}"><img class="img" src="https://s3-eu-west-1.amazonaws.com/bucket.images.1/portadas/{{ a.titulo_libro.split|join:'' }}.jpg" title="Foto10" alt="Foto10"></a>
+                                        <a href="javascript:pasarUsuario('/biblioteca/descripcionLibro/{{ a.id_libro }}/','ni')"><img class="img" src="https://s3-eu-west-1.amazonaws.com/bucket.images.1/portadas/{{ a.titulo_libro.split|join:'' }}.jpg" title="Foto10" alt="Foto10"></a>
                                         <div class="text">{{a.titulo_libro.capitalize}}</div>
                                     </div>
                                 </div>
@@ -72,6 +130,27 @@
 
 
 
+{%for a in us%}
+
+    <script>
+
+var ni="{{a.username}}";
+var nombre='';
+var comp='';
+    function pasarVariables(pagina, nombres) {
+
+  nomVec = nombres.split(",");
+  for (i=0; i<nomVec.length; i++){
+    nombre = eval(nomVec[i]);
+    comp = nomVec[i] + "=" + escape(eval(nomVec[i]))+"&";
+    }
+  pagina +=nombre
+  pagina = pagina.substring(0,pagina.length);
+  location.href=pagina;
+}
+</script>
+
+    {%endfor%}
 
 
 
@@ -79,7 +158,6 @@
 
 
 
-        <script src="{% static 'js/editar.js' %}"></script>
         <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
         <script src="{% static 'js/popper.min.js'%}"></script>
         <script src="{% static 'js/bootstrap.min.js'%}"></script>

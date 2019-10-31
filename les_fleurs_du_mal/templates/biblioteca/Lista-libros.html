@@ -13,6 +13,7 @@
     <th>Editorial</th>
     <th>Numero de paginas</th>
     <th>Sucursales</th>
+    <th>Sinopsis</th>
     <th>Vistas</th>
     <th>Costo</th>
     <th>Fecha de Creacion</th>
@@ -49,6 +50,13 @@
 
                     {% endfor %}
                         </p>
+                    </td>
+                    <td>
+                        {%if a.sinopsis != 'o'%}
+                        tiene sinopsis
+                        {%else%}
+                        no tiene sinopsis
+                        {%endif%}
                     </td>
                     <td>
                         {{a.vistas}}
