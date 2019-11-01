@@ -1,3 +1,4 @@
+from django.core.mail import EmailMessage
 from django.db.models import Count
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
@@ -12,7 +13,6 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import get_object_or_404, render
 from django import template
 from django.contrib import messages
-from django.core.mail import EmailMessage
 from django.views.generic import(
     View,
     TemplateView,
@@ -980,8 +980,6 @@ class addLogin(CreateView):
             html = template.render(params)
             return HttpResponse(html)
 
-
-
 class EnviarEmail(ListView):
     def get(self, request, *args, **kwargs):
         user = self.kwargs['us']
@@ -990,7 +988,6 @@ class EnviarEmail(ListView):
         email.send()
 
         return HttpResponseRedirect(reverse_lazy('biblioteca_app:sesionLogin', kwargs={'us': user}))
-
 
 class sesionLogin(ListView):
 
@@ -1002,11 +999,11 @@ class sesionLogin(ListView):
         c = Categoria.objects.filter(
             status_categoria="A"
         ).order_by('nombre_categoria')
-        l2 = Libro.objects.distinct("categoria").order_by("categoria")
-
+        l2 = Libro.objects.filter(status_libro='A').order_by("categoria").distinct("categoria")
         us = login.objects.filter(
             username=usuario,status='A'
         )
+        print(l2)
         for a in us:
             f = favoritos.objects.filter(login=a.id_login)
 

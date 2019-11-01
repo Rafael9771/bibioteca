@@ -3,7 +3,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+     <style>
+
+           #libro_contenido::after {
+             content: "";
+             background: url("{% static 'img/blanco.jpg'%}");
+             opacity: 0.5;
+             top: 0;
+             left: 0;
+             bottom: 0;
+             right: 0;
+             position: absolute;
+             z-index: -1;
+            	height: auto;
+            	border-radius: 15px;
+           }
+
+
+
+        </style>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+
 
 
     <script src="{% static 'js/url.js'%}"></script>
@@ -13,7 +33,7 @@
     <link rel="stylesheet" href="{% static 'css/descripcion.css'%}">
     <title>Title</title>
 </head>
-<body background="{% static '275.jpg'%}">
+<body background="{% static 'img/fondop.jpg'%}" onload="">
 
 
 
@@ -24,9 +44,24 @@
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-
+{%for u in us%}
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
+      <ul class="navbar-nav mr-auto">
+
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         Categorias
+        </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="user2">
+            {%for a in l2%}
+                <a class="dropdown-item" href="/biblioteca/inicioS/{{u.username}}#{{a.categoria.id_categoria}}" > {{a.categoria.nombre_categoria.capitalize}}</a>
+                {%endfor%}
+        </div>
+            {%endfor%}
+        </li>
+
+    </ul>
+    <ul class="navbar-nav mr-auto" id="usuario">
         <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
          {% for a in us %}
@@ -43,26 +78,12 @@
 
     </ul>
 
+
+
   </div>
 </nav>
 
 
-{%for i in us%}
-<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
-
-
-    <div class="collapse navbar-collapse" id="navbarColor03">
-      <ul class="navbar-nav mr-auto">
-        {%for a in l2%}
-        <li class="nav-item">
-          <a class="nav-link" href="/biblioteca/inicioS/{{i.username}}#{{a.categoria.id_categoria}}">{{a.categoria.nombre_categoria.capitalize}}</a>
-        </li>
-        {%endfor%}
-      </ul>
-
-    </div>
-  </nav>
-{%endfor%}
 
 
 <div id="libro_contenido" class="filter">
@@ -81,7 +102,7 @@
 
 
                     <h2 id="locomprado">Comprado</h2>
-                    <a href="/biblioteca/mostrarlibro/{{ a.titulo_libro }}/{{ a.vistas }}"> Ver</a>
+                    <a href="/biblioteca/mostrarlibro/{{ a.titulo_libro }}/{{ a.vistas }}"><img src="{% static 'img/leer.png'%}" alt="" title="holi"> <h6>Ver</h6></a>
                 {%else%}
                     <h2 id="loprecio">Precio: {{a.costo}}</h2>
                     <button onclick="">Ver prueba</button>

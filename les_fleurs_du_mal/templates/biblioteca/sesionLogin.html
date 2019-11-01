@@ -10,11 +10,23 @@
         <link rel="stylesheet" href="{% static 'css/efectos.css'%}">
         <link rel="stylesheet" href="{% static 'css/user.css'%}">
         <script src="{% static 'js/sesionLogin.js'%}"></script>
+        <style>
+             body {
+                content: "";
+                 background: url("{% static 'img/fondop.jpg'%}");
+                 background-attachment: fixed;
+
+
+           }
+           nav{
+           position: fixed;
+           }
+        </style>
 
         <title>metodo post</title>
         <script src="{% static 'js/url.js' %}"></script>
     </head>
-    <body onload='' background="{% static '275.jpg'%}">
+    <body >
     <script>
 
     </script>
@@ -35,7 +47,7 @@
         </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="user2">
             {%for a in l2%}
-                <a class="dropdown-item" href="#{{a.categoria.id_categoria}}">{{a.categoria.nombre_categoria.capitalize}}</a>
+                <a class="dropdown-item" href="#{{a.categoria.id_categoria}}" > {{a.categoria.nombre_categoria.capitalize}}</a>
                 {%endfor%}
         </div>
         </li>
@@ -48,14 +60,15 @@
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
          {% for a in us %}
                 Usuario: {{a.username}}
-                {%endfor%}
+
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="user">
             <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/MiBiblioteca/','ni')">Mi biblioteca</a>
+            <h4>Saldo: {{a.saldo}}</h4>
           <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/saldo/','ni')">agregar Saldo</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/Logout/','ni')">cerrar sesion</a>
-        </div>
+        </div>{%endfor%}
 
       </li>
       </ul>
@@ -63,27 +76,14 @@
   </div>
 </nav>
 
-    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
 
 
-    <div class="collapse navbar-collapse" id="navbarColor03">
-      <ul class="navbar-nav mr-auto">
-        {%for a in l2%}
-        <li class="nav-item">
-          <a class="nav-link" href="#{{a.categoria.id_categoria}}">{{a.categoria.nombre_categoria.capitalize}}</a>
-        </li>
-        {%endfor%}
-      </ul>
 
-    </div>
-  </nav>
-<!--                   EJEMPLO PARA ENVIAR UN CORREO
-{%for a in us%}
-    <form action="/biblioteca/enviarEmail/{{a.username}}" method="get">
-        <button type="submit">Enviarmail</button>
-    </form>
--->
-{%endfor%}
+
+
+
+<div id="cont">
+
 
                 {% if estadoSaldo%}
                 alert({{estadoSaldo}})
@@ -102,8 +102,10 @@
 
                         <div class="container">
                                     <div class="div-img" >
-                                        <a href="javascript:pasarUsuario('/biblioteca/descripcionLibro/{{ a.libro.id_libro }}/','ni')"><img class="img" src="https://s3-eu-west-1.amazonaws.com/bucket.images.1/portadas/{{ a.libro.titulo_libro.split|join:'' }}.jpg" title="Foto10" alt="Foto10"></a>
-                                        <div class="text">{{a.libro.titulo_libro.capitalize}}</div>
+                                        <a href="javascript:pasarUsuario('/biblioteca/descripcionLibro/{{ a.libro.id_libro }}/','ni')">
+                                            <img class="img" src="https://s3-eu-west-1.amazonaws.com/bucket.images.1/portadas/{{ a.libro.titulo_libro.split|join:'' }}.jpg" title="Foto10" alt="Foto10">
+                                            <div class="text">{{a.libro.titulo_libro.capitalize}}</div>
+                                        </a>
                                     </div>
                                 </div>
 
@@ -118,8 +120,10 @@
                             {%if a.categoria.nombre_categoria == s.nombre_categoria%}
                                 <div class="container">
                                     <div class="div-img" >
-                                        <a href="javascript:pasarUsuario('/biblioteca/descripcionLibro/{{ a.id_libro }}/','ni')"><img class="img" src="https://s3-eu-west-1.amazonaws.com/bucket.images.1/portadas/{{ a.titulo_libro.split|join:'' }}.jpg" title="Foto10" alt="Foto10"></a>
-                                        <div class="text">{{a.titulo_libro.capitalize}}</div>
+                                        <a href="javascript:pasarUsuario('/biblioteca/descripcionLibro/{{ a.id_libro }}/','ni')">
+                                            <img class="img" src="https://s3-eu-west-1.amazonaws.com/bucket.images.1/portadas/{{ a.titulo_libro.split|join:'' }}.jpg" title="Foto10" alt="Foto10">
+                                            <div class="text">{{a.titulo_libro.capitalize}}</div>
+                                        </a>
                                     </div>
                                 </div>
                             {%endif%}
@@ -128,7 +132,7 @@
 
 
 
-
+</div>
 
 {%for a in us%}
 
