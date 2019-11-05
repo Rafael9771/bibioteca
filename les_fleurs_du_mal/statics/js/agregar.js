@@ -3,7 +3,7 @@ function cambiarValoresLibro() {
 
             arrVariables = cadVariables.split("/");
             var link = document.getElementById("cierre de sesion");
-            link.href="http://127.0.0.1:8000/biblioteca/er2/"+arrVariables[arrVariables.length-1]+"/";
+            link.href="/er2/"+arrVariables[arrVariables.length-1]+"/";
             var usuario = document.getElementById("btnUsuario");
             usuario.innerText=arrVariables[arrVariables.length-1];
 
@@ -48,7 +48,7 @@ function cambiarValores(opcion) {
 
             arrVariables = cadVariables.split("/");
             var link = document.getElementById("cierre de sesion");
-            link.href="http://127.0.0.1:8000/biblioteca/er2/"+arrVariables[arrVariables.length-1]+"/";
+            link.href="/er2/"+arrVariables[arrVariables.length-1]+"/";
             var usuario = document.getElementById("btnUsuario");
             usuario.innerText=arrVariables[arrVariables.length-1];
         var inputFModificacion = document.getElementById("id_fecha_modificacion_"+opcion);

@@ -1,6 +1,6 @@
 {% extends 'base/baseBuscar.html'%}
 {% block tituloNav %}CATEGORIAS{% endblock %}
-{% block regresar%}<a class="navbar-brand" href="/biblioteca/categorias">CATEGORIAS</a>{% endblock %}
+{% block regresar%}<a class="navbar-brand" href="/categorias">CATEGORIAS</a>{% endblock %}
 {% block formBuscar %}<form class="form-inline" id="formulario" action="#" onsubmit='return buscarNombre("categoria")' autocomplete="off">{% endblock %}
 
 
@@ -27,7 +27,7 @@
                     <td>{{a.fecha_modificacion_categoria}}
                     </td>
 					<td>
-                       <a id="EliminarCategoria{{a.id_categoria}}" class="btn btn-danger" href="http://127.0.0.1:8000/biblioteca/eliminar-categoria/{{a.id_categoria}}/">Eliminar</a>
+                       <a id="EliminarCategoria{{a.id_categoria}}" class="btn btn-danger" href="/eliminar-categoria/{{a.id_categoria}}/">Eliminar</a>
 					</td>
                     <td>
                         <a href="" class="btn btn-info" id="EditarCategoria{{a.id_categoria}}">Editar</a>
@@ -45,8 +45,8 @@ arrVariables = cadVariables.split("/");
 
                 {% if a.status_categoria.lower == 'a'%}
 
-                 document.getElementById("EditarCategoria{{a.id_categoria}}").href="http://127.0.0.1:8000/biblioteca/editar-categoria/{{a.id_categoria}}/"+arrVariables[arrVariables.length-1];
-                 document.getElementById("EliminarCategoria{{a.id_categoria}}").href="http://127.0.0.1:8000/biblioteca/eliminar-categoria/{{a.id_categoria}}/"+arrVariables[arrVariables.length-1];
+                 document.getElementById("EditarCategoria{{a.id_categoria}}").href="/editar-categoria/{{a.id_categoria}}/"+arrVariables[arrVariables.length-1];
+                 document.getElementById("EliminarCategoria{{a.id_categoria}}").href="/eliminar-categoria/{{a.id_categoria}}/"+arrVariables[arrVariables.length-1];
                 {%endif%}
             {%endfor%}
 </script>

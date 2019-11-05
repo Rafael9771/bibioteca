@@ -14,7 +14,7 @@ function link(){
 
             arrVariables = cadVariables.split("/");
             var link = document.getElementById("cierre de sesion");
-            link.href="http://127.0.0.1:8000/biblioteca/er2/"+arrVariables[arrVariables.length-1]+"/";
+            link.href="/er2/"+arrVariables[arrVariables.length-1]+"/";
             var ni=arrVariables[arrVariables.length-1];
             document.getElementById("btnUsuario").innerText=arrVariables[arrVariables.length-1];
 
@@ -27,9 +27,9 @@ function cambiarlink(){
             var usuario = document.getElementById("usuario");
             if(usuario.value != null || usuario.value != undefined){
                 us = usuario.value;
-                document.getElementById("cierre de sesion").href="http://127.0.0.1:8000/biblioteca/er2/"+us+"/";
+                document.getElementById("cierre de sesion").href="/er2/"+us+"/";
             }else{
-                location.href="http://127.0.0.1:8000/biblioteca";
+                location.href="/";
             }
 
 

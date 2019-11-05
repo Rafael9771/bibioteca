@@ -8,7 +8,7 @@ cadVariables = window.location.toString();
          var usuario = arrVariables[arrVariables.length-1];
 
         var inputBuscar = document.getElementById("buscar");
-        var busqueda = urlBuscar('/biblioteca/buscar-'+opcion+'/',inputBuscar.value.toLowerCase(),usuario);
+        var busqueda = urlBuscar('/buscar-'+opcion+'/',inputBuscar.value.toLowerCase(),usuario);
 
         formulario = document.getElementById("formulario");
         formulario.setAttribute('action',busqueda);

@@ -84,3 +84,8 @@ div{
   transform: translate(0px, -20px);
   opacity: 1;
 }
+
+#inicioAdminContenido{
+  position: relative;
+  top: 65px;
+}

@@ -9,43 +9,75 @@
     <script src="{% static 'js/jquery-3.4.1.min.js'%}"></script>
     <script src="{% static 'js/url.js'%}"></script>
     <script src="{% static 'js/saldo.js'%}"></script>
+
+    <style>
+    body {
+                content: "";
+                 background: url("{% static 'img/fondop.jpg'%}");
+                 background-attachment: fixed;
+
+
+           }
+           nav{
+           position: fixed;
+           }
+
+           #divSaldo::after {
+             content: "";
+             background: url("{% static 'img/blanco.jpg'%}");
+             opacity: 0.5;
+             top: 0;
+             left: 0;
+             bottom: 0;
+             right: 0;
+             position: absolute;
+             z-index: -1;
+            	height: auto;
+            	border-radius: 15px;
+           }
+
+
+
+        </style>
 </head>
 <body background="{% static '275.jpg'%}">
-<nav class="navbar navbar-dark bg-dark">
+ <nav class="navbar navbar-expand-lg navbar-light bg-light">
+         <a class="navbar-brand" href="javascript:pasarUsuario('/inicioS/','ni')">Inicio</a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
 
 
 
+    </ul>
+      <ul class="navbar-nav navbar-right">
 
 
+          <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         {% for a in us %}
+                Usuario: {{a.username}}
 
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="user">
+            <a class="dropdown-item" href="javascript:pasarUsuario('/MiBiblioteca/','ni')">Mi biblioteca</a>
+            <h4>Saldo: {{a.saldo}}</h4>
+          <a class="dropdown-item" href="javascript:pasarUsuario('/saldo/','ni')">agregar Saldo</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="javascript:pasarUsuario('/Logout/','ni')">cerrar sesion</a>
+        </div>{%endfor%}
 
-            <button class="navbar-toggler navbar-toggler-left" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="true" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>{% for a in us %}
-                {{a.username}}
-                {%endfor%}
-            </button>
-            <h1 style="color:white" id="biblio">BIBLIOTECA</h1>
-            <h1 style="color:white">{% block tituloNav %}BIENVENIDO{% endblock %}</h1>
-                <div class="navbar-collapse collapse" id="navbarColor01" style="">
-                    <ul class="navbar-nav mr-auto">
+      </li>
+      </ul>
 
-                        <li class="nav-item active">
-                            <a href="javascript:pasarUsuario('/biblioteca/saldo/','ni')">agregar Saldo</a>
-                        </li>
-
-                        <li class="nav-item active">
-                            <a href="javascript:pasarUsuario('/biblioteca/Logout/','ni')">cerrar sesion</a>
-                        </li>
-
-
-
-                    </ul>
-
-                </div>
-
-        </nav>
+  </div>
+</nav>
 <div id="divSaldo">
-    <form action="/biblioteca/agregarSaldo" method="get" id="formSaldo">
+    <form action="/agregarSaldo" method="get" id="formSaldo">
         {% csrf_token %}
         {% for a in us%}
             <h2 id="username">{{a.username}}</h2>
@@ -92,5 +124,9 @@ var comp='';
 </script>
 
     {%endfor%}
+
+<script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+        <script src="{% static 'js/popper.min.js'%}"></script>
+        <script src="{% static 'js/bootstrap.min.js'%}"></script>
 </body>
 </html>

@@ -41,7 +41,7 @@ function iniciodesesion(){//este metodo nos manda a generar el reporte de libros
 
         var cod = document.getElementById("codigoA");
 
-        var url = "/biblioteca/"+cod.value+"/er"
+        var url = "/"+cod.value+"/er"
         var formulario = document.getElementById("inicio");
 
         formulario.setAttribute('action',url);

@@ -21,7 +21,7 @@
                     </td>
 					<td>
                         {% for k in s %}
-                        <a id="EliminarAutor{{a.id_autor}}" class="btn btn-danger" href="http://127.0.0.1:8000/biblioteca/eliminar-autor/{{a.id_autor}}/">Eliminar</a>
+                        <a id="EliminarAutor{{a.id_autor}}" class="btn btn-danger" href="/eliminar-autor/{{a.id_autor}}/">Eliminar</a>
 
 					</td>
                     <td>
@@ -40,8 +40,8 @@ arrVariables = cadVariables.split("/");
 
                 {% if a.status_autor.lower == 'a'%}
 
-                 document.getElementById("EditarAutor{{a.id_autor}}").href="http://127.0.0.1:8000/biblioteca/editar-autor/{{a.id_autor}}/"+arrVariables[arrVariables.length-1];
-                 document.getElementById("EliminarAutor{{a.id_autor}}").href="http://127.0.0.1:8000/biblioteca/eliminar-autor/{{a.id_autor}}/"+arrVariables[arrVariables.length-1];
+                 document.getElementById("EditarAutor{{a.id_autor}}").href="/editar-autor/{{a.id_autor}}/"+arrVariables[arrVariables.length-1];
+                 document.getElementById("EliminarAutor{{a.id_autor}}").href="/eliminar-autor/{{a.id_autor}}/"+arrVariables[arrVariables.length-1];
                 {%endif%}
             {%endfor%}
 </script>

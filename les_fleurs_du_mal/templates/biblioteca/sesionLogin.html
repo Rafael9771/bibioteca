@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8" content="1;URL=http:127.0.0.1:8000/biblioteca/">
+        <meta charset="UTF-8" content="1;URL=http:127.0.0.1:8000/">
         <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
         <link rel="stylesheet" href="{% static 'css/fondo.css'%}">
         <link rel="stylesheet" href="{% static 'css/tabla.css'%}">
@@ -32,7 +32,7 @@
     </script>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-         <a class="navbar-brand" href="javascript:pasarUsuario('/biblioteca/inicioS/','ni')">Inicio</a>
+         <a class="navbar-brand" href="javascript:pasarUsuario('/inicioS/','ni')">Inicio</a>
 
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -63,11 +63,11 @@
 
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="user">
-            <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/MiBiblioteca/','ni')">Mi biblioteca</a>
+            <a class="dropdown-item" href="javascript:pasarUsuario('/MiBiblioteca/','ni')">Mi biblioteca</a>
             <h4>Saldo: {{a.saldo}}</h4>
-          <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/saldo/','ni')">agregar Saldo</a>
+          <a class="dropdown-item" href="javascript:pasarUsuario('/saldo/','ni')">agregar Saldo</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/Logout/','ni')">cerrar sesion</a>
+          <a class="dropdown-item" href="javascript:pasarUsuario('/Logout/','ni')">cerrar sesion</a>
         </div>{%endfor%}
 
       </li>
@@ -86,23 +86,30 @@
 
 
                 {% if estadoSaldo%}
-                alert({{estadoSaldo}})
+                    alert({{estadoSaldo}})
                 {%endif%}
                 {%if errorLoginStatus%}
 
-    <script>
-        alert("El usuario no ha iniciado sesion");
-        location.href="http://127.0.0.1:8000/biblioteca/inicioU/";
-    </script>
+                    <script>
+                        alert("El usuario no ha iniciado sesion");
+                        location.href="/inicio/";
+                    </script>
                 {%endif%}
 
+                {%if errorSesionSaldo%}
+
+                    <script>
+                        alert("El usuario no ha iniciado sesion");
+                        location.href="/inicio/";
+                    </script>
+                {%endif%}
                 {%if f%}
                     <h1 style="color:white">Favoritos</h1>
                     {%for a in f%}
 
                         <div class="container">
                                     <div class="div-img" >
-                                        <a href="javascript:pasarUsuario('/biblioteca/descripcionLibro/{{ a.libro.id_libro }}/','ni')">
+                                        <a href="javascript:pasarUsuario('/descripcionLibro/{{ a.libro.id_libro }}/','ni')">
                                             <img class="img" src="https://s3-eu-west-1.amazonaws.com/bucket.images.1/portadas/{{ a.libro.titulo_libro.split|join:'' }}.jpg" title="Foto10" alt="Foto10">
                                             <div class="text">{{a.libro.titulo_libro.capitalize}}</div>
                                         </a>
@@ -113,6 +120,20 @@
 
                 {%endif%}
 
+                {%if compras%}
+                     <h1 style="color:white">Compras</h1>
+                    {%for a in compras%}
+                      <div class="container">
+                                    <div class="div-img" >
+                                        <a href="javascript:pasarUsuario('/descripcionLibro/{{ a.libro.id_libro }}/','ni')">
+                                            <img class="img" src="https://s3-eu-west-1.amazonaws.com/bucket.images.1/portadas/{{ a.libro.titulo_libro.split|join:'' }}.jpg" title="Foto10" alt="Foto10">
+                                            <div class="text">{{a.libro.titulo_libro.capitalize}}</div>
+                                        </a>
+                                    </div>
+                                </div>
+                    {%endfor%}
+                {%endif%}
+
                     {%for s in c%}
                         {%load tz%}
                         <h1 style="color:white" id="{{s.id_categoria}}">{{s.nombre_categoria.capitalize}}</h1>
@@ -120,7 +141,7 @@
                             {%if a.categoria.nombre_categoria == s.nombre_categoria%}
                                 <div class="container">
                                     <div class="div-img" >
-                                        <a href="javascript:pasarUsuario('/biblioteca/descripcionLibro/{{ a.id_libro }}/','ni')">
+                                        <a href="javascript:pasarUsuario('/descripcionLibro/{{ a.id_libro }}/','ni')">
                                             <img class="img" src="https://s3-eu-west-1.amazonaws.com/bucket.images.1/portadas/{{ a.titulo_libro.split|join:'' }}.jpg" title="Foto10" alt="Foto10">
                                             <div class="text">{{a.titulo_libro.capitalize}}</div>
                                         </a>

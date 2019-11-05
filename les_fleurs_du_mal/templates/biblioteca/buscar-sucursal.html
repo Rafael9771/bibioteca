@@ -1,6 +1,6 @@
 {% extends 'base/baseBuscar.html'%}
 {% block tituloNav %}SUCURSALES{% endblock %}
-{% block regresar%}<a class="navbar-brand" href="/biblioteca/sucursales">SUCURSALES</a>{% endblock %}
+{% block regresar%}<a class="navbar-brand" href="/sucursales">SUCURSALES</a>{% endblock %}
 {% block formBuscar %}<form class="form-inline" id="formulario" action="#" onsubmit='return buscarNombre("sucursal")' autocomplete="off">{% endblock %}
 
 
@@ -44,7 +44,7 @@
                     <td>{{a.fecha_modificacion_sucursal}}
                     </td>
 					<td>
-                       <a id="EliminarSucursal{{a.id_sucursal}}" class="btn btn-danger" href="http://127.0.0.1:8000/biblioteca/eliminar-sucursal/{{a.id_sucursal}}/">Eliminar</a>
+                       <a id="EliminarSucursal{{a.id_sucursal}}" class="btn btn-danger" href="http://127.0.0.1:8000/eliminar-sucursal/{{a.id_sucursal}}/">Eliminar</a>
 					</td>
                     <td>
                         <a href="" class="btn btn-info" id="EditarSucursal{{a.id_sucursal}}">Editar</a>
@@ -61,8 +61,8 @@ arrVariables = cadVariables.split("/");
 
                 {% if a.status_sucursal.lower == 'a'%}
 
-                 document.getElementById("EditarSucursal{{a.id_sucursal}}").href="http://127.0.0.1:8000/biblioteca/editar-sucursal/{{a.id_sucursal}}/"+arrVariables[arrVariables.length-1];
-                 document.getElementById("EliminarSucursal{{a.id_sucursal}}").href="http://127.0.0.1:8000/biblioteca/eliminar-sucursal/{{a.id_sucursal}}/"+arrVariables[arrVariables.length-1];
+                 document.getElementById("EditarSucursal{{a.id_sucursal}}").href="http://127.0.0.1:8000/editar-sucursal/{{a.id_sucursal}}/"+arrVariables[arrVariables.length-1];
+                 document.getElementById("EliminarSucursal{{a.id_sucursal}}").href="http://127.0.0.1:8000/eliminar-sucursal/{{a.id_sucursal}}/"+arrVariables[arrVariables.length-1];
                 {%endif%}
             {%endfor%}
 </script>

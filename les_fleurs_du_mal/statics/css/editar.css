@@ -156,9 +156,15 @@
 
 
 
+#EditarContenido{
+	position: relative;
+	top: 65px;
+}
 
-
-
+nav{
+	position: relative;
+	top: 0px;
+}
 
 
 

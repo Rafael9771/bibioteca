@@ -13,7 +13,7 @@ function verfechas(opcion){//este metodo nos manda a generar el reporte de libro
 
         var fechainicial = document.getElementById("finicio").value;
         var fechafinal = document.getElementById("ffinal").value;
-        var url = "/biblioteca/reporte/"+opcion+"/"+fechainicial+"/"+fechafinal;
+        var url = "/reporte/"+opcion+"/"+fechainicial+"/"+fechafinal;
         var formulario = document.getElementById("fechas");
 
         formulario.setAttribute('action',url);
@@ -24,13 +24,13 @@ function verfechas(opcion){//este metodo nos manda a generar el reporte de libro
 
 function verReporteAutor_libro(){
         var op = document.getElementById("lib");
-        location.href="http://127.0.0.1:8000/biblioteca/reporte/autor-libro/"+op.value+"/"
+        location.href="/reporte/autor-libro/"+op.value+"/"
         }
 
         function verReporteAutor_nacionalidad(){
 
             var op = document.getElementById("nac");
-            location.href="http://127.0.0.1:8000/biblioteca/reporte/autor-nacionalidad/"+op.value+"/"
+            location.href="/reporte/autor-nacionalidad/"+op.value+"/"
 
         }
 
@@ -63,7 +63,7 @@ function verReporteAutor_libro(){
 
             arrVariables = cadVariables.split("/");
             var link = document.getElementById("cierre de sesion");
-            link.href="http://127.0.0.1:8000/biblioteca/er2/"+arrVariables[arrVariables.length-1]+"/";
+            link.href="/er2/"+arrVariables[arrVariables.length-1]+"/";
             var ni=arrVariables[arrVariables.length-1];
             document.getElementById("btnUsuario").innerText=arrVariables[arrVariables.length-1];
 
@@ -79,7 +79,7 @@ function verReporteAutor_libro(){
 
             arrVariables = cadVariables.split("/");
             var link = document.getElementById("cierre de sesion");
-            link.href="http://127.0.0.1:8000/biblioteca/er2/"+arrVariables[arrVariables.length-1]+"/";
+            link.href="/er2/"+arrVariables[arrVariables.length-1]+"/";
             var ni=arrVariables[arrVariables.length-1];
             document.getElementById("btnUsuario").innerText=arrVariables[arrVariables.length-1];
 
@@ -100,7 +100,7 @@ function cal2(){
 
             arrVariables = cadVariables.split("/");
             var link = document.getElementById("cierre de sesion");
-            link.href="http://127.0.0.1:8000/biblioteca/er2/"+arrVariables[arrVariables.length-1]+"/";
+            link.href="/er2/"+arrVariables[arrVariables.length-1]+"/";
             var ni=arrVariables[arrVariables.length-1];
             document.getElementById("btnUsuario").innerText=arrVariables[arrVariables.length-1];
 
@@ -137,20 +137,20 @@ function cal2(){
 
         function vercategoria(){
         var op = document.getElementById("select");
-        location.href="http://127.0.0.1:8000/biblioteca/reporte/libro-categoria/"+op.value+"/"
+        location.href="/reporte/libro-categoria/"+op.value+"/"
 
         }
 
         function verautor(){
         var op = document.getElementById("au");
-        location.href="http://127.0.0.1:8000/biblioteca/reporte/libro-autor/"+op.value+"/"
+        location.href="/reporte/libro-autor/"+op.value+"/"
         }
 
         function desactivarC(){
 
 
             var link = document.getElementById("cierre de sesion");
-            link.href="http://127.0.0.1:8000/biblioteca/er2/"+encontrarusuario()+"/";
+            link.href="/er2/"+encontrarusuario()+"/";
 
             document.getElementById("btnUsuario").innerText=encontrarusuario();
 
@@ -174,7 +174,7 @@ function calR(){
 
             arrVariables = cadVariables.split("/");
             var link = document.getElementById("cierre de sesion");
-            link.href="http://127.0.0.1:8000/biblioteca/er2/"+arrVariables[arrVariables.length-1]+"/";
+            link.href="/er2/"+arrVariables[arrVariables.length-1]+"/";
             var ni=arrVariables[arrVariables.length-1];
             document.getElementById("btnUsuario").innerText=arrVariables[arrVariables.length-1];
 
@@ -210,7 +210,7 @@ function calR(){
 
 
             var link = document.getElementById("cierre de sesion");
-            link.href="http://127.0.0.1:8000/biblioteca/er2/"+encontrarusuario()+"/";
+            link.href="/er2/"+encontrarusuario()+"/";
 
             document.getElementById("btnUsuario").innerText=encontrarusuario();
 
@@ -225,7 +225,7 @@ function calR(){
 
         function vercategoriaR(){
         var op = document.getElementById("select");
-        location.href="http://127.0.0.1:8000/biblioteca/reporte/revista-categoria/"+op.value+"/"
+        location.href="/reporte/revista-categoria/"+op.value+"/"
 
         }
 
@@ -233,12 +233,12 @@ function calR(){
 
         function verReporteLibro_sucursal(){
         var op = document.getElementById("sucursal");
-        location.href="http://127.0.0.1:8000/biblioteca/reporte/sucursal-libro/"+op.value+"/"
+        location.href="/reporte/sucursal-libro/"+op.value+"/"
         }
 
         function cerrarsesion(){
             var link = document.getElementById("cierre de sesion");
-            link.href="http://127.0.0.1:8000/biblioteca/er2/"+encontrarusuario()+"/";
+            link.href="/er2/"+encontrarusuario()+"/";
 
             document.getElementById("btnUsuario").innerText=encontrarusuario();
         }

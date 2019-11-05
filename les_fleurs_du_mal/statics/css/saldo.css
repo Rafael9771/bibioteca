@@ -3,7 +3,8 @@
 	width: 30%;
 	left: 35%;
 	height: 500px;
-	background-color: white;
+	top: 75px;
+	border-radius: 15px;
 }
 
 h2{

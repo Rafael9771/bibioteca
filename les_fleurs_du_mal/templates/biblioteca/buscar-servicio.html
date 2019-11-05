@@ -1,6 +1,6 @@
 {% extends 'base/baseBuscar.html'%}
 {% block tituloNav %}SERVICIOS{% endblock %}
-{% block regresar%}<a class="navbar-brand" href="/biblioteca/servicios">SUCURSALES</a>{% endblock %}
+{% block regresar%}<a class="navbar-brand" href="/servicios">SUCURSALES</a>{% endblock %}
 {% block formBuscar %}<form class="form-inline" id="formulario" action="#" onsubmit='return buscarNombre("servicio")' autocomplete="off">{% endblock %}
 
 
@@ -29,7 +29,7 @@
                     <td>{{a.fecha_modificacion_servicio}}
                     </td>
 					<td>
-                       <a id="EliminarServicio{{a.id_servicio}}" class="btn btn-danger" href="http://127.0.0.1:8000/biblioteca/eliminar-servicio/{{a.id_servicio}}/">Eliminar</a>
+                       <a id="EliminarServicio{{a.id_servicio}}" class="btn btn-danger" href="/eliminar-servicio/{{a.id_servicio}}/">Eliminar</a>
 					</td>
                     <td>
                         <a href="" class="btn btn-info" id="EditarServicio{{a.id_servicio}}">Editar</a>
@@ -46,8 +46,8 @@ arrVariables = cadVariables.split("/");
 
                 {% if a.status_servicio.lower == 'a'%}
 
-                 document.getElementById("EditarServicio{{a.id_servicio}}").href="http://127.0.0.1:8000/biblioteca/editar-servicio/{{a.id_servicio}}/"+arrVariables[arrVariables.length-1];
-                 document.getElementById("EliminarServicio{{a.id_servicio}}").href="http://127.0.0.1:8000/biblioteca/eliminar-servicio/{{a.id_servicio}}/"+arrVariables[arrVariables.length-1];
+                 document.getElementById("EditarServicio{{a.id_servicio}}").href="/editar-servicio/{{a.id_servicio}}/"+arrVariables[arrVariables.length-1];
+                 document.getElementById("EliminarServicio{{a.id_servicio}}").href="/eliminar-servicio/{{a.id_servicio}}/"+arrVariables[arrVariables.length-1];
                 {%endif%}
             {%endfor%}
 </script>

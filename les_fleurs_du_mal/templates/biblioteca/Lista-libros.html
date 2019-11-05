@@ -72,7 +72,7 @@
                     <td>{{a.fecha_modificacion_libro}}
                     </td>
 					<td>
-                       <a id="EliminarLibro{{a.id_libro}}" class="btn btn-danger" href="http://127.0.0.1:8000/biblioteca/eliminar-libro/{{a.id_libro}}/">Eliminar</a>
+                       <a id="EliminarLibro{{a.id_libro}}" class="btn btn-danger" href="/eliminar-libro/{{a.id_libro}}/">Eliminar</a>
 					</td>
                     <td>
                         <a href="" class="btn btn-info" id="EditarLibro{{a.id_libro}}">Editar</a>
@@ -90,8 +90,8 @@ arrVariables = cadVariables.split("/");
 
                 {% if a.status_libro.lower == 'a'%}
 
-                 document.getElementById("EditarLibro{{a.id_libro}}").href="http://127.0.0.1:8000/biblioteca/editar-libro/{{a.id_libro}}/"+arrVariables[arrVariables.length-1];
-                 document.getElementById("EliminarLibro{{a.id_libro}}").href="http://127.0.0.1:8000/biblioteca/eliminar-libro/{{a.id_libro}}/"+arrVariables[arrVariables.length-1];
+                 document.getElementById("EditarLibro{{a.id_libro}}").href="/editar-libro/{{a.id_libro}}/"+arrVariables[arrVariables.length-1];
+                 document.getElementById("EliminarLibro{{a.id_libro}}").href="/eliminar-libro/{{a.id_libro}}/"+arrVariables[arrVariables.length-1];
                 {%endif%}
             {%endfor%}
 </script>

@@ -30,19 +30,17 @@
       <div class="navbar-collapse collapse" id="navbarColor01" style="">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="javascript:pasarUsuario('/biblioteca/inicioA/','ni')">Inicio <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="javascript:pasarUsuario('/inicioA/','ni')">Inicio <span class="sr-only">(current)</span></a>
       </li>
         <li class="nav-item">
 
           <div class="btn-group dropright">
                 <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {% for a in l%}
-                     {{a.username}}
-
-
+                    {%if uA%}
+                    {{uA.username}}
                 </button>
                 <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
-                   <a href="http://127.0.0.1:8000/biblioteca/f/" id="cierre de sesion">Cerrar Sesion</a>
+                   <a href="/f/" id="cierre de sesion">Cerrar Sesion</a>
 
                 </div>
             </div>
@@ -54,8 +52,8 @@
                     Libros
                 </button>
                 <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a class="dropdown-item" href="javascript:pasarVariables('/biblioteca/libros/','ni')">Ver</a>
-                    <a class="dropdown-item" href="javascript:pasarVariables('/biblioteca/libro/add/','ni')">Agregar</a>
+                    <a class="dropdown-item" href="javascript:pasarVariables('/libros/','ni')">Ver</a>
+                    <a class="dropdown-item" href="javascript:pasarVariables('/libro/add/','ni')">Agregar</a>
                 </div>
             </div>
       </li>
@@ -65,8 +63,8 @@
                     Autores
                 </button>
                 <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a class="dropdown-item" href="javascript:pasarVariables('/biblioteca/autores/','ni')">Ver</a>
-                    <a class="dropdown-item" href="javascript:pasarVariables('/biblioteca/autor/add/','ni')">Agregar</a>
+                    <a class="dropdown-item" href="javascript:pasarVariables('/autores/','ni')">Ver</a>
+                    <a class="dropdown-item" href="javascript:pasarVariables('/autor/add/','ni')">Agregar</a>
                 </div>
             </div>
       </li>
@@ -77,8 +75,8 @@
                    Categorias
                 </button>
                 <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a class="dropdown-item" href="javascript:pasarVariables('/biblioteca/categorias/','ni')">Ver</a>
-                    <a class="dropdown-item" href="javascript:pasarVariables('/biblioteca/categoria/add/','ni')">Agregar</a>
+                    <a class="dropdown-item" href="javascript:pasarVariables('/categorias/','ni')">Ver</a>
+                    <a class="dropdown-item" href="javascript:pasarVariables('/categoria/add/','ni')">Agregar</a>
                 </div>
             </div>
       </li>
@@ -89,8 +87,8 @@
                     Editoriales
                 </button>
                 <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a class="dropdown-item" href="javascript:pasarVariables('/biblioteca/editoriales/','ni')">Ver</a>
-                    <a class="dropdown-item" href="javascript:pasarVariables('/biblioteca/editorial/add/','ni')">Agregar</a>
+                    <a class="dropdown-item" href="javascript:pasarVariables('/editoriales/','ni')">Ver</a>
+                    <a class="dropdown-item" href="javascript:pasarVariables('/editorial/add/','ni')">Agregar</a>
                 </div>
             </div>
       </li>
@@ -101,8 +99,8 @@
                     Revistas
                 </button>
                 <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a class="dropdown-item" href="javascript:pasarVariables('/biblioteca/revistas/','ni')">Ver</a>
-                    <a class="dropdown-item" href="javascript:pasarVariables('/biblioteca/revista/add/','ni')">Agregar</a>
+                    <a class="dropdown-item" href="javascript:pasarVariables('/revistas/','ni')">Ver</a>
+                    <a class="dropdown-item" href="javascript:pasarVariables('/revista/add/','ni')">Agregar</a>
                 </div>
             </div>
       </li>
@@ -112,8 +110,8 @@
                     Sucursales
                 </button>
                 <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a class="dropdown-item" href="javascript:pasarVariables('/biblioteca/sucursales/','ni')'">Ver</a>
-                    <a class="dropdown-item" href="javascript:pasarVariables('/biblioteca/sucursal/add/','ni')">Agregar</a>
+                    <a class="dropdown-item" href="javascript:pasarVariables('/sucursales/','ni')'">Ver</a>
+                    <a class="dropdown-item" href="javascript:pasarVariables('/sucursal/add/','ni')">Agregar</a>
                 </div>
             </div>
       </li>
@@ -123,8 +121,8 @@
                     Servicios
                 </button>
                 <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a class="dropdown-item" href="javascript:pasarVariables('/biblioteca/servicios/','ni')'">Ver</a>
-                    <a class="dropdown-item" href="javascript:pasarVariables('/biblioteca/servicio/add/','ni')">Agregar</a>
+                    <a class="dropdown-item" href="javascript:pasarVariables('/servicios/','ni')'">Ver</a>
+                    <a class="dropdown-item" href="javascript:pasarVariables('/servicio/add/','ni')">Agregar</a>
                 </div>
             </div>
       </li>
@@ -134,9 +132,9 @@
                     Reportes
                 </button>
                 <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/reportesC/','ni')">Libros</a>
+                    <a class="dropdown-item" href="javascript:pasarUsuario('/reportesC/','ni')">Libros</a>
                     <a class="dropdown-item" href="#">Revistas</a>
-                    <a class="dropdown-item" href="javascript:pasarVariables('/biblioteca/reportes-Autores/','ni')">Autores</a>
+                    <a class="dropdown-item" href="javascript:pasarVariables('/reportes-Autores/','ni')">Autores</a>
                     <a class="dropdown-item" href="#">Sucursales</a>
                 </div>
             </div>
@@ -148,7 +146,156 @@
   </div>
 
     </nav>
+<div id="inicioAdminContenido">
+<script>
 
+var ni="{{uA.username}}";
+var nombre='';
+var comp='';
+    function pasarVariables(pagina, nombres) {
+
+  nomVec = nombres.split(",");
+  for (i=0; i<nomVec.length; i++){
+    nombre = eval(nomVec[i]);
+    comp = nomVec[i] + "=" + escape(eval(nomVec[i]))+"&";
+    }
+  pagina +=nombre
+  pagina = pagina.substring(0,pagina.length);
+  location.href=pagina;
+}
+</script>
+
+{%for s in c%}
+    {%load tz%}
+    <h1 style="color:white">{{s.nombre_categoria.capitalize}}</h1>
+    {%for a in l2%}
+        {%if a.categoria.nombre_categoria == s.nombre_categoria%}
+            <div class="container">
+                <div class="div-img" >
+                    <a href="/mostrarlibro/{{ a.titulo_libro }}/{{ a.vistas }}"><img class="img" src="https://s3-eu-west-1.amazonaws.com/bucket.images.1/portadas/{{ a.titulo_libro.split|join:'' }}.jpg" title="Foto10" alt="Foto10"></a>
+                    <div class="text">{{a.titulo_libro.capitalize}}</div>
+                </div>
+            </div>
+        {%endif%}
+    {%endfor%}
+{%endfor%}
+
+<input type="hidden" id="usuario" value="{{uA.username}}">
+
+                    {%else%}
+                    {% for a in l%}
+                     {{a.username}}
+
+
+                </button>
+                <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+                   <a href="/f/" id="cierre de sesion">Cerrar Sesion</a>
+
+                </div>
+            </div>
+      </li>
+      <li class="nav-item">
+
+          <div class="btn-group dropright">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Libros
+                </button>
+                <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    <a class="dropdown-item" href="javascript:pasarVariables('/libros/','ni')">Ver</a>
+                    <a class="dropdown-item" href="javascript:pasarVariables('/libro/add/','ni')">Agregar</a>
+                </div>
+            </div>
+      </li>
+      <li class="nav-item">
+          <div class="btn-group dropright">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Autores
+                </button>
+                <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    <a class="dropdown-item" href="javascript:pasarVariables('/autores/','ni')">Ver</a>
+                    <a class="dropdown-item" href="javascript:pasarVariables('/autor/add/','ni')">Agregar</a>
+                </div>
+            </div>
+      </li>
+      <li class="nav-item">
+
+          <div class="btn-group dropright">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                   Categorias
+                </button>
+                <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    <a class="dropdown-item" href="javascript:pasarVariables('/categorias/','ni')">Ver</a>
+                    <a class="dropdown-item" href="javascript:pasarVariables('/categoria/add/','ni')">Agregar</a>
+                </div>
+            </div>
+      </li>
+        <li class="nav-item">
+
+            <div class="btn-group dropright">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Editoriales
+                </button>
+                <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    <a class="dropdown-item" href="javascript:pasarVariables('/editoriales/','ni')">Ver</a>
+                    <a class="dropdown-item" href="javascript:pasarVariables('/editorial/add/','ni')">Agregar</a>
+                </div>
+            </div>
+      </li>
+        <li class="nav-item">
+
+            <div class="btn-group dropright">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Revistas
+                </button>
+                <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    <a class="dropdown-item" href="javascript:pasarVariables('/revistas/','ni')">Ver</a>
+                    <a class="dropdown-item" href="javascript:pasarVariables('/revista/add/','ni')">Agregar</a>
+                </div>
+            </div>
+      </li>
+        <li class="nav-item">
+            <div class="btn-group dropright">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Sucursales
+                </button>
+                <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    <a class="dropdown-item" href="javascript:pasarVariables('/sucursales/','ni')'">Ver</a>
+                    <a class="dropdown-item" href="javascript:pasarVariables('/sucursal/add/','ni')">Agregar</a>
+                </div>
+            </div>
+      </li>
+        <li class="nav-item">
+            <div class="btn-group dropright">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Servicios
+                </button>
+                <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    <a class="dropdown-item" href="javascript:pasarVariables('/servicios/','ni')'">Ver</a>
+                    <a class="dropdown-item" href="javascript:pasarVariables('/servicio/add/','ni')">Agregar</a>
+                </div>
+            </div>
+      </li>
+        <li class="nav-item">
+            <div class="btn-group dropright">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Reportes
+                </button>
+                <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    <a class="dropdown-item" href="javascript:pasarUsuario('/reportesC/','ni')">Libros</a>
+                    <a class="dropdown-item" href="#">Revistas</a>
+                    <a class="dropdown-item" href="javascript:pasarVariables('/reportes-Autores/','ni')">Autores</a>
+                    <a class="dropdown-item" href="#">Sucursales</a>
+                </div>
+            </div>
+        </li>
+
+
+    </ul>
+
+  </div>
+
+    </nav>
+<div id="inicioAdminContenido">
 <script>
 
 var ni="{{a.username}}";
@@ -174,7 +321,7 @@ var comp='';
         {%if a.categoria.nombre_categoria == s.nombre_categoria%}
             <div class="container">
                 <div class="div-img" >
-                    <a href="http://127.0.0.1:8000/biblioteca/mostrarlibro/{{ a.titulo_libro }}/{{ a.vistas }}"><img class="img" src="https://s3-eu-west-1.amazonaws.com/bucket.images.1/portadas/{{ a.titulo_libro.split|join:'' }}.jpg" title="Foto10" alt="Foto10"></a>
+                    <a href="/mostrarlibro/{{ a.titulo_libro }}/{{ a.vistas }}"><img class="img" src="https://s3-eu-west-1.amazonaws.com/bucket.images.1/portadas/{{ a.titulo_libro.split|join:'' }}.jpg" title="Foto10" alt="Foto10"></a>
                     <div class="text">{{a.titulo_libro.capitalize}}</div>
                 </div>
             </div>
@@ -184,8 +331,8 @@ var comp='';
 
 <input type="hidden" id="usuario" value="{{a.username}}">
 {%endfor%}
-
-
+    {%endif%}
+</div>>
 
 <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
     <script src="{% static 'js/popper.min.js'%}"></script>

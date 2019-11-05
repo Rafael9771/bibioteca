@@ -125,6 +125,7 @@ class login(models.Model):
     nombre = models.CharField('nombre', blank=False, max_length=20)
     apellido_paterno = models.CharField('apellido_paterno', blank=False, max_length=15)
     apellido_materno = models.CharField('apellido_materno', blank=True, max_length=15)
+    email = models.EmailField
     username = models.CharField('username', blank=False, max_length=20)
     password = models.CharField('password', blank=False, max_length=20)
     saldo = models.IntegerField('saldo', blank=False, default=0)

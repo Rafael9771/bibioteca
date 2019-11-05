@@ -1,79 +1,13 @@
-{% load staticfiles %}
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
 </head>
 <body>
-<table border="0.5">
-    <thead>
-    <th>Nombre</th>
-    <th>Nacionalidad</th>
-    </thead>
-    <tbody>
-
-{% for a in l%}
-
-        <tr>
-        <td>{{a.nombre_autor.capitalize}}{{" "}}{{a.apellidos_autor.capitalize}}</td>
-        <td>{{a.nacionalidad_autor.capitalize}}</td>
-        </tr>
-{%endfor%}
-
-    </tbody>
-</table>
-
-<h1>Libros</h1>
-
-<table border="0.5">
-    <thead>
-    <th>N</th>
-    <th>Nacionalidad</th>
-    </thead>
-    <tbody>
-
-{% for a in l2%}
-
-        <tr>
-					<td>
-						{{a.titulo_libro.capitalize}}
-					</td>
-					<td>
-						{{a.autor.nombre_autor.capitalize}}{{" "}}{{a.autor.apellidos_autor.capitalize}}
-					</td>
-                    <td>{{a.categoria.nombre_categoria.capitalize}}
-                    </td>
-                    <td>
-						{{a.editorial.nombre_editorial.capitalize}}
-					</td>
-                    <td>
-						{{a.no_paginas_libro}}
-					</td>
-                    <td>
-                        <p>
-                    {% for u in a.sucursal.all %}
-                        {% if u.status_sucursal.lower == 'a'%}
-                        {{u}},
-                            {% endif %}
-
-                    {% endfor %}
-                        </p>
-                    </td>
-                    <td>
-
-                        {{a.fecha_creacion_libro}}
-
-                    </td>
-                    <td>{{a.fecha_modificacion_libro}}
-                    </td>
-        </tr>
-{%endfor%}
-
-    </tbody>
-</table>
-<h1>{{n}}</h1>
-
-<img src="{% static '275.jpg'%}" alt="">
+<h1>Holi</h1>
 </body>
 </html>

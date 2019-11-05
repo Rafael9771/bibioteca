@@ -19,7 +19,7 @@
         {%if a.categoria.nombre_categoria == s.nombre_categoria%}
             <div class="container">
                 <div class="div-img" >
-                    <a href="http://127.0.0.1:8000/biblioteca/mostrarlibro/{{ a.titulo_libro }}/{{ a.vistas }}"><img class="img" src="https://s3-eu-west-1.amazonaws.com/bucket.images.1/portadas/{{ a.titulo_libro.split|join:'' }}.jpg" title="Foto10" alt="Foto10"></a>
+                    <a href="/mostrarlibro/{{ a.titulo_libro }}/{{ a.vistas }}"><img class="img" src="https://s3-eu-west-1.amazonaws.com/bucket.images.1/portadas/{{ a.titulo_libro.split|join:'' }}.jpg" title="Foto10" alt="Foto10"></a>
                     <div class="text" >{{a.titulo_libro.capitalize}}</div>
                 </div>
             </div>

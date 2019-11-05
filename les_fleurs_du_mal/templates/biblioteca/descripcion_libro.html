@@ -39,7 +39,7 @@
 
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-         <a class="navbar-brand" href="javascript:pasarUsuario('/biblioteca/inicioS/','ni')">Inicio</a>
+         <a class="navbar-brand" href="javascript:pasarUsuario('/inicioS/','ni')">Inicio</a>
 
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -54,28 +54,32 @@
         </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="user2">
             {%for a in l2%}
-                <a class="dropdown-item" href="/biblioteca/inicioS/{{u.username}}#{{a.categoria.id_categoria}}" > {{a.categoria.nombre_categoria.capitalize}}</a>
+                <a class="dropdown-item" href="/inicioS/{{u.username}}#{{a.categoria.id_categoria}}" > {{a.categoria.nombre_categoria.capitalize}}</a>
                 {%endfor%}
         </div>
             {%endfor%}
         </li>
 
     </ul>
+      <ul id="espacio">
+
+      </ul>
     <ul class="navbar-nav mr-auto" id="usuario">
         <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
          {% for a in us %}
                 {{a.username}}
-                {%endfor%}
+
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="user">
-            <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/MiBiblioteca/','ni')">Mi biblioteca</a>
-          <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/saldo/','ni')">agregar Saldo</a>
+            <a class="dropdown-item" href="javascript:pasarUsuario('/MiBiblioteca/','ni')">Mi biblioteca</a>
+            <h4>Saldo: {{a.saldo}}</h4>
+          <a class="dropdown-item" href="javascript:pasarUsuario('/saldo/','ni')">agregar Saldo</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="javascript:pasarUsuario('/biblioteca/Logout/','ni')">cerrar sesion</a>
+          <a class="dropdown-item" href="javascript:pasarUsuario('/Logout/','ni')">cerrar sesion</a>
         </div>
       </li>
-
+{%endfor%}
     </ul>
 
 
@@ -102,11 +106,11 @@
 
 
                     <h2 id="locomprado">Comprado</h2>
-                    <a href="/biblioteca/mostrarlibro/{{ a.titulo_libro }}/{{ a.vistas }}"><img src="{% static 'img/leer.png'%}" alt="" title="holi"> <h6>Ver</h6></a>
+                    <a href="/mostrarlibro/{{ a.titulo_libro }}/{{ a.vistas }}"><img src="{% static 'img/leer.png'%}" alt="" title="holi"> <h6>Ver</h6></a>
                 {%else%}
                     <h2 id="loprecio">Precio: {{a.costo}}</h2>
                     <button onclick="">Ver prueba</button>
-                    <form action="http://127.0.0.1:8000/biblioteca/comprar" method="get" id="compra">
+                    <form action="/comprar" method="get" id="compra">
                         <input type="hidden" value="{{a.costo}}" name="costo" id="costo">
                         {% for s in us%}
                             <input type="hidden" value="{{s.saldo}}" name="saldo" id="saldo">
@@ -121,7 +125,7 @@
                             <h2 id="lofavorito">Agregado a favorito</h2>
 
                         {%else%}
-                            <form  action="http://127.0.0.1:8000/biblioteca/fav" method="get">
+                            <form  action="/fav" method="get">
                                 {% for u in us %}
                                     {% csrf_token %}
                                     <input type="hidden" value="{{a.id_libro}}" name="libro">
@@ -151,7 +155,7 @@
 
     <div id="comentar">
         {% for u in us %}
-            <form  action="http://127.0.0.1:8000/biblioteca/comentar" method="get">
+            <form  action="/comentar" method="get">
                 {% csrf_token %}
                 <input type="hidden" value="{{a.id_libro}}" id="id_libro" name="libro">
 

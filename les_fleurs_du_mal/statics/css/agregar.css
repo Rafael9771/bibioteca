@@ -128,7 +128,10 @@
 }
 /*fin form*/
 
-
+#AgregarContenido{
+	position: relative;
+	top: 75px;
+}
 
 /*boton agregar*/
 #btnAgregar{

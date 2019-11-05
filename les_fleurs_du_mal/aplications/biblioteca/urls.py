@@ -64,12 +64,14 @@ urlpatterns = [
     re_path('js', views.script.as_view(), name="js"),
 
     path('admin/<ca>', views.registro.as_view(), name="sd"),
+    path('admin', views.ErrorUrlAdmin.as_view(), name="ErrorAdminSinCA"),
+    path('admin/', views.ErrorUrlAdmin.as_view(), name="ErrorAd"),
 
     path('<ca>/er', views.errorsesion.as_view(), name="errorsesion"),
     path('er2/<cs>/', views.errorsesion2.as_view(), name="er2"),
     path('inicioA/<un>', views.Inicio.as_view(), name="index"),
 
-    path('inicio/', views.inicioLogin.as_view(), name='inicioLogin'),
+    path('', views.inicioLogin.as_view(), name='inicioLogin'),
     path('errorLogin', views.errorLogin.as_view(), name="errorLogin"),
     path('login/add', views.addLogin.as_view(), name="addLogin"),
     path('inicioS/<us>', views.sesionLogin.as_view(), name='sesionLogin'),

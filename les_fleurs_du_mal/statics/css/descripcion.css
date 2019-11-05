@@ -9,7 +9,17 @@
 	
 }
 
+h4{
+	position: relative;
+	font-size: 20px;
+	left: 24px;
+	margin-top: 5px;
+}
 
+#espacio{
+	position: relative;
+	margin-right: 1500px;
+}
 
 #navCategorias {
 	background-color: #343a40;

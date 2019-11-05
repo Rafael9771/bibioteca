@@ -1,4 +1,4 @@
-{% extends 'base/baseAgregar.html' %}
+﻿{% extends 'base/baseAgregar.html' %}
 {% load staticfiles %}
 {% block bodyAdd %}
 <body  onload="cambiarValoresUsuarioLogin()" background="{% static '275.jpg'%}">{% endblock %}
@@ -6,13 +6,13 @@
 {%if errorTamanioContra%}
 <script>
     alert("La contraseña debe de ser de almenos 8 caracteres");
-    location.href="http://127.0.0.1:8000/biblioteca/login/add";
+    location.href="/login/add";
 </script>
 
 {%elif ErrorLoginExist%}
 <script>
     alert("Error el usuario ya existe");
-    location.href="http://127.0.0.1:8000/biblioteca/login/add";
+    location.href="/login/add";
 </script>
 {%endif%}
 {%endblock%}

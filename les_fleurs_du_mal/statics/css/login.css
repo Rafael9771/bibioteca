@@ -4,6 +4,16 @@ margin-left: 30px;
 color: white;
 }
 
+#incioLoginContenido{
+	position: relative;
+	top: 65px;
+}
+
+#indexContenido{
+	position: relative;
+	top: 65px;
+}
+
 #biblio{
 }
 .input{
