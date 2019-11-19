@@ -5,3 +5,46 @@
 {%block agregar%}USUARIO{%endblock%}
 {%block nav%}{%endblock%}
 {% block onclick %} onclick="" {% endblock %}
+{%block errorUsuarioAdmin%}
+<h3 id="ErrorAdmin">Usuario Existente</h3>
+{%endblock%}
+{%block ajax%}
+<script>
+document.getElementById("ErrorAdmin").style.display = 'none';
+$("#id_username").val(1);
+ban = false;
+        $("#id_username").keyup(function () {
+            var username = $("#id_username").val();
+            console.log( username );
+          $.ajax({
+            url: '/ajax/validate_usernameAdmin',
+            data: {
+              'username': username
+            },
+            dataType: 'json',
+            success: function (data) {
+              if (data.is_taken) {
+                document.getElementById("ErrorAdmin").style.display = 'block';
+
+                ban=true;
+
+              }else{
+              ban=false
+              document.getElementById("ErrorAdmin").style.display = 'none';
+
+              }
+            }
+          });
+        });
+        $("#btnAgregar").click(function () {
+            if(ban){
+                $("#agregar").on('submit', function(evt){
+                    evt.preventDefault();
+                    alert("El usuario ya existe"    );
+                });
+            }
+        });
+
+
+</script>
+    {%endblock%}

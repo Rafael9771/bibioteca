@@ -156,7 +156,8 @@
             <form method="post" id="agregar" autocomplete="off">{% csrf_token %}
                 {{ form.as_p}}
                 <button type="submit" name="button" class="btn btn-primary" id="btnAgregar" {% block onclick %} onclick="lowerT()" {% endblock %}>Guardar</button>
-
+                {%block errorUsuarioAdmin%}
+                {%endblock%}
 
             </form>
 
@@ -167,10 +168,13 @@
         {% block alerta%}
 
         {%endblock%}
+
 </div>
         <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
             <script src="{% static 'js/popper.min.js'%}"></script>
             <script src="{% static 'js/bootstrap.min.js'%}"></script>
+    {%block ajax%}
+    {%endblock%}
     </body>
 
 </html>

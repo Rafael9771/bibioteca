@@ -32,6 +32,15 @@ function agregarCodigoAdmin(){
      var cod = document.getElementById("codigoA");
      cod.value=encontrarcodigo();
      document.getElementById("codigoA").readOnly = true;
+     var formulario = document.getElementById("inicio");
+     if(cod.value == "Omegha"){
+        formulario.setAttribute('action', 'admin1');
+
+     }else{
+        formulario.setAttribute('action', 'er');
+
+     }
+
 
 }
 

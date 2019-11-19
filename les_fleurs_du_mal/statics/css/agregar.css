@@ -125,12 +125,24 @@
 		height:auto;
 		border-radius:20px;
 		margin-bottom:10px;
+		height: 20%;
+		padding-top: 10px;
 }
 /*fin form*/
 
 #AgregarContenido{
 	position: relative;
 	top: 75px;
+}
+
+#ErrorAdmin{
+	color: red;
+	position: relative;
+	margin-top: -35px;
+	margin-bottom: -35px;
+	left: 650px;
+	bottom: 140px;
+
 }
 
 /*boton agregar*/

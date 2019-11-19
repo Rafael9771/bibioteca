@@ -67,7 +67,7 @@ urlpatterns = [
     path('admin', views.ErrorUrlAdmin.as_view(), name="ErrorAdminSinCA"),
     path('admin/', views.ErrorUrlAdmin.as_view(), name="ErrorAd"),
 
-    path('<ca>/er', views.errorsesion.as_view(), name="errorsesion"),
+    path('er', views.errorsesion.as_view(), name="errorsesion"),
     path('er2/<cs>/', views.errorsesion2.as_view(), name="er2"),
     path('inicioA/<un>', views.Inicio.as_view(), name="index"),
 
@@ -84,6 +84,8 @@ urlpatterns = [
     path('comprar', views.comprar.as_view(), name='comprar'),
     path('MiBiblioteca/<us>', views.BibliotecaCompras.as_view(), name='MiBiblioteca'),
     path('enviarEmail/<us>', views.EnviarEmail.as_view(), name='enviarEmail'),
+    path('ajax/validate_usernameAdmin', views.validate_usernameAdmin, name="ajaxNameAdmin"),
+    path('ajax/validate_inicioAdmin', views.validate_inicioAdmin, name="validate_inicioAdmin"),
     #Falta agregar descripcion sin login
 
 

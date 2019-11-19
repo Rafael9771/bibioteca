@@ -3,7 +3,7 @@ from django.db.models import Count
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django import  forms
 from django.template.loader import get_template
 from django.urls import reverse_lazy
@@ -1172,8 +1172,49 @@ class registro(ListView):
                 return HttpResponse(html)
 
 
+def validate_usernameAdmin(request):
+    username = request.GET.get('username', None)
+    data = {
+        'is_taken': Usuario.objects.filter(username=username).exists()
+    }
+    return JsonResponse(data)
 
 
+def validate_inicioAdmin(request):
+    username = request.GET.get('username', None)
+    password = request.GET.get('password', None)
+    codigoAd = request.GET.get('codigoAd', None)
+    data = {}
+    if username and password and codigoAd:
+        data = {
+            'is_taken':"todo shido"
+        }
+        return JsonResponse(data)
+    else:
+        return JsonResponse(data)
+
+    #data ={}
+    #if str(codigoAd) == 'Omegha' and str(username) == 'adminP' and str(password) == 'Omeghax9771':
+
+     #   return JsonResponse(data)
+    #else:
+     #   us = Usuario.objects.filter(
+      #      username=username,
+       #     password=password
+        #)
+        #if us:
+
+         #   for a in us:
+          #      l = codigoAdmin.objects.filter(
+           #         codigo=codigoAd, usuario=a.id_usuario
+            #    )
+            #if l:
+             #   return JsonResponse(data)
+            #else:
+             #   data = {
+              #      'is_taken': 'Error'
+               # }
+                #return JsonResponse(data)
 
 class errorsesion(ListView):
 
@@ -1192,7 +1233,11 @@ class errorsesion(ListView):
         ).order_by('nombre_categoria')
 
         if codigoAd == 'Omegha' and id == 'adminP' and contrasenia == 'Omeghax9771':
-            context = {'form': addUsuarioForm}
+
+            context = {'form': addUsuarioForm,
+                       'l2': l2,
+                       'c': c
+                       }
             return render(request, 'biblioteca/add-usuario.html', context)
         else:
             us = Usuario.objects.filter(
@@ -1262,6 +1307,10 @@ class errorsesion(ListView):
                 template = get_template('biblioteca/index.html')
                 html = template.render(params)
                 return HttpResponseRedirect(reverse_lazy('biblioteca_app:sd', kwargs={'ca': codigoAd}))
+
+    def post(self, request, *args, **kwargs):
+
+        return HttpResponse
 
 class errorsesion2(ListView):
 
@@ -2273,20 +2322,17 @@ class addUsuarioAdmin(CreateView):
         form = addUsuarioForm(request.POST)
         nombre = request.POST['username']
         user = Usuario.objects.filter(username=nombre).exists()
+
         if user:
+            return HttpResponse
 
-            messages.error(request, 'Error el autor ya exixte')
-            return HttpResponseRedirect(reverse_lazy('biblioteca_app:index'))
+        if form.is_valid():
+            book = form.save()
+            book.save()
+            r = self.kwargs["us"]
+            id = self.kwargs["ca"]
 
-
-        else:
-            if form.is_valid():
-                book = form.save()
-                book.save()
-                r = self.kwargs["us"]
-                id = self.kwargs["ca"]
-
-                return HttpResponseRedirect(reverse_lazy('biblioteca_app:codigoAdmin', kwargs={'us': r,'ca':id}))
+            return HttpResponseRedirect(reverse_lazy('biblioteca_app:codigoAdmin', kwargs={'us': r,'ca':id}))
 
 
 class addcAdminForm(forms.ModelForm):

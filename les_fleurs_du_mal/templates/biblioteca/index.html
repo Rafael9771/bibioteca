@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="{% static 'css/efectos.css'%}">
         <title>metodo post</title>
         <script src="{% static 'js/codigoAdmin.js'%}"></script>
+         <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
     </head>
     <body onload="agregarCodigoAdmin()" background="{% static '275.jpg'%}">
     <script>
@@ -31,16 +32,16 @@
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
                             <div id="div">
-                                <form action="/er" autocomplete="off" id="inicio">
+                                <form action="/er" autocomplete="off" id="inicio" method="post" >
                                     {% csrf_token %}
                                     <label class="label" for="codigoAdmin">Codigo Admin:</label>
                                     <input class="input" type="text" name="codigoAdmin" id="codigoA">
                                     <label class="label" for="username">Nombre de usuraio:</label>
-                                    <input class="input" type="text" name="username">
+                                    <input class="input" type="text" name="username" id="username">
                                     <label class="label" for="password">Constraseña:</label>
-                                    <input class="input" type="password" name="password">
+                                    <input class="input" type="password" name="password" id="password">
                                     <!-- <a href="/password_reset/">Olvidaste tu contraseña?</a>-->
-                                    <button class="button" type="submit" name="button" onclick="iniciodesesion()"  >Guardar</button>
+                                    <button class="button" type="submit" name="button" id="btnform" onclick="">Guardar</button>
                                 </form>
                                 <a class="a" href="/registro">Registrarse</a>
                             </div>
@@ -163,7 +164,62 @@
 
 
 
+<script>
+var cod = document.getElementById("codigoA");
 
+
+
+var ban = false;
+$(function() {
+        $("#btnform").click(function (){
+            var username = $("#username").val();
+            var password = $("#password").val();
+            var codigoAd = $("#codigoA").val();
+            if(username == ""){
+                alert("Ingrese su usuario porfavor");
+            }else if(password == ""){
+                alert("Ingrese su password porfavor");
+            }else{
+                $("#inicio").on('submit', function(evt){
+
+
+
+
+                        $.ajax({
+                            url: '/ajax/validate_inicioAdmin',
+
+                            data: {
+                                'username':username,
+                                'password':password,
+                                'codigoAd':codigoAd
+                            },
+
+                            dataType: 'json',
+
+                            success: function (data) {
+                                if (data.is_taken) {
+                                    $("#inicio").on('submit', function(evt){
+                                        evt.preventDefault();
+                                        alert("resivio bien los datos");
+                                    });
+                                }else{
+                                    $("#inicio").on('submit', function(evt){
+                                        evt.preventDefault();
+                                        alert("no resivio bien los datos");
+                                    });
+                                }
+                            }
+
+                        });
+
+                });
+             }
+        });
+});
+
+
+
+</script>
 </div>
 
         <script src="{% static 'js/editar.js' %}"></script>

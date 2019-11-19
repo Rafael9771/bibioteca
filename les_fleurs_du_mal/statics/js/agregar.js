@@ -117,7 +117,7 @@ function cambiarValoresUsuario() {
         for(var i=0; i<a.length; i++){
         $('label[for=' + a[i] + '], input#' + a[i]).hide();
         }
-         document.getElementById("nav").style.display = 'none';
+
 
 
 
