@@ -31,7 +31,7 @@
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
                             <div id="div">
-                                <form action="/er" autocomplete="off" id="inicio">
+                                <form  autocomplete="off" id="inicio" method="post">
                                     {% csrf_token %}
                                     <label class="label" for="codigoAdmin">Codigo Admin:</label>
                                     <input class="input" type="text" name="codigoAdmin" id="codigoA">
@@ -40,7 +40,7 @@
                                     <label class="label" for="password">Constraseña:</label>
                                     <input class="input" type="password" name="password">
                                     <!-- <a href="/password_reset/">Olvidaste tu contraseña?</a>-->
-                                    <button class="button" type="submit" name="button" onclick="iniciodesesion()"  >Guardar</button>
+                                    <button class="button" type="submit" name="button" onclick=""  >Guardar</button>
                                 </form>
                                 <a class="a" href="/registro">Registrarse</a>
                             </div>

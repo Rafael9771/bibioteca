@@ -5,14 +5,18 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.http import HttpResponse, HttpResponseRedirect
 from django import  forms
+from django.template.context_processors import csrf
 from django.template.loader import get_template
 from django.urls import reverse_lazy
 from django import template
+from django.views.decorators.csrf import csrf_protect
+
 from .util import render_to_pdf
 from django.contrib.admin.views.decorators import staff_member_required
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, render_to_response
 from django import template
 from django.contrib import messages
+from django.template import RequestContext
 from django.views.generic import(
     View,
     TemplateView,
@@ -1066,6 +1070,7 @@ class cerarSesionLogin(ListView):
         return HttpResponse(html)
 
 
+
 class inicioLogin(ListView):
 
     def get(self, request, *args, **kwargs):
@@ -1084,6 +1089,16 @@ class inicioLogin(ListView):
         }
         html = template.render(params)
         return HttpResponse(html)
+
+    def post(self, request, *args, **kwargs):
+        c = {}
+        c.update(csrf(request))
+        # ... view code here
+        return render_to_response("biblioteca/inicioLogin.html", c)
+
+
+
+
 
 
 class errorLogin(ListView):
@@ -1171,6 +1186,9 @@ class registro(ListView):
                 html = template.render()
                 return HttpResponse(html)
 
+    def post(self, request, *args, **kwargs):
+
+        return render(request,'biblioteca_app:inicioLogin')
 
 
 

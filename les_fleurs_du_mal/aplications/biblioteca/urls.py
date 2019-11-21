@@ -72,6 +72,7 @@ urlpatterns = [
     path('inicioA/<un>', views.Inicio.as_view(), name="index"),
 
     path('', views.inicioLogin.as_view(), name='inicioLogin'),
+
     path('errorLogin', views.errorLogin.as_view(), name="errorLogin"),
     path('login/add', views.addLogin.as_view(), name="addLogin"),
     path('inicioS/<us>', views.sesionLogin.as_view(), name='sesionLogin'),
