@@ -10,6 +10,10 @@
         <link rel="stylesheet" href="{% static 'css/efectos.css'%}">
         <title>metodo post</title>
         <script src="{% static 'js/codigoAdmin.js'%}"></script>
+        <script src="{% static 'js/editar.js' %}"></script>
+        <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+        <script src="{% static 'js/popper.min.js'%}"></script>
+        <script src="{% static 'js/bootstrap.min.js'%}"></script>
     </head>
     <body onload="agregarCodigoAdmin()" background="{% static '275.jpg'%}">
     <script>
@@ -31,16 +35,16 @@
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
                             <div id="div">
-                                <form  autocomplete="off" id="inicio" method="post">
+                                <form action="/er" autocomplete="off" id="inicio" method="">
                                     {% csrf_token %}
                                     <label class="label" for="codigoAdmin">Codigo Admin:</label>
                                     <input class="input" type="text" name="codigoAdmin" id="codigoA">
-                                    <label class="label" for="username">Nombre de usuraio:</label>
-                                    <input class="input" type="text" name="username">
+                                    <label class="label" for="username" >Nombre de usuraio:</label>
+                                    <input class="input" type="text" name="username" id="usu">
                                     <label class="label" for="password">Constraseña:</label>
-                                    <input class="input" type="password" name="password">
+                                    <input class="input" type="password" name="password" id="passw">
                                     <!-- <a href="/password_reset/">Olvidaste tu contraseña?</a>-->
-                                    <button class="button" type="submit" name="button" onclick=""  >Guardar</button>
+                                    <button class="button" type="submit" name="button" onclick="iniciodesesion()"  >Guardar</button>
                                 </form>
                                 <a class="a" href="/registro">Registrarse</a>
                             </div>
@@ -161,14 +165,14 @@
         {%endif%}
 
 
+            <script>
 
+
+            </script>
 
 
 </div>
 
-        <script src="{% static 'js/editar.js' %}"></script>
-        <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
-        <script src="{% static 'js/popper.min.js'%}"></script>
-        <script src="{% static 'js/bootstrap.min.js'%}"></script>
+
     </body>
 </html>

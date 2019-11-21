@@ -85,6 +85,8 @@ urlpatterns = [
     path('comprar', views.comprar.as_view(), name='comprar'),
     path('MiBiblioteca/<us>', views.BibliotecaCompras.as_view(), name='MiBiblioteca'),
     path('enviarEmail/<us>', views.EnviarEmail.as_view(), name='enviarEmail'),
+    path('ajax/validarAdmin', views.validate_userAdmin, name="Validar_Inicio_Admin"),
+    path('inicioAdmin', views.inicioAdmin, name="inicio_admin"),
     #Falta agregar descripcion sin login
 
 

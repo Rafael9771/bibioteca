@@ -3,7 +3,7 @@ from django.db.models import Count
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django import  forms
 from django.template.context_processors import csrf
 from django.template.loader import get_template
@@ -27,7 +27,49 @@ from django.views.generic import(
 
 from .models import *
 
+def validate_userAdmin(request):
+    username = request.GET.get('username', None)
+    codigoAD = request.GET.get('password', None)
+    passwrd = request.GET.get('codigo', None)
+    usuario = Usuario.objects.filter(username=username, password=passwrd)
+    if(usuario):
+        data = {
+            'is_taken': codigoAdmin.objects.filter(codigo=codigoAD, usuario=usuario.id_usuario).exists()
+        }
+    else:
+        data = {}
 
+    return JsonResponse(data)
+
+def inicioAdmin(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        contrasenia = request.POST['password']
+        codigo = request.POST['codigoAdmin']
+        us = Usuario.objects.filter(
+            username=username,
+            password=contrasenia
+        )
+        l2 = Libro.objects.filter(
+            status_libro="A"
+        ).order_by('-vistas')
+        c = Categoria.objects.filter(
+            status_categoria="A"
+        ).order_by('nombre_categoria')
+        s = Usuario.objects.filter(
+            username=username,
+            password=contrasenia
+        ).update(
+            status="A"
+        )
+        template = get_template('biblioteca/inicio.html')
+        params = {
+            'l': us,
+            'l2': l2,
+            'c': c
+        }
+        html = template.render(params)
+        return render(request,'biblioteca/inicio.html',params)
 
 class ErrorUrlAdmin(TemplateView):
     template_name = 'biblioteca/ErrorUrlAdmin.html'

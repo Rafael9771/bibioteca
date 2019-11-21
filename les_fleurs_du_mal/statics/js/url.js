@@ -31,6 +31,7 @@ function cambiarlink(){
             }else{
                 location.href="/";
             }
+            history.pushState(null, "", "mengano.html");
 
 
         }
